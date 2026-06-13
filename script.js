@@ -159,159 +159,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ─── Generic Horizontal Drag Scroll ───────────
-    const makeDraggable = (slider) => {
-        if (!slider) return;
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        slider.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-            slider.style.cursor = 'grabbing';
-            slider.style.scrollSnapType = 'none'; // disable snap while dragging
-        });
-        slider.addEventListener('mouseleave', () => {
-            isDown = false;
-            slider.style.cursor = '';
-            slider.style.scrollSnapType = ''; 
-        });
-        slider.addEventListener('mouseup', () => {
-            isDown = false;
-            slider.style.cursor = '';
-            slider.style.scrollSnapType = ''; 
-        });
-        slider.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 2;
-            slider.scrollLeft = scrollLeft - walk;
-        });
-    };
-
-    // Apply drag to scroll to services carousels
-    const servicesCarousels = document.querySelectorAll('.services-carousel');
-    servicesCarousels.forEach(carousel => makeDraggable(carousel));
-
-    // ─── Endless Auto-Scrolling Gallery ───────────
-    const makeEndlessGallery = (slider) => {
-        if (!slider) return;
-
-        // Clone items for infinite scroll
-        const items = Array.from(slider.children);
-        if (items.length === 0) return;
-        
-        items.forEach(item => {
-            const clone = item.cloneNode(true);
-            // Lightbox listeners won't automatically clone, so we must add a class to distinguish them if needed
-            clone.classList.add('clone');
-            slider.appendChild(clone);
-        });
-
-        let isDown = false;
-        let isHovered = false;
-        let startX;
-        let scrollLeft;
-        let autoScrollId;
-
-        const getOriginalWidth = () => {
-            const firstRect = items[0].getBoundingClientRect();
-            const lastRect = items[items.length - 1].getBoundingClientRect();
-            const gap = parseFloat(window.getComputedStyle(slider).gap) || 0;
-            return lastRect.right - firstRect.left + gap;
-        };
-
-        const autoScroll = () => {
-            if (!isDown && !isHovered) {
-                slider.style.scrollSnapType = 'none'; // Disable snap during auto scroll
-                slider.scrollLeft += 0.5; // cinematic slow speed
-
-                const originalWidth = getOriginalWidth();
-                if (originalWidth > 0 && slider.scrollLeft >= originalWidth) {
-                    slider.scrollLeft -= originalWidth; // Seamless reset
-                }
-            }
-            autoScrollId = requestAnimationFrame(autoScroll);
-        };
-
-        // Start auto-scroll
-        autoScrollId = requestAnimationFrame(autoScroll);
-
-        // Interaction Pausing
-        slider.addEventListener('mouseenter', () => isHovered = true);
-        slider.addEventListener('mouseleave', () => {
-            isHovered = false;
-            isDown = false;
-            slider.style.cursor = '';
-            slider.style.scrollSnapType = 'x mandatory'; 
-        });
-        slider.addEventListener('touchstart', () => isHovered = true, { passive: true });
-        slider.addEventListener('touchend', () => {
-            isHovered = false;
-            slider.style.scrollSnapType = 'x mandatory'; 
-        }, { passive: true });
-
-        // Drag Support
-        slider.addEventListener('mousedown', (e) => {
-            isDown = true;
-            isHovered = true;
-            startX = e.pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-            slider.style.cursor = 'grabbing';
-            slider.style.scrollSnapType = 'none';
-        });
-
-        slider.addEventListener('mouseup', () => {
-            isDown = false;
-            slider.style.cursor = '';
-            setTimeout(() => {
-                slider.style.scrollSnapType = 'x mandatory'; 
-            }, 50);
-        });
-
-        slider.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 2;
-            slider.scrollLeft = scrollLeft - walk;
-            
-            // Handle looping during manual drag
-            const originalWidth = getOriginalWidth();
-            if (originalWidth > 0) {
-                if (slider.scrollLeft >= originalWidth) {
-                    slider.scrollLeft -= originalWidth;
-                    scrollLeft -= originalWidth;
-                } else if (slider.scrollLeft <= 0) {
-                    slider.scrollLeft += originalWidth;
-                    scrollLeft += originalWidth;
-                }
-            }
-        });
-        
-        slider.addEventListener('scroll', () => {
-            if (!isDown && isHovered) {
-                const originalWidth = getOriginalWidth();
-                if (originalWidth > 0) {
-                    if (slider.scrollLeft >= originalWidth) {
-                        slider.scrollLeft -= originalWidth;
-                    } else if (slider.scrollLeft <= 0) {
-                        slider.scrollLeft += originalWidth;
-                    }
-                }
-            }
-        }, { passive: true });
-    };
-
+    // ─── Gallery Scroll Controls ──────────────────
     const gallerySlider = document.getElementById('gallerySlider');
-    makeEndlessGallery(gallerySlider);
+    const galleryPrev = document.getElementById('galleryPrev');
+    const galleryNext = document.getElementById('galleryNext');
 
-    const servicesCarousels = document.querySelectorAll('.services-carousel');
-    servicesCarousels.forEach(carousel => makeDraggable(carousel));
+    if (gallerySlider && galleryPrev && galleryNext) {
+        const galleryScrollAmount = 340;
 
+        galleryPrev.addEventListener('click', () => {
+            gallerySlider.scrollBy({ left: -galleryScrollAmount, behavior: 'smooth' });
+        });
+
+        galleryNext.addEventListener('click', () => {
+            gallerySlider.scrollBy({ left: galleryScrollAmount, behavior: 'smooth' });
+        });
+    }
 
     // ─── Gallery Lightbox ─────────────────────────
     const galleryItems = document.querySelectorAll('.gallery-item');
