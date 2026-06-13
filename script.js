@@ -159,20 +159,133 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ─── Gallery Scroll Controls ──────────────────
+    // ─── True Infinite Loop Gallery ─────────────────
     const gallerySlider = document.getElementById('gallerySlider');
     const galleryPrev = document.getElementById('galleryPrev');
     const galleryNext = document.getElementById('galleryNext');
 
-    if (gallerySlider && galleryPrev && galleryNext) {
-        const galleryScrollAmount = 340;
-
-        galleryPrev.addEventListener('click', () => {
-            gallerySlider.scrollBy({ left: -galleryScrollAmount, behavior: 'smooth' });
+    if (gallerySlider) {
+        const originalItems = Array.from(gallerySlider.children);
+        
+        // Clone items for infinite loop (3 full sets to allow scrolling both directions safely)
+        originalItems.forEach(item => {
+            const cloneEnd = item.cloneNode(true);
+            cloneEnd.classList.add('clone-end');
+            gallerySlider.appendChild(cloneEnd);
+        });
+        
+        originalItems.forEach(item => {
+            const cloneStart = item.cloneNode(true);
+            cloneStart.classList.add('clone-start');
+            gallerySlider.insertBefore(cloneStart, gallerySlider.firstChild);
         });
 
-        galleryNext.addEventListener('click', () => {
-            gallerySlider.scrollBy({ left: galleryScrollAmount, behavior: 'smooth' });
+        // Calculate the width of one full set of original items
+        const getSetWidth = () => {
+            const items = Array.from(gallerySlider.children);
+            const setLength = originalItems.length;
+            if (items.length === 0) return 0;
+            const firstOfSet = items[setLength]; // First of middle set
+            const lastOfSet = items[setLength * 2 - 1]; // Last of middle set
+            const gap = parseFloat(window.getComputedStyle(gallerySlider).gap) || 0;
+            return lastOfSet.getBoundingClientRect().right - firstOfSet.getBoundingClientRect().left + gap;
+        };
+
+        // Center the gallery on the middle set initially
+        let isInitialized = false;
+        const initScrollPosition = () => {
+            if (isInitialized) return;
+            const setWidth = getSetWidth();
+            if (setWidth > 0) {
+                gallerySlider.scrollLeft = setWidth;
+                isInitialized = true;
+            }
+        };
+
+        // Needs a slight delay for images to render and get actual widths
+        setTimeout(initScrollPosition, 100);
+        window.addEventListener('resize', () => {
+            isInitialized = false;
+            setTimeout(initScrollPosition, 100);
+        });
+
+        // Quietly jump back to the middle set when scrolling into clones
+        const handleInfiniteScroll = () => {
+            const setWidth = getSetWidth();
+            if (setWidth === 0) return;
+
+            // If we've scrolled into the first (prepended) set
+            if (gallerySlider.scrollLeft < setWidth / 2) {
+                gallerySlider.style.scrollBehavior = 'auto'; // Disable smooth scroll for instant jump
+                gallerySlider.scrollLeft += setWidth;
+            } 
+            // If we've scrolled into the last (appended) set
+            else if (gallerySlider.scrollLeft > setWidth * 1.5) {
+                gallerySlider.style.scrollBehavior = 'auto';
+                gallerySlider.scrollLeft -= setWidth;
+            }
+        };
+
+        gallerySlider.addEventListener('scroll', () => {
+            // Re-enable smooth behavior if we just jumped
+            if (gallerySlider.style.scrollBehavior === 'auto') {
+                gallerySlider.style.scrollBehavior = 'smooth';
+            }
+        });
+        
+        // We use scrollend (or a timeout fallback) to jump seamlessly when they finish a swipe
+        let scrollTimeout;
+        gallerySlider.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(handleInfiniteScroll, 150);
+        }, { passive: true });
+
+
+        // Buttons
+        const scrollAmount = 350;
+        if (galleryPrev) {
+            galleryPrev.addEventListener('click', () => {
+                gallerySlider.style.scrollBehavior = 'smooth';
+                gallerySlider.scrollLeft -= scrollAmount;
+            });
+        }
+        if (galleryNext) {
+            galleryNext.addEventListener('click', () => {
+                gallerySlider.style.scrollBehavior = 'smooth';
+                gallerySlider.scrollLeft += scrollAmount;
+            });
+        }
+
+        // Generic Mouse Drag Support
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        gallerySlider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            gallerySlider.style.cursor = 'grabbing';
+            gallerySlider.style.scrollBehavior = 'auto';
+            gallerySlider.style.scrollSnapType = 'none';
+            startX = e.pageX - gallerySlider.offsetLeft;
+            scrollLeft = gallerySlider.scrollLeft;
+        });
+        gallerySlider.addEventListener('mouseleave', () => {
+            isDown = false;
+            gallerySlider.style.cursor = '';
+            gallerySlider.style.scrollSnapType = 'x mandatory';
+        });
+        gallerySlider.addEventListener('mouseup', () => {
+            isDown = false;
+            gallerySlider.style.cursor = '';
+            gallerySlider.style.scrollSnapType = 'x mandatory';
+            handleInfiniteScroll();
+        });
+        gallerySlider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - gallerySlider.offsetLeft;
+            const walk = (x - startX) * 2;
+            gallerySlider.scrollLeft = scrollLeft - walk;
         });
     }
 
