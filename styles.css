@@ -937,20 +937,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     pointer-events: none;
 }
 .location-card {
-    background: rgba(255, 255, 255, 0.015);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border-light);
-    border-radius: 20px;
-    box-shadow: var(--shadow-lg);
     display: grid;
     grid-template-columns: 1fr;
-    overflow: hidden;
-    margin-top: 40px;
+    gap: 40px;
+    margin-top: 60px;
     position: relative;
     z-index: 1;
 }
 .location-content {
-    padding: clamp(40px, 6vw, 60px);
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1077,9 +1072,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 @media (min-width: 992px) {
     .location-card {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 45fr 55fr;
         align-items: center;
-        gap: 80px;
+        gap: 60px;
     }
     .location-map-wrapper {
         min-height: 450px;
