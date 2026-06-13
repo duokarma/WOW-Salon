@@ -210,6 +210,94 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ─── Cinematic Services Swipe Engine ──────────
+    const servicesCarousels = document.querySelectorAll('.services-carousel');
+    
+    // 1. Generic Drag to Scroll
+    const makeDraggable = (slider) => {
+        if (!slider) return;
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+            slider.style.cursor = 'grabbing';
+            slider.style.scrollSnapType = 'none';
+        });
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = '';
+            slider.style.scrollSnapType = 'x mandatory'; 
+        });
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = '';
+            slider.style.scrollSnapType = 'x mandatory'; 
+        });
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    };
+
+    servicesCarousels.forEach(carousel => makeDraggable(carousel));
+
+    // 2. Cinematic Intersection Tracking
+    if ('IntersectionObserver' in window) {
+        const cinematicObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    
+                    // Ignore if already focused
+                    if (card.classList.contains('focused')) return;
+                    
+                    // Remove focus from siblings
+                    const parentCarousel = card.closest('.services-carousel');
+                    if (parentCarousel) {
+                        const siblings = parentCarousel.querySelectorAll('.service-card');
+                        siblings.forEach(s => {
+                            s.classList.remove('focused');
+                            const content = s.querySelector('.card-content');
+                            if (content) content.classList.remove('show-overlay');
+                        });
+                    }
+
+                    // Add focus to centered card
+                    card.classList.add('focused');
+                    const content = card.querySelector('.card-content');
+                    
+                    if (content) {
+                        // Clear existing timeout
+                        if (content.hideTimeout) clearTimeout(content.hideTimeout);
+                        
+                        // Show overlay
+                        content.classList.add('show-overlay');
+                        
+                        // Auto-hide after 2.5 seconds
+                        content.hideTimeout = setTimeout(() => {
+                            content.classList.remove('show-overlay');
+                        }, 2500);
+                    }
+                }
+            });
+        }, {
+            root: null, // use viewport (can't easily use carousel itself due to mobile/desktop differences)
+            rootMargin: '0px',
+            threshold: 0.8 // triggered when 80% of card is visible
+        });
+
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+            cinematicObserver.observe(card);
+        });
+    }
 
     // ─── Before / After Slider ────────────────────
     const baContainers = document.querySelectorAll('.ba-slider-container');
