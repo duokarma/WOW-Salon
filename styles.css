@@ -960,8 +960,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     font-family: var(--font-display);
     font-size: 1.5rem;
     color: var(--accent-champagne);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     letter-spacing: 0.05em;
+}
+.location-desc {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 400px;
 }
 .location-address {
     display: flex;
@@ -1006,9 +1014,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .location-map-wrapper {
     position: relative;
-    min-height: 400px;
+    min-height: 300px;
     width: 100%;
     overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-lg);
+    background: var(--bg-card);
 }
 .location-map-wrapper iframe {
     width: 100%;
@@ -1065,10 +1077,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 @media (min-width: 992px) {
     .location-card {
-        grid-template-columns: 1.2fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 80px;
     }
     .location-map-wrapper {
-        min-height: 100%;
+        min-height: 450px;
+        height: 100%;
     }
 }
 
