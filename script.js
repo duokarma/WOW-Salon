@@ -5,6 +5,25 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // ─── Premium Loader Intro ─────────────────────
+    const loader = document.getElementById('premium-loader');
+    if (loader) {
+        // Prevent scrolling while loader is active
+        document.body.style.overflow = 'hidden';
+        
+        setTimeout(() => {
+            loader.classList.add('hidden');
+            document.body.style.overflow = '';
+            
+            // Remove from DOM after transition completes (0.8s)
+            setTimeout(() => {
+                if (loader.parentNode) {
+                    loader.parentNode.removeChild(loader);
+                }
+            }, 800);
+        }, 2500); // 2.5s duration
+    }
+
     // ─── Navbar Scroll Effect ─────────────────────
     const navbar = document.getElementById('navbar');
     let lastScroll = 0;
@@ -289,38 +308,89 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ─── Gallery Lightbox ─────────────────────────
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    // ─── Gallery Lightbox (Advanced) ──────────────
+    const originalGalleryItems = document.querySelectorAll('#gallerySlider > .gallery-item:not(.clone-start):not(.clone-end)');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    let currentLightboxIndex = 0;
 
-    if (lightbox && galleryItems.length > 0) {
-        galleryItems.forEach(item => {
+    if (lightbox && originalGalleryItems.length > 0) {
+        
+        // Extract original images
+        const galleryImages = Array.from(originalGalleryItems).map(item => item.querySelector('img').src);
+
+        const openLightbox = (index) => {
+            currentLightboxIndex = index;
+            lightboxImg.style.opacity = 0;
+            lightboxImg.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                lightboxImg.src = galleryImages[currentLightboxIndex];
+                lightboxImg.style.opacity = 1;
+                lightboxImg.style.transform = 'scale(1)';
+            }, 50); // slight delay for smooth transition between images
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        const showNext = () => {
+            currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length;
+            openLightbox(currentLightboxIndex);
+        };
+
+        const showPrev = () => {
+            currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length;
+            openLightbox(currentLightboxIndex);
+        };
+
+        // Attach click to original items and clones
+        const allGalleryItems = document.querySelectorAll('.gallery-item');
+        allGalleryItems.forEach(item => {
             item.addEventListener('click', () => {
-                const img = item.querySelector('img');
-                if (img) {
-                    lightboxImg.src = img.src;
-                    lightbox.classList.add('active');
-                }
+                const imgSrc = item.querySelector('img').src;
+                const index = galleryImages.indexOf(imgSrc);
+                if (index > -1) openLightbox(index);
             });
         });
 
-        lightboxClose.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-        });
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+        lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
 
         lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('active');
+            if (e.target === lightbox || e.target.id === 'lightboxWrapper') {
+                closeLightbox();
             }
         });
         
+        // Keyboard Navigation
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                lightbox.classList.remove('active');
-            }
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
         });
+
+        // Touch Swipe Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        lightboxImg.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        lightboxImg.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) showNext(); // Swiped left
+            if (touchEndX - touchStartX > 50) showPrev(); // Swiped right
+        }, {passive: true});
     }
 
     // ─── Cinematic Services Swipe Engine ──────────
