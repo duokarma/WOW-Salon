@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOW SALON — Premium Luxury Salon Experience</title>
+    <meta name="description" content="WOW SALON — Experience the future of luxury grooming. Premium hair styling, coloring, bridal makeup, and grooming services for men and women.">
+    <meta name="keywords" content="WOW Salon, luxury salon, premium haircut, hair styling, bridal makeup, grooming">
+    <meta name="theme-color" content="#0a0a0f">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+
+
+    <!-- ============================================= -->
+    <!-- NAVBAR                                        -->
+    <!-- ============================================= -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src= "D:\WOW-salon\logo.png" alt="WOW Salon Logo" class="brand-logo">
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                <li><a href="#services" class="nav-link" data-section="services">Services</a></li>
+                <li><a href="#staff" class="nav-link" data-section="staff">Staff</a></li>
+                <li><a href="#gallery" class="nav-link" data-section="gallery">Gallery</a></li>
+                <li><a href="#before-after" class="nav-link" data-section="before-after">Before & After</a></li>
+                <li><a href="#reviews" class="nav-link" data-section="reviews">Reviews</a></li>
+                <li><a href="#footer" class="nav-link" data-section="footer">Quick Links</a></li>
+            </ul>
+
+            <button class="nav-hamburger" id="navHamburger" aria-label="Toggle navigation menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileOverlay">
+        <div class="mobile-menu-content">
+            <ul class="mobile-nav-links">
+                <li><a href="#home" class="mobile-link">Home</a></li>
+                <li><a href="#about" class="mobile-link">About</a></li>
+                <li><a href="#services" class="mobile-link">Services</a></li>
+                <li><a href="#staff" class="mobile-link">Staff</a></li>
+                <li><a href="#gallery" class="mobile-link">Gallery</a></li>
+                <li><a href="#before-after" class="mobile-link">Before & After</a></li>
+                <li><a href="#reviews" class="mobile-link">Reviews</a></li>
+                <li><a href="#footer" class="mobile-link">Quick Links</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- ============================================= -->
+    <!-- HERO SECTION                                  -->
+    <!-- ============================================= -->
+    <section class="hero" id="home">
+        <!-- Warm cinematic background layers -->
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-grain"></div>
+        <div class="hero-ambient-light"></div>
+
+        <div class="hero-centered-layout">
+            <!-- TOP: Editorial Text Content -->
+            <div class="hero-text-header">
+                <span class="hero-label">Welcome to WOW Salon</span>
+                <h1 class="hero-title">
+                    <span class="title-line-1">Luxury Hair</span>
+                    <span class="title-line-2">&amp; Beauty</span>
+                    <span class="title-line-3">Experience</span>
+                </h1>
+                <p class="hero-description">Modern styling, premium care, and timeless confidence — crafted by our expert stylists at WOW Salon.</p>
+            </div>
+
+            <!-- CENTER: Dual Avatar Transformation Showcase -->
+            <div class="hero-transformation-split" id="heroScene">
+                <div class="scene-perspective split-perspective">
+                    
+                    <!-- LEFT: Male Avatar Transformations (7 Indian Styles) -->
+                    <div class="avatar-showcase male-showcase scene-layer" data-depth="0.04">
+                        <img src= "D:\WOW-salon\male_in_1.png" alt="Male Style 1" class="trans-layer-7 t-1">
+                        <img src= "D:\WOW-salon\male_in_2.png" alt="Male Style 2" class="trans-layer-7 t-2">
+                        <img src= "D:\WOW-salon\male_in_3.png" alt="Male Style 3" class="trans-layer-7 t-3">
+                        <img src= "D:\WOW-salon\male_in_4.png" alt="Male Style 4" class="trans-layer-7 t-4">
+                        <img src= "D:\WOW-salon\male_in_5.png" alt="Male Style 5" class="trans-layer-7 t-5">
+                        <img src= "D:\WOW-salon\male_in_6.png" alt="Male Style 6" class="trans-layer-7 t-6">
+                        <img src= "D:\WOW-salon\male_in_7.png" alt="Male Style 7" class="trans-layer-7 t-7">
+                        <div class="avatar-lighting-overlay"></div>
+                        <div class="avatar-vignette"></div>
+                    </div>
+
+                    <!-- RIGHT: Female Avatar Transformations (3 Styles) -->
+                    <div class="avatar-showcase female-showcase scene-layer" data-depth="0.02">
+                        <img src= "D:\WOW-salon\female_1.png" alt="Female Straight Style" class="trans-layer-3 t-1">
+                        <img src= "D:\WOW-salon\female_2.png" alt="Female Curls Style" class="trans-layer-3 t-2">
+                        <img src= "D:\WOW-salon\female_3.png" alt="Female Balayage Style" class="trans-layer-3 t-3">
+                        <div class="avatar-lighting-overlay"></div>
+                        <div class="avatar-vignette"></div>
+                    </div>
+                    
+                    <div class="scene-ambient-glow avatar-glow"></div>
+                </div>
+            </div>
+
+            <!-- BOTTOM: CTA Buttons -->
+            <div class="hero-cta-row">
+                <a href="#services" class="hero-btn hero-btn-matte">
+                    <span>Explore Services</span>
+                </a>
+                <a href="#gallery" class="hero-btn hero-btn-matte">
+                    <span>View Gallery</span>
+                </a>
+                <a href="#staff" class="hero-btn hero-btn-matte">
+                    <span>Meet Our Staff</span>
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ============================================= -->
+    <!-- ABOUT SECTION                                 -->
+    <!-- ============================================= -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image-wrapper reveal-left">
+                    <div class="about-image-frame">
+                        <img src= "D:\WOW-salon\about_salon.jpeg" alt="WOW Salon luxury interior" class="about-image" loading="lazy">
+                        <div class="image-chrome-border"></div>
+                    </div>
+                    <div class="about-experience-badge">
+                        <span class="exp-number">15+</span>
+                        <span class="exp-text">Years of<br>Excellence</span>
+                    </div>
+                </div>
+
+                <div class="about-content reveal-right">
+                    <span class="section-label">About Us</span>
+                    <h2 class="section-title">Redefining the Art of <span class="text-gradient">Beauty</span></h2>
+                    <p class="about-text">
+                        At WOW SALON, we blend cutting-edge technology with timeless artistry to create transformative experiences. 
+                        Our team of master stylists and beauty experts delivers personalized services in an atmosphere of pure luxury.
+                    </p>
+                    <p class="about-text">
+                        From precision haircuts to stunning color transformations, bridal makeovers to premium grooming — 
+                        every visit is crafted to make you feel extraordinary.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="1500">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Happy Clients</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="9">0</span>
+                            <span class="stat-label">Expert Stylists</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="50">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Services</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================= -->
+    <!-- SERVICES SECTION                              -->
+    <!-- ============================================= -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-label">What We Offer</span>
+                <h2 class="section-title">Premium <span class="text-gradient">Services</span></h2>
+                <p class="section-desc">Tailored luxury experiences for men and women</p>
+            </div>
+
+            <!-- Service Tabs -->
+            <div class="service-tabs reveal-up">
+                <button class="tab-btn active" data-tab="men" id="tabMen">
+                    <span>Men</span>
+                </button>
+                <button class="tab-btn" data-tab="women" id="tabWomen">
+                    <span>Women</span>
+                </button>
+                <div class="tab-slider" id="tabSlider"></div>
+            </div>
+
+            <!-- Men Services -->
+            <div class="service-panel active" id="panelMen">
+                <div class="services-carousel">
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_men_1.jpg" alt="Premium Haircut" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Premium Haircut</h3>
+                            <p class="card-desc">Precision cuts tailored to your face shape and style preferences.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_men_2.jpg" alt="Beard Grooming" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Beard Sculpting</h3>
+                            <p class="card-desc">Expert beard shaping, trimming, and hot towel treatments.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_men_3.jpg" alt="Hair Color" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Hair Color</h3>
+                            <p class="card-desc">Premium coloring with global brands for natural and bold looks.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_men_1.jpg" alt="Hair Spa" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Hair Spa & Treatment</h3>
+                            <p class="card-desc">Deep conditioning and scalp therapy for healthy, revitalized hair.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_men_2.jpg" alt="Facial" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Premium Facial</h3>
+                            <p class="card-desc">Luxury facial treatments using imported skincare products.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Women Services -->
+            <div class="service-panel" id="panelWomen">
+                <div class="services-carousel">
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_women_1.jpg" alt="Hair Styling" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Hair Styling</h3>
+                            <p class="card-desc">Expert styling for every occasion, from casual to red carpet.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_women_2.jpg" alt="Bridal Makeup" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Bridal Makeup</h3>
+                            <p class="card-desc">Complete bridal packages with HD makeup and hairstyling.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_women_3.jpg" alt="Hair Color" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Color & Highlights</h3>
+                            <p class="card-desc">Balayage, highlights, global color — premium products only.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_women_1.jpg" alt="Keratin" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Keratin & Smoothening</h3>
+                            <p class="card-desc">Professional keratin treatments for silky, frizz-free hair.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up">
+                        <div class="card-image-wrapper">
+                            <img src= "D:\WOW-salon\service_women_2.jpg" alt="Skin Treatment" loading="lazy">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Skin Treatments</h3>
+                            <p class="card-desc">Advanced facials, peels, and rejuvenation therapies.</p>
+                            <span class="card-price"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================= -->
+    <!-- STAFF SECTION                                 -->
+    <!-- ============================================= -->
+    <section class="section staff" id="staff">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-label">Meet the Experts</span>
+                <h2 class="section-title">Our <span class="text-gradient">Stylists</span></h2>
+                <p class="section-desc">Passionate artists dedicated to your transformation</p>
+            </div>
+
+            <div class="staff-slider-wrapper">
+                    <div class="staff-slider" id="staffSlider">
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_1.jpg" alt="Arjun Patel" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Master Stylist</span>
+                                <h4 class="staff-name">Arjun Patel</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_2.jpg" alt="Vikram Shah" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Senior Barber</span>
+                                <h4 class="staff-name">Vikram Shah</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_3.jpg" alt="Rohan Mehta" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Color Specialist</span>
+                                <h4 class="staff-name">Rohan Mehta</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_4.jpg" alt="Karan Desai" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Creative Director</span>
+                                <h4 class="staff-name">Karan Desai</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_5.jpg" alt="Dev Sharma" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Junior Stylist</span>
+                                <h4 class="staff-name">Dev Sharma</h4>
+                            </div>
+                        </div>
+<div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\female_staff_1.jpg" alt="Priya Kapoor" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Senior Stylist</span>
+                                <h4 class="staff-name">Priya Kapoor</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\female_staff_2.jpg" alt="Neha Verma" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Makeup Artist</span>
+                                <h4 class="staff-name">Neha Verma</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\female_staff_3.jpg" alt="Ananya Joshi" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Color Expert</span>
+                                <h4 class="staff-name">Ananya Joshi</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\female_staff_4.jpg" alt="Riya Singh" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Bridal Specialist</span>
+                                <h4 class="staff-name">Riya Singh</h4>
+                            </div>
+                        </div>
+<div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_1.jpg" alt="Arjun Patel" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Master Stylist</span>
+                                <h4 class="staff-name">Arjun Patel</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_2.jpg" alt="Vikram Shah" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Senior Barber</span>
+                                <h4 class="staff-name">Vikram Shah</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_3.jpg" alt="Rohan Mehta" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Color Specialist</span>
+                                <h4 class="staff-name">Rohan Mehta</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_4.jpg" alt="Karan Desai" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Creative Director</span>
+                                <h4 class="staff-name">Karan Desai</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\male_staff_5.jpg" alt="Dev Sharma" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Junior Stylist</span>
+                                <h4 class="staff-name">Dev Sharma</h4>
+                            </div>
+                        </div>
+<div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\female_staff_1.jpg" alt="Priya Kapoor" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Senior Stylist</span>
+                                <h4 class="staff-name">Priya Kapoor</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\female_staff_2.jpg" alt="Neha Verma" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Makeup Artist</span>
+                                <h4 class="staff-name">Neha Verma</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\female_staff_3.jpg" alt="Ananya Joshi" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Color Expert</span>
+                                <h4 class="staff-name">Ananya Joshi</h4>
+                            </div>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-image-wrapper">
+                                <img src= "D:\WOW-salon\female_staff_4.jpg" alt="Riya Singh" loading="lazy">
+                                <div class="staff-image-overlay"></div>
+                            </div>
+                            <div class="staff-info">
+                                <span class="staff-role">Bridal Specialist</span>
+                                <h4 class="staff-name">Riya Singh</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================= -->
+    <!-- GALLERY SECTION                               -->
+    <!-- ============================================= -->
+    <section class="section gallery" id="gallery">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-label">Our Work</span>
+                <h2 class="section-title">Showcase <span class="text-gradient">Gallery</span></h2>
+                <p class="section-desc">A glimpse into our world of transformations</p>
+            </div>
+        </div>
+
+        <div class="gallery-slider-wrapper reveal-up">
+            <div class="gallery-slider" id="gallerySlider">
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_1.jpeg" alt="Salon work 1" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Premium Styling</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_2.jpeg" alt="Salon work 2" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Expert Cuts</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_3.jpeg" alt="Salon work 3" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Men's Grooming</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_4.jpeg" alt="Salon work 4" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Color Transformation</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_5.jpeg" alt="Salon work 5" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Bridal Beauty</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_6.jpeg" alt="Salon work 6" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Modern Styles</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_7.jpeg" alt="Salon work 7" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Elegant Styling</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_8.jpeg" alt="Salon work 8" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Creative Color</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_9.jpeg" alt="Salon work 9" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Luxury Treatment</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_10.jpeg" alt="Salon work 10" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Precision Fade</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_11.jpeg" alt="Salon work 11" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Texture & Volume</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src= "D:\WOW-salon\gallery_12.jpeg" alt="Salon work 12" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-caption">Signature Look</span>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-controls">
+                <button class="gallery-btn gallery-prev" id="galleryPrev" aria-label="Previous">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                </button>
+                <button class="gallery-btn gallery-next" id="galleryNext" aria-label="Next">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================= -->
+    <!-- BEFORE & AFTER SECTION                        -->
+    <!-- ============================================= -->
+    <section class="section before-after" id="before-after">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-label">Transformations</span>
+                <h2 class="section-title">Before & <span class="text-gradient">After</span></h2>
+                <p class="section-desc">Witness the magic of our transformations</p>
+            </div>
+
+            <div class="ba-grid">
+                <div class="ba-comparison reveal-up">
+                    <div class="ba-slider-container" data-ba="1">
+                        <div class="ba-image ba-before">
+                            <img src= "D:\WOW-salon\before_after_1.jpg" alt="Before transformation" loading="lazy">
+                            <span class="ba-label ba-label-before">Before</span>
+                        </div>
+                        <div class="ba-image ba-after">
+                            <img src= "D:\WOW-salon\before_after_1.jpg" alt="After transformation" loading="lazy">
+                            <span class="ba-label ba-label-after">After</span>
+                        </div>
+                        <div class="ba-handle" aria-label="Drag to compare">
+                            <div class="ba-handle-line"></div>
+                            <div class="ba-handle-circle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8l4 4-4 4M6 8l-4 4 4 4"/></svg>
+                            </div>
+                            <div class="ba-handle-line"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ba-comparison reveal-up">
+                    <div class="ba-slider-container" data-ba="2">
+                        <div class="ba-image ba-before">
+                            <img src= "D:\WOW-salon\before_after_2.jpg" alt="Before transformation" loading="lazy">
+                            <span class="ba-label ba-label-before">Before</span>
+                        </div>
+                        <div class="ba-image ba-after">
+                            <img src= "D:\WOW-salon\before_after_2.jpg" alt="After transformation" loading="lazy">
+                            <span class="ba-label ba-label-after">After</span>
+                        </div>
+                        <div class="ba-handle" aria-label="Drag to compare">
+                            <div class="ba-handle-line"></div>
+                            <div class="ba-handle-circle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8l4 4-4 4M6 8l-4 4 4 4"/></svg>
+                            </div>
+                            <div class="ba-handle-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================= -->
+    <!-- REVIEWS SECTION                               -->
+    <!-- ============================================= -->
+    <section class="section reviews" id="reviews">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-label">Testimonials</span>
+                <h2 class="section-title">Client <span class="text-gradient">Reviews</span></h2>
+                <p class="section-desc">What our valued clients say about us</p>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card reveal-up">
+                    <div class="review-stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <p class="review-text">"Absolutely the best salon experience I've ever had! The attention to detail and the premium atmosphere is unmatched. My hair has never looked this good."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">R</div>
+                        <div class="author-info">
+                            <span class="author-name">Rahul M.</span>
+                            <span class="author-date">2 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card reveal-up">
+                    <div class="review-stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <p class="review-text">"Got my bridal makeup done here and it was absolutely stunning. The team is so professional and talented. Every detail was perfect for my big day!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <span class="author-name">Sneha P.</span>
+                            <span class="author-date">1 month ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card reveal-up">
+                    <div class="review-stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <p class="review-text">"The hair color transformation was incredible! They understood exactly what I wanted. The salon ambiance is luxurious and the staff is extremely friendly."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <span class="author-name">Ankit D.</span>
+                            <span class="author-date">3 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card reveal-up">
+                    <div class="review-stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star half">★</span>
+                    </div>
+                    <p class="review-text">"Best beard grooming in the city! They take their time to get every detail right. The hot towel treatment is amazing. Highly recommend for men!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">K</div>
+                        <div class="author-info">
+                            <span class="author-name">Kiran V.</span>
+                            <span class="author-date">1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card reveal-up">
+                    <div class="review-stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <p class="review-text">"My go-to salon for everything! From haircuts to facials, they excel at everything. The keratin treatment they did lasted for months. Love WOW Salon!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <span class="author-name">Meera S.</span>
+                            <span class="author-date">2 months ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card reveal-up">
+                    <div class="review-stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <p class="review-text">"First time visiting and I'm already a regular! The premium experience is worth every penny. Clean, hygienic, and the results speak for themselves."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">D</div>
+                        <div class="author-info">
+                            <span class="author-name">Dhruv R.</span>
+                            <span class="author-date">5 days ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================= -->
+    <!-- FOOTER                                        -->
+    <!-- ============================================= -->
+    <footer class="footer" id="footer">
+        <div class="footer-glow"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Column -->
+                <div class="footer-brand">
+                    <a href="#home" class="footer-logo">
+                        <img src= "D:\WOW-salon\logo.png" alt="WOW Salon Logo" class="brand-logo">
+                    </a>
+                    <p class="footer-desc">Where style meets the future. Experience premium luxury grooming in a cinematic atmosphere.</p>
+                    <div class="footer-social">
+                        <a href="https://wa.me/919924404860" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="WhatsApp">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/wowsaloon?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-links-col">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#staff">Our Team</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-contact-col">
+                    <h4 class="footer-heading">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                            <a href="tel:9924404860">+91 99244 04860</a>
+                        </li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <span>Mon - Sun: 9:30 AM - 9:30 PM</span>
+                        </li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>First Floor, WoW Hair and Beauty Salon,<br>Raj Heights On Navjeevan Mill Road,<br>Station Rd, Swastik Society,<br>Shidhpur, Dahod, Gujarat 389151</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Map -->
+                <div class="footer-map-col">
+                    <h4 class="footer-heading">Find Us</h4>
+                    <div class="footer-map">
+                        <iframe 
+                            src="https://maps.google.com/maps?q=WoW%20Hair%20and%20Beauty%20Salon,%20Dahod,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            width="100%" 
+                            height="240" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="WOW Salon Location">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 WOW SALON. All Rights Reserved.</p>
+                <p class="footer-credit">Crafted with &#9829 in Dahod</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="Fullscreen preview">
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
