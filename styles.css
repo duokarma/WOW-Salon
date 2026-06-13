@@ -1,14 +1,9 @@
-/* ============================================= */
-/* WOW SALON — Phase 3: Premium Enhancements      */
-/* Luxury · Layered · Immersive · Cinematic       */
-/* ============================================= */
-
-/* ---------- CSS Custom Properties ---------- */
 :root {
     /* Core Colors - Light Luxury Theme */
-    --bg-primary: #fdfbf7; /* Warm pearl white */
-    --bg-graphite: #f7f4ed; /* Soft sand beige */
-    --bg-silver-dark: #f0ebe1; /* Warm ivory */
+    --bg-primary: #fdfbf7; /* Warm pearl white base */
+    --bg-gradient: linear-gradient(145deg, #fdfbf7 0%, #f4ede4 100%);
+    --bg-graphite: linear-gradient(160deg, #f9f6f0 0%, #ede8dd 100%); /* Soft sand beige gradient */
+    --bg-silver-dark: linear-gradient(135deg, #f2efe9 0%, #e8e2d8 100%); /* Warm ivory gradient */
     
     /* Accents & Text */
     --text-primary: #1a1614; /* Soft matte charcoal */
@@ -36,7 +31,7 @@
     --font-display: 'Outfit', 'Inter', sans-serif;
 
     /* Spacing */
-    --section-padding: clamp(60px, 10vw, 120px);
+    --section-padding: clamp(50px, 8vw, 100px);
     --container-width: 1400px;
     --container-padding: clamp(20px, 5vw, 60px);
 
@@ -64,19 +59,16 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px; /* Ensures anchor links don't overlap with fixed navbar */
     scrollbar-width: thin;
-    scrollbar-color: var(--text-muted) var(--bg-primary);
+    scrollbar-color: var(--accent-champagne) transparent;
 }
 
 body {
     font-family: var(--font-body);
-    font-weight: 300;
-    background-color: var(--bg-primary);
-    background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
     color: var(--text-secondary);
-    line-height: 1.85;
+    background: var(--bg-gradient);
+    line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Noise Texture Overlay & Cinematic Vignette */
@@ -332,21 +324,32 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     display: none;
     flex-direction: column;
     gap: 6px;
-    padding: 10px;
+    padding: 12px;
     z-index: 1100;
+    border-radius: 50%;
+    transition: background 0.4s var(--ease-out-expo), backdrop-filter 0.4s var(--ease-out-expo);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.nav-hamburger.open {
+    background: rgba(26, 22, 20, 0.05); /* Dark semi-transparent circle */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .hamburger-line {
-    width: 30px;
-    height: 1px;
+    width: 26px;
+    height: 1.5px;
     background: var(--text-primary);
     transition: all 0.4s var(--ease-out-expo);
     transform-origin: center;
 }
 
-.nav-hamburger.open .hamburger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open .hamburger-line:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
 .nav-hamburger.open .hamburger-line:nth-child(2) { opacity: 0; }
-.nav-hamburger.open .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-hamburger.open .hamburger-line:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
 .mobile-menu-overlay {
     position: fixed;
@@ -848,7 +851,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Matte Glassmorphism Card */
 .service-card {
     flex: 0 0 clamp(280px, 30vw, 380px);
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     background: var(--bg-card);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -1250,36 +1253,23 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     .hero-scroll-indicator { display: none; }
     .about-stats { gap: 32px; grid-template-columns: 1fr; }
     .services-carousel { 
-        display: flex; 
-        overflow-x: auto; 
-        scroll-snap-type: x mandatory; 
         gap: 16px; 
         padding-bottom: 20px; 
-        max-width: none; 
-        scrollbar-width: none; 
     }
-    .services-carousel::-webkit-scrollbar { display: none; }
     .service-card { 
-        flex: 0 0 85vw; 
+        flex: 0 0 clamp(260px, 75vw, 320px); 
         scroll-snap-align: center; 
     }
     .staff-card { 
-        width: 85vw; 
+        width: 75vw; 
     }
     .gallery-slider {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 0;
-        overflow-x: visible;
-        scroll-snap-type: none;
+        gap: 16px;
+        padding-bottom: 20px;
     }
     .gallery-item { 
-        width: 100%; 
-        aspect-ratio: auto;
-    }
-    .gallery-item:nth-child(even) {
-        transform: translateY(24px);
+        width: clamp(260px, 75vw, 320px); 
+        aspect-ratio: 4/5;
     }
     .ba-slider-container { aspect-ratio: 4/3; }
     .footer-grid { gap: 60px; grid-template-columns: 1fr; }

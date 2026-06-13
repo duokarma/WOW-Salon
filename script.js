@@ -452,10 +452,23 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const carousels = servicesSection.querySelectorAll('.services-carousel');
+        let hintTimer;
+
         carousels.forEach(c => {
-            c.addEventListener('scroll', hideHint, { once: true });
-            c.addEventListener('mousedown', hideHint, { once: true });
-            c.addEventListener('touchstart', hideHint, { once: true });
+            c.addEventListener('scroll', () => {
+                hideHint();
+                clearTimeout(hintTimer);
+                
+                // Re-show if scrolled back to start
+                if (c.scrollLeft <= 10) {
+                    hintTimer = setTimeout(() => {
+                        swipeHint.classList.add('visible');
+                        setTimeout(hideHint, 3000);
+                    }, 800);
+                }
+            });
+            c.addEventListener('mousedown', hideHint);
+            c.addEventListener('touchstart', hideHint);
         });
     }
 
