@@ -251,11 +251,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .navbar.scrolled {
-    background: rgba(20, 20, 20, 0.35); /* iOS style dark translucency */
-    backdrop-filter: blur(14px); /* True visible blur */
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: none; 
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2); /* Subtle organic shadow */
+    background: rgba(253, 251, 247, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(17, 14, 12, 0.05);
+    box-shadow: 0 4px 30px rgba(17, 14, 12, 0.03);
 }
 
 .nav-container {
@@ -796,13 +796,59 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .tab-slider { position: absolute; bottom: -1px; left: 0; width: 50%; height: 2px; background: var(--text-primary); transition: transform var(--transition-base); }
 .tab-slider.right { transform: translateX(100%); }
 
+.swipe-hint-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -10px;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.6s var(--ease-out-expo);
+    pointer-events: none;
+    position: relative;
+    z-index: 10;
+}
+.swipe-hint-container.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.swipe-hint-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(253, 251, 247, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-light);
+    border-radius: 40px;
+    padding: 8px 16px;
+    box-shadow: 0 4px 15px rgba(17, 14, 12, 0.05);
+}
+.swipe-hint-text {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
 .service-panel { display: none; }
 .service-panel.active { display: block; animation: fadeUpSlow 0.8s var(--ease-out-expo); }
 
-.services-carousel { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
+.services-carousel { 
+    display: flex; 
+    overflow-x: auto; 
+    scroll-snap-type: x mandatory; 
+    gap: 24px; 
+    padding-bottom: 40px; 
+    scrollbar-width: none; 
+}
+.services-carousel::-webkit-scrollbar { display: none; }
 
 /* Matte Glassmorphism Card */
 .service-card {
+    flex: 0 0 clamp(280px, 30vw, 380px);
+    scroll-snap-align: start;
     background: var(--bg-card);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);

@@ -159,22 +159,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ─── Gallery Scroll Controls ──────────────────
+    // ─── Generic Horizontal Drag Scroll ───────────
+    const makeDraggable = (slider) => {
+        if (!slider) return;
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+            slider.style.cursor = 'grabbing';
+            slider.style.scrollSnapType = 'none'; // disable snap while dragging
+        });
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = '';
+            slider.style.scrollSnapType = ''; 
+        });
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = '';
+            slider.style.scrollSnapType = ''; 
+        });
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    };
+
+    // Apply drag to scroll to carousels
     const gallerySlider = document.getElementById('gallerySlider');
-    const galleryPrev = document.getElementById('galleryPrev');
-    const galleryNext = document.getElementById('galleryNext');
+    makeDraggable(gallerySlider);
 
-    if (gallerySlider && galleryPrev && galleryNext) {
-        const galleryScrollAmount = 340;
+    const servicesCarousels = document.querySelectorAll('.services-carousel');
+    servicesCarousels.forEach(carousel => makeDraggable(carousel));
 
-        galleryPrev.addEventListener('click', () => {
-            gallerySlider.scrollBy({ left: -galleryScrollAmount, behavior: 'smooth' });
-        });
-
-        galleryNext.addEventListener('click', () => {
-            gallerySlider.scrollBy({ left: galleryScrollAmount, behavior: 'smooth' });
-        });
-    }
 
     // ─── Gallery Lightbox ─────────────────────────
     const galleryItems = document.querySelectorAll('.gallery-item');
@@ -399,5 +423,40 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // ─── Swipe Hint Micro-interaction ─────────────
+    const swipeHint = document.getElementById('swipeHint');
+    const servicesSection = document.getElementById('services');
+    let swipeHintShown = false;
+
+    if (swipeHint && servicesSection) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !swipeHintShown) {
+                swipeHintShown = true;
+                setTimeout(() => {
+                    swipeHint.classList.add('visible');
+                    
+                    setTimeout(() => {
+                        swipeHint.classList.remove('visible');
+                    }, 4000);
+                }, 500);
+            }
+        }, { threshold: 0.3 });
+        
+        observer.observe(servicesSection);
+
+        const hideHint = () => {
+            if (swipeHint.classList.contains('visible')) {
+                swipeHint.classList.remove('visible');
+            }
+        };
+
+        const carousels = servicesSection.querySelectorAll('.services-carousel');
+        carousels.forEach(c => {
+            c.addEventListener('scroll', hideHint, { once: true });
+            c.addEventListener('mousedown', hideHint, { once: true });
+            c.addEventListener('touchstart', hideHint, { once: true });
+        });
+    }
 
 });
