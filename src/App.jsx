@@ -7,7 +7,10 @@ import { MagnetLines } from './components/ui/magnet-lines';
 import Hero from './components/Hero';
 import './app.css';
 
+const getAsset = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+
 /* ─── Scroll-reveal wrapper ─── */
+
 const Reveal = ({ children, className = '', delay = 0, direction = 'up' }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
@@ -64,7 +67,7 @@ const About = () => (
       <div className="about-grid">
         <Reveal direction="left" className="about-image-col">
           <div className="about-image-frame">
-            <img src="/about_salon.jpeg" alt="WOW Salon luxury interior" loading="lazy" />
+            <img src={getAsset("/about_salon.jpeg")} alt="WOW Salon luxury interior" loading="lazy" />
             <div className="image-chrome-border" />
           </div>
           <div className="about-experience-badge">
@@ -97,18 +100,18 @@ const About = () => (
 /*  SERVICES                                       */
 /* ═══════════════════════════════════════════════ */
 const menServices = [
-  { img: '/service_men_1.jpg', title: 'Premium Haircut', desc: 'Precision cuts tailored to your face shape and style preferences.' },
-  { img: '/service_men_2.jpg', title: 'Beard Sculpting', desc: 'Expert beard shaping, trimming, and hot towel treatments.' },
-  { img: '/service_men_3.jpg', title: 'Hair Color', desc: 'Premium coloring with global brands for natural and bold looks.' },
-  { img: '/service_men_1.jpg', title: 'Hair Spa & Treatment', desc: 'Deep conditioning and scalp therapy for healthy, revitalized hair.' },
-  { img: '/service_men_2.jpg', title: 'Premium Facial', desc: 'Luxury facial treatments using imported skincare products.' },
+  { img: getAsset('/service_men_1.jpg'), title: 'Premium Haircut', desc: 'Precision cuts tailored to your face shape and style preferences.' },
+  { img: getAsset('/service_men_2.jpg'), title: 'Beard Sculpting', desc: 'Expert beard shaping, trimming, and hot towel treatments.' },
+  { img: getAsset('/service_men_3.jpg'), title: 'Hair Color', desc: 'Premium coloring with global brands for natural and bold looks.' },
+  { img: getAsset('/service_men_1.jpg'), title: 'Hair Spa & Treatment', desc: 'Deep conditioning and scalp therapy for healthy, revitalized hair.' },
+  { img: getAsset('/service_men_2.jpg'), title: 'Premium Facial', desc: 'Luxury facial treatments using imported skincare products.' },
 ];
 const womenServices = [
-  { img: '/service_women_1.jpg', title: 'Hair Styling', desc: 'Expert styling for every occasion, from casual to red carpet.' },
-  { img: '/service_women_2.jpg', title: 'Bridal Makeup', desc: 'Complete bridal packages with HD makeup and hairstyling.' },
-  { img: '/service_women_3.jpg', title: 'Color & Highlights', desc: 'Balayage, highlights, global color — premium products only.' },
-  { img: '/service_women_1.jpg', title: 'Keratin & Smoothening', desc: 'Professional keratin treatments for silky, frizz-free hair.' },
-  { img: '/service_women_2.jpg', title: 'Skin Treatments', desc: 'Advanced facials, peels, and rejuvenation therapies.' },
+  { img: getAsset('/service_women_1.jpg'), title: 'Hair Styling', desc: 'Expert styling for every occasion, from casual to red carpet.' },
+  { img: getAsset('/service_women_2.jpg'), title: 'Bridal Makeup', desc: 'Complete bridal packages with HD makeup and hairstyling.' },
+  { img: getAsset('/service_women_3.jpg'), title: 'Color & Highlights', desc: 'Balayage, highlights, global color — premium products only.' },
+  { img: getAsset('/service_women_1.jpg'), title: 'Keratin & Smoothening', desc: 'Professional keratin treatments for silky, frizz-free hair.' },
+  { img: getAsset('/service_women_2.jpg'), title: 'Skin Treatments', desc: 'Advanced facials, peels, and rejuvenation therapies.' },
 ];
 
 const Services = () => {
@@ -164,15 +167,15 @@ const Services = () => {
 /*  STAFF                                          */
 /* ═══════════════════════════════════════════════ */
 const staffData = [
-  { img: '/male_staff_1.jpg', name: 'Arjun Patel', role: 'Master Stylist' },
-  { img: '/male_staff_2.jpg', name: 'Vikram Shah', role: 'Senior Barber' },
-  { img: '/male_staff_3.jpg', name: 'Rohan Mehta', role: 'Color Specialist' },
-  { img: '/male_staff_4.jpg', name: 'Karan Desai', role: 'Creative Director' },
-  { img: '/male_staff_5.jpg', name: 'Dev Sharma', role: 'Junior Stylist' },
-  { img: '/female_staff_1.jpg', name: 'Priya Kapoor', role: 'Senior Stylist' },
-  { img: '/female_staff_2.jpg', name: 'Neha Verma', role: 'Makeup Artist' },
-  { img: '/female_staff_3.jpg', name: 'Ananya Joshi', role: 'Color Expert' },
-  { img: '/female_staff_4.jpg', name: 'Riya Singh', role: 'Bridal Specialist' },
+  { img: getAsset('/male_staff_1.jpg'), name: 'Arjun Patel', role: 'Master Stylist' },
+  { img: getAsset('/male_staff_2.jpg'), name: 'Vikram Shah', role: 'Senior Barber' },
+  { img: getAsset('/male_staff_3.jpg'), name: 'Rohan Mehta', role: 'Color Specialist' },
+  { img: getAsset('/male_staff_4.jpg'), name: 'Karan Desai', role: 'Creative Director' },
+  { img: getAsset('/male_staff_5.jpg'), name: 'Dev Sharma', role: 'Junior Stylist' },
+  { img: getAsset('/female_staff_1.jpg'), name: 'Priya Kapoor', role: 'Senior Stylist' },
+  { img: getAsset('/female_staff_2.jpg'), name: 'Neha Verma', role: 'Makeup Artist' },
+  { img: getAsset('/female_staff_3.jpg'), name: 'Ananya Joshi', role: 'Color Expert' },
+  { img: getAsset('/female_staff_4.jpg'), name: 'Riya Singh', role: 'Bridal Specialist' },
 ];
 
 const Staff = () => {
@@ -218,12 +221,12 @@ const Staff = () => {
 /*  GALLERY (Sticky Stack)                         */
 /* ═══════════════════════════════════════════════ */
 const galleryItems = [
-  { caption: 'Premium Styling', img: '/gallery_1.jpeg' },
-  { caption: 'Expert Cuts', img: '/gallery_2.jpeg' },
-  { caption: "Men's Grooming", img: '/gallery_3.jpeg' },
-  { caption: 'Color Transformation', img: '/gallery_4.jpeg' },
-  { caption: 'Bridal Beauty', img: '/gallery_5.jpeg' },
-  { caption: 'Modern Styles', img: '/gallery_6.jpeg' },
+  { caption: 'Premium Styling', img: getAsset('/gallery_1.jpeg') },
+  { caption: 'Expert Cuts', img: getAsset('/gallery_2.jpeg') },
+  { caption: "Men's Grooming", img: getAsset('/gallery_3.jpeg') },
+  { caption: 'Color Transformation', img: getAsset('/gallery_4.jpeg') },
+  { caption: 'Bridal Beauty', img: getAsset('/gallery_5.jpeg') },
+  { caption: 'Modern Styles', img: getAsset('/gallery_6.jpeg') },
 ];
 
 const StickyCard_001 = ({ i, caption, img, progress, range, targetScale }) => {
@@ -347,10 +350,10 @@ const BeforeAfter = () => (
       </Reveal>
       <div className="ba-grid">
         <Reveal delay={0.1} className="ba-comparison">
-          <BeforeAfterSlider beforeImg="/before_after_1.jpg" afterImg="/before_after_1.jpg" />
+          <BeforeAfterSlider beforeImg={getAsset("/before_after_1.jpg")} afterImg={getAsset("/before_after_1.jpg")} />
         </Reveal>
         <Reveal delay={0.2} className="ba-comparison">
-          <BeforeAfterSlider beforeImg="/before_after_2.jpg" afterImg="/before_after_2.jpg" />
+          <BeforeAfterSlider beforeImg={getAsset("/before_after_2.jpg")} afterImg={getAsset("/before_after_2.jpg")} />
         </Reveal>
       </div>
     </div>
@@ -493,7 +496,7 @@ const Footer = () => (
       <div className="footer-grid">
         <div className="footer-brand">
           <a href="#home" className="footer-logo">
-            <img src="/logo.png" alt="WOW Salon Logo" className="brand-logo" />
+            <img src={getAsset("/logo.png")} alt="WOW Salon Logo" className="brand-logo" />
           </a>
           <p className="footer-desc">Where style meets the future. Experience premium luxury grooming in a cinematic atmosphere.</p>
           <div className="footer-social">
@@ -586,7 +589,7 @@ const Navbar = () => {
       <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
         <div className="nav-container">
           <a href="#home" className="nav-logo">
-            <img src="/logo.png" alt="WOW Salon Logo" className="brand-logo" />
+            <img src={getAsset("/logo.png")} alt="WOW Salon Logo" className="brand-logo" />
           </a>
           <ul className="nav-menu">
             {links.map(l => (
@@ -612,7 +615,7 @@ const Navbar = () => {
           >
             <div className="mobile-overlay-top">
               <a href="#home" className="nav-logo" onClick={() => setMobileOpen(false)}>
-                <img src="/logo.png" alt="WOW Salon Logo" className="brand-logo" />
+                <img src={getAsset("/logo.png")} alt="WOW Salon Logo" className="brand-logo" />
               </a>
               <button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label="Close menu">
                 <X size={24} />
