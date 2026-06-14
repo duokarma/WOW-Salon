@@ -43,7 +43,7 @@ const Hero = () => {
                 animate="visible"
                 className="text-right"
               >
-                <div className="font-semibold" style={{ fontSize: 'clamp(1.5rem, 5vw, 3.5rem)' }}>
+                <div className="font-semibold font-display" style={{ fontSize: 'clamp(1.5rem, 5vw, 3.5rem)' }}>
                   <span className="text-white text-[0.5em] align-top mr-0.5">+</span>
                   {stat.num}
                 </div>
@@ -95,7 +95,7 @@ const Hero = () => {
               </p>
             </motion.div>
 
-            <div className="text-right font-semibold flex flex-col items-end" style={{ fontSize: 'clamp(2rem, 9vw, 9rem)', lineHeight: 0.88 }}>
+            <div className="text-right font-semibold flex flex-col items-end font-display" style={{ fontSize: 'clamp(2rem, 9vw, 9rem)', lineHeight: 0.88 }}>
               {['LUXURY', 'BEAUTY', 'DELIVERED'].map((word, i) => (
                 <div key={word} className="overflow-hidden">
                   <motion.div custom={i} variants={slideUp} initial="hidden" animate="visible">

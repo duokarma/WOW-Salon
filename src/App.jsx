@@ -7,6 +7,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
 import Staff from './components/Staff';
+import Gallery from './components/Gallery';
 import BeforeAfter from './components/BeforeAfter';
 import Reviews from './components/Reviews';
 import Location from './components/Location';
@@ -26,7 +27,7 @@ function App() {
         {loading && <Loader onFinish={() => setLoading(false)} />}
       </AnimatePresence>
 
-      {!loading && (
+      <div style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.8s ease-in-out' }}>
         <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
           <SceneManager />
           <ScrollProgress />
@@ -47,11 +48,7 @@ function App() {
             <About />
             <Services />
             <Staff />
-            {/* 
-              Transparent spacer section gives the native scrollbar room to breathe 
-              while the user interacts with the 3D GalleryCylinder underneath 
-            */}
-            <div id="gallery" className="h-[120vh] w-full pointer-events-none" />
+            <Gallery />
             <BeforeAfter />
             <Reviews />
             <Location />
@@ -59,7 +56,7 @@ function App() {
             <Footer />
           </SilkAurora>
         </ReactLenis>
-      )}
+      </div>
     </>
   );
 }
