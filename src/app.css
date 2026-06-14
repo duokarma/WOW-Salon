@@ -905,24 +905,41 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ═══════════════════════════════════════════════ */
 /*  REVIEWS                                        */
 /* ═══════════════════════════════════════════════ */
-.reviews-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+.reviews-carousel-area {
+  position: relative;
+  margin-top: 8px;
 }
-@media (min-width: 640px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.reviews-slider {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 20px 24px;
+  scrollbar-width: none;
+}
+.reviews-slider::-webkit-scrollbar { display: none; }
+@media (min-width: 640px) { .reviews-slider { padding: 8px 32px 24px; } }
+@media (min-width: 1024px) { .reviews-slider { padding: 8px 48px 24px; } }
 
 .review-card {
+  flex: 0 0 300px;
+  scroll-snap-align: start;
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-lg);
-  padding: 28px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  padding: 32px 28px;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
 }
+@media (min-width: 768px) { .review-card { flex: 0 0 360px; } }
+
 .review-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(180, 180, 195, 0.15);
+  transform: translateY(-6px);
+  border-color: rgba(180, 180, 195, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
 }
 
 .review-stars {
@@ -1123,10 +1140,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .footer-logo .brand-logo { height: 36px; }
 
 .footer-desc {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 360px;
+  font-size: 1rem;
+  color: var(--color-smoke);
+  line-height: 1.7;
+  max-width: 400px;
+  font-weight: 400;
 }
 
 .footer-social {
@@ -1153,24 +1171,33 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .footer-heading {
   font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--text-primary);
-  margin-bottom: 16px;
+  color: var(--color-paper-white);
+  margin-bottom: 24px;
 }
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 }
 .footer-links a {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  transition: color 0.25s;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-smoke);
+  letter-spacing: 0.05em;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  display: inline-block;
+  width: max-content;
 }
-.footer-links a:hover { color: var(--accent-primary); }
+.footer-links a:hover { 
+  color: var(--color-paper-white); 
+  transform: translateX(8px);
+}
 
 .footer-bottom {
   border-top: 1px solid var(--border-subtle);

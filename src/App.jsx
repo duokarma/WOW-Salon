@@ -372,36 +372,49 @@ const reviewsData = [
   { text: "First time visiting and I'm already a regular! The premium experience is worth every penny. Clean, hygienic, and the results speak for themselves.", author: 'Dhruv R.', date: '5 days ago', stars: 5 },
 ];
 
-const Reviews = () => (
-  <section className="section section-light" id="reviews">
-    <div className="container">
-      <Reveal className="section-header">
-        <span className="section-label">Testimonials</span>
-        <h2 className="section-title">Client <span className="text-gradient">Reviews</span></h2>
-        <p className="section-desc">What our valued clients say about us</p>
-      </Reveal>
-      <div className="reviews-grid">
-        {reviewsData.map((r, i) => (
-          <Reveal key={i} delay={i * 0.08} className="review-card">
-            <div className="review-stars">
-              {[...Array(5)].map((_, j) => (
-                <Star key={j} size={16} fill={j < Math.floor(r.stars) ? '#d4a853' : 'none'} stroke="#d4a853" />
-              ))}
-            </div>
-            <p className="review-text">"{r.text}"</p>
-            <div className="review-author">
-              <div className="author-avatar">{r.author[0]}</div>
-              <div className="author-info">
-                <span className="author-name">{r.author}</span>
-                <span className="author-date">{r.date}</span>
-              </div>
-            </div>
-          </Reveal>
-        ))}
+const Reviews = () => {
+  const sliderRef = useRef(null);
+  const scroll = (dir) => {
+    if (!sliderRef.current) return;
+    const amount = sliderRef.current.offsetWidth * 0.75;
+    sliderRef.current.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' });
+  };
+
+  return (
+    <section className="section section-light" id="reviews">
+      <div className="container">
+        <Reveal className="section-header">
+          <span className="section-label">Testimonials</span>
+          <h2 className="section-title">Client <span className="text-gradient">Reviews</span></h2>
+          <p className="section-desc">What our valued clients say about us</p>
+        </Reveal>
       </div>
-    </div>
-  </section>
-);
+      <div className="reviews-carousel-area">
+        <button className="carousel-nav carousel-prev" onClick={() => scroll('left')} aria-label="Previous"><ChevronLeft size={20} /></button>
+        <div className="reviews-slider" ref={sliderRef}>
+          {reviewsData.map((r, i) => (
+            <Reveal key={i} delay={i * 0.08} className="review-card">
+              <div className="review-stars">
+                {[...Array(5)].map((_, j) => (
+                  <Star key={j} size={16} fill={j < Math.floor(r.stars) ? '#d4a853' : 'none'} stroke="#d4a853" />
+                ))}
+              </div>
+              <p className="review-text">"{r.text}"</p>
+              <div className="review-author" style={{ marginTop: 'auto' }}>
+                <div className="author-avatar">{r.author[0]}</div>
+                <div className="author-info">
+                  <span className="author-name">{r.author}</span>
+                  <span className="author-date">{r.date}</span>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <button className="carousel-nav carousel-next" onClick={() => scroll('right')} aria-label="Next"><ChevronRight size={20} /></button>
+      </div>
+    </section>
+  );
+};
 
 /* ═══════════════════════════════════════════════ */
 /*  LOCATION                                       */
