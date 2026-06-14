@@ -399,24 +399,38 @@ export function Hero({
       {...props}
     >
       <WebGLFallback className="absolute inset-0 h-full w-full" />
-      {(title || subtitle || description || children) && (
-        <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-20 md:px-10 md:py-28">
-          <div className="max-w-[760px]">
-            {subtitle && (
-              <p className="mb-5 text-xs font-medium uppercase tracking-[0.24em] text-white/50">
-                {subtitle}
-              </p>
-            )}
-            {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
-            {description && (
-              <p className="mt-7 max-w-[620px] text-base leading-relaxed text-white/68 md:text-xl">
-                {description}
-              </p>
-            )}
-            {children && <div className="mt-10">{children}</div>}
+        {(title || subtitle || description || children) && (
+          <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-24 md:px-10 md:py-32 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 pt-32 sm:pt-40">
+            {/* Left Content */}
+            <div className="w-full max-w-[660px] flex-shrink-0 z-20 text-center lg:text-left flex flex-col items-center lg:items-start">
+              {subtitle && (
+                <p className="mb-5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-white/50">
+                  {subtitle}
+                </p>
+              )}
+              {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
+              {description && (
+                <p className="mt-7 text-sm sm:text-base leading-relaxed text-white/68 md:text-xl mx-auto lg:mx-0 max-w-[540px]">
+                  {description}
+                </p>
+              )}
+              {children && <div className="mt-10">{children}</div>}
+            </div>
+
+            {/* Right Avatar Image */}
+            <div className="w-full lg:w-[480px] flex-shrink-0 flex justify-center lg:justify-end relative mt-8 lg:mt-0 z-20">
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full sm:rounded-[40px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-transform duration-700 hover:scale-[1.03] hover:rotate-1">
+                {/* Overlay gradient to match SilkAurora lighting */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#2A1E12]/40 to-transparent mix-blend-overlay z-10 pointer-events-none" />
+                <img 
+                  src="/ticketbro_avatar.png" 
+                  alt="Premium Haircut Avatar" 
+                  className="w-full h-full object-cover object-center relative z-0"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 
@@ -446,20 +460,34 @@ export function Hero({
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
 
         {(title || subtitle || description || children) && (
-          <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-20 md:px-10 md:py-28">
-            <div className="max-w-[760px]">
+          <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-24 md:px-10 md:py-32 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 pt-32 sm:pt-40">
+            {/* Left Content */}
+            <div className="w-full max-w-[660px] flex-shrink-0 z-20 text-center lg:text-left flex flex-col items-center lg:items-start">
               {subtitle && (
-                <p className="mb-5 text-xs font-medium uppercase tracking-[0.24em] text-white/50">
+                <p className="mb-5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-white/50">
                   {subtitle}
                 </p>
               )}
               {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
               {description && (
-                <p className="mt-7 max-w-[620px] text-base leading-relaxed text-white/68 md:text-xl">
+                <p className="mt-7 text-sm sm:text-base leading-relaxed text-white/68 md:text-xl mx-auto lg:mx-0 max-w-[540px]">
                   {description}
                 </p>
               )}
               {children && <div className="mt-10">{children}</div>}
+            </div>
+
+            {/* Right Avatar Image */}
+            <div className="w-full lg:w-[480px] flex-shrink-0 flex justify-center lg:justify-end relative mt-8 lg:mt-0 z-20">
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full sm:rounded-[40px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-transform duration-700 hover:scale-[1.03] hover:rotate-1">
+                {/* Overlay gradient to match SilkAurora lighting */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#2A1E12]/40 to-transparent mix-blend-overlay z-10 pointer-events-none" />
+                <img 
+                  src="/ticketbro_avatar.png" 
+                  alt="Premium Haircut Avatar" 
+                  className="w-full h-full object-cover object-center relative z-0"
+                />
+              </div>
             </div>
           </div>
         )}
