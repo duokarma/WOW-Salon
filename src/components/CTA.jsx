@@ -1,6 +1,9 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { ease } from '../lib/motion';
 import { MagnetLines } from './ui/magnet-lines';
+import MagneticButton from './ui/MagneticButton';
 
 const CTA = () => (
   <section className="section section-dark relative flex items-center justify-center min-h-[40vh] overflow-hidden" style={{ background: '#000000', padding: '8rem 0' }}>
@@ -15,12 +18,24 @@ const CTA = () => (
       />
     </div>
     <div className="relative z-10 flex flex-col items-center justify-center gap-8 text-center" style={{ pointerEvents: 'none' }}>
-      <h2 className="text-4xl md:text-5xl lg:text-7xl font-light tracking-[0.12em] text-white uppercase leading-[1.1]">
+      <motion.h2
+        className="text-4xl md:text-5xl lg:text-7xl font-light tracking-[0.12em] text-white uppercase leading-[1.1]"
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.8, ease }}
+      >
         READY TO TRANSFORM?
-      </h2>
-      <a href="https://wa.me/919924404860" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ pointerEvents: 'auto' }}>
+      </motion.h2>
+      <MagneticButton
+        href="https://wa.me/919924404860"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn-primary"
+        style={{ pointerEvents: 'auto' }}
+      >
         BOOK YOUR APPOINTMENT <ArrowUpRight size={20} className="inline-block ml-2" />
-      </a>
+      </MagneticButton>
     </div>
   </section>
 );

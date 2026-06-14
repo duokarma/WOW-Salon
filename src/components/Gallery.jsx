@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { getAsset } from '../lib/assets';
-import Reveal from './ui/Reveal';
+import SectionHeader from './ui/SectionHeader';
 
 const galleryItems = [
   { caption: 'Premium Styling', img: getAsset('/gallery_1.jpeg') },
@@ -44,11 +44,13 @@ const Gallery = () => {
   return (
     <section className="section section-light" id="gallery" style={{ paddingBottom: 0 }}>
       <div className="container relative z-10 mb-8">
-        <Reveal className="section-header" style={{ marginBottom: 0 }}>
-          <span className="section-label">Our Work</span>
-          <h2 className="section-title">Showcase <span className="text-gradient">Gallery</span></h2>
-          <p className="section-desc">Scroll down to see our curated portfolio</p>
-        </Reveal>
+        <SectionHeader
+          label="Our Work"
+          words={['Showcase', 'Gallery']}
+          highlightWord="Gallery"
+          description="Scroll down to see our curated portfolio"
+          style={{ marginBottom: 0 }}
+        />
       </div>
       <main
         ref={container}

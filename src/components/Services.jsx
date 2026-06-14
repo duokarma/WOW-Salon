@@ -1,6 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getAsset } from '../lib/assets';
+import { tabContent } from '../lib/motion';
+import SectionHeader from './ui/SectionHeader';
+import HoverCard from './ui/HoverCard';
+import CarouselNav from './ui/CarouselNav';
 import Reveal from './ui/Reveal';
 
 const menServices = [
@@ -19,10 +24,19 @@ const womenServices = [
   { img: getAsset('/service_women_2.jpg'), title: 'Skin Treatments', desc: 'Advanced facials, peels, and rejuvenation therapies.' },
 ];
 
+const TABS = [
+  { id: 'men', label: 'Men' },
+  { id: 'women', label: 'Women' },
+];
+
 const Services = () => {
   const [activeTab, setActiveTab] = useState('men');
   const carouselRef = useRef(null);
   const services = activeTab === 'men' ? menServices : womenServices;
+
+  useEffect(() => {
+    if (carouselRef.current) carouselRef.current.scrollLeft = 0;
+  }, [activeTab]);
 
   const scroll = (dir) => {
     if (!carouselRef.current) return;
@@ -33,35 +47,66 @@ const Services = () => {
   return (
     <section className="section section-light" id="services">
       <div className="container">
-        <Reveal className="section-header">
-          <span className="section-label">What We Offer</span>
-          <h2 className="section-title">Premium <span className="text-gradient">Services</span></h2>
-          <p className="section-desc">Premium services designed for both men and women</p>
-        </Reveal>
+        <SectionHeader
+          label="What We Offer"
+          words={['Premium', 'Services']}
+          highlightWord="Services"
+          description="Premium services designed for both men and women"
+        />
 
         <Reveal delay={0.1} className="service-tabs">
-          <button className={`tab-btn ${activeTab === 'men' ? 'active' : ''}`} onClick={() => setActiveTab('men')}>Men</button>
-          <button className={`tab-btn ${activeTab === 'women' ? 'active' : ''}`} onClick={() => setActiveTab('women')}>Women</button>
-          <div className="tab-slider" style={{ transform: activeTab === 'women' ? 'translateX(100%)' : 'translateX(0)' }} />
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {activeTab === tab.id && (
+                <motion.div
+                  layoutId="service-tab-pill"
+                  className="tab-slider"
+                  transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                />
+              )}
+              {tab.label}
+            </button>
+          ))}
         </Reveal>
 
         <div className="carousel-wrapper">
-          <button className="carousel-nav carousel-prev" onClick={() => scroll('left')} aria-label="Previous"><ChevronLeft size={20} /></button>
-          <div className="services-carousel" ref={carouselRef} key={activeTab}>
-            {services.map((s, i) => (
-              <Reveal key={`${activeTab}-${i}`} delay={i * 0.08} className="service-card">
-                <div className="card-image-wrapper">
-                  <img src={s.img} alt={s.title} loading="lazy" />
-                  <div className="card-glow" />
-                </div>
-                <div className="card-content">
-                  <h3 className="card-title">{s.title}</h3>
-                  <p className="card-desc">{s.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <button className="carousel-nav carousel-next" onClick={() => scroll('right')} aria-label="Next"><ChevronRight size={20} /></button>
+          <CarouselNav onClick={() => scroll('left')} ariaLabel="Previous" className="carousel-prev">
+            <ChevronLeft size={20} />
+          </CarouselNav>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              ref={carouselRef}
+              className="services-carousel"
+              variants={tabContent}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              {services.map((s, i) => (
+                <HoverCard key={`${activeTab}-${i}`} delay={i * 0.06} className="service-card">
+                  <div className="card-image-wrapper">
+                    <img src={s.img} alt={s.title} loading="lazy" />
+                    <div className="card-glow" />
+                  </div>
+                  <div className="card-content">
+                    <h3 className="card-title">{s.title}</h3>
+                    <p className="card-desc">{s.desc}</p>
+                  </div>
+                </HoverCard>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          <CarouselNav onClick={() => scroll('right')} ariaLabel="Next" className="carousel-next">
+            <ChevronRight size={20} />
+          </CarouselNav>
         </div>
       </div>
     </section>

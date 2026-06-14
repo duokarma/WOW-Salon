@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ReactLenis from 'lenis/react';
 import { SilkAurora } from './components/ui/silk-aurora';
+import ScrollProgress from './components/ui/ScrollProgress';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
@@ -27,6 +28,7 @@ function App() {
 
       {!loading && (
         <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+          <ScrollProgress />
           <Navbar />
           <SilkAurora
             baseColor="#000000"

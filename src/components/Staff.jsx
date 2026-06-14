@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getAsset } from '../lib/assets';
-import Reveal from './ui/Reveal';
+import SectionHeader from './ui/SectionHeader';
+import HoverCard from './ui/HoverCard';
+import CarouselNav from './ui/CarouselNav';
 
 const staffData = [
   { img: getAsset('/male_staff_1.jpg'), name: 'Arjun Patel', role: 'Master Stylist' },
@@ -26,17 +28,20 @@ const Staff = () => {
   return (
     <section className="section section-light" id="staff">
       <div className="container">
-        <Reveal className="section-header">
-          <span className="section-label">Meet the Experts</span>
-          <h2 className="section-title">Our <span className="text-gradient">Stylists</span></h2>
-          <p className="section-desc">Passionate artists dedicated to your transformation</p>
-        </Reveal>
+        <SectionHeader
+          label="Meet the Experts"
+          words={['Our', 'Stylists']}
+          highlightWord="Stylists"
+          description="Passionate artists dedicated to your transformation"
+        />
       </div>
       <div className="staff-carousel-area">
-        <button className="carousel-nav carousel-prev" onClick={() => scroll('left')} aria-label="Previous"><ChevronLeft size={20} /></button>
+        <CarouselNav onClick={() => scroll('left')} ariaLabel="Previous" className="carousel-prev">
+          <ChevronLeft size={20} />
+        </CarouselNav>
         <div className="staff-slider" ref={sliderRef}>
           {staffData.map((s, i) => (
-            <Reveal key={i} delay={i * 0.06} className="staff-card">
+            <HoverCard key={i} delay={i * 0.05} className="staff-card">
               <div className="staff-image-wrapper">
                 <img src={s.img} alt={s.name} loading="lazy" />
                 <div className="staff-image-overlay" />
@@ -45,10 +50,12 @@ const Staff = () => {
                 <span className="staff-role">{s.role}</span>
                 <h4 className="staff-name">{s.name}</h4>
               </div>
-            </Reveal>
+            </HoverCard>
           ))}
         </div>
-        <button className="carousel-nav carousel-next" onClick={() => scroll('right')} aria-label="Next"><ChevronRight size={20} /></button>
+        <CarouselNav onClick={() => scroll('right')} ariaLabel="Next" className="carousel-next">
+          <ChevronRight size={20} />
+        </CarouselNav>
       </div>
     </section>
   );

@@ -1,7 +1,10 @@
 import React, { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Reveal from './ui/Reveal';
+import SectionHeader from './ui/SectionHeader';
+import HoverCard from './ui/HoverCard';
 import StarRating from './ui/StarRating';
+import CarouselNav from './ui/CarouselNav';
+import Reveal from './ui/Reveal';
 
 const reviewsData = [
   { text: "Absolutely the best salon experience I've ever had! The attention to detail and the premium atmosphere is unmatched. My hair has never looked this good.", author: 'Rahul M.', date: '2 weeks ago', stars: 5 },
@@ -23,18 +26,21 @@ const Reviews = () => {
   return (
     <section className="section section-light" id="reviews">
       <div className="container">
-        <Reveal className="section-header">
-          <span className="section-label">Testimonials</span>
-          <h2 className="section-title">Client <span className="text-gradient">Reviews</span></h2>
-          <p className="section-desc">What our valued clients say about us</p>
-        </Reveal>
+        <SectionHeader
+          label="Testimonials"
+          words={['Client', 'Reviews']}
+          highlightWord="Reviews"
+          description="What our valued clients say about us"
+        />
       </div>
       <div className="reviews-carousel-area">
-        <button className="carousel-nav carousel-prev" onClick={() => scroll('left')} aria-label="Previous"><ChevronLeft size={20} /></button>
+        <CarouselNav onClick={() => scroll('left')} ariaLabel="Previous" className="carousel-prev">
+          <ChevronLeft size={20} />
+        </CarouselNav>
         <Reveal className="reviews-slider-wrapper">
           <div className="reviews-slider" ref={sliderRef}>
             {reviewsData.map((r, i) => (
-              <div key={i} className="review-card">
+              <HoverCard key={i} delay={i * 0.04} className="review-card">
                 <StarRating stars={r.stars} />
                 <p className="review-text">"{r.text}"</p>
                 <div className="review-author" style={{ marginTop: 'auto' }}>
@@ -44,11 +50,13 @@ const Reviews = () => {
                     <span className="author-date">{r.date}</span>
                   </div>
                 </div>
-              </div>
+              </HoverCard>
             ))}
           </div>
         </Reveal>
-        <button className="carousel-nav carousel-next" onClick={() => scroll('right')} aria-label="Next"><ChevronRight size={20} /></button>
+        <CarouselNav onClick={() => scroll('right')} ariaLabel="Next" className="carousel-next">
+          <ChevronRight size={20} />
+        </CarouselNav>
       </div>
     </section>
   );

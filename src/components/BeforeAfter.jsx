@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { getAsset } from '../lib/assets';
+import SectionHeader from './ui/SectionHeader';
 import Reveal from './ui/Reveal';
 
 const BeforeAfterSlider = ({ beforeImg, afterImg }) => {
@@ -37,13 +39,17 @@ const BeforeAfterSlider = ({ beforeImg, afterImg }) => {
         <img src={beforeImg} alt="Before" loading="lazy" />
         <span className="ba-label ba-label-before">Before</span>
       </div>
-      <div className="ba-handle" style={{ left: `${position}%` }}>
+      <motion.div className="ba-handle" style={{ left: `${position}%` }}>
         <div className="ba-handle-line" />
-        <div className="ba-handle-circle">
+        <motion.div
+          className="ba-handle-circle"
+          whileHover={{ scale: 1.12 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 8l4 4-4 4M6 8l-4 4 4 4" /></svg>
-        </div>
+        </motion.div>
         <div className="ba-handle-line" />
-      </div>
+      </motion.div>
     </div>
   );
 };
@@ -51,11 +57,12 @@ const BeforeAfterSlider = ({ beforeImg, afterImg }) => {
 const BeforeAfter = () => (
   <section className="section section-light" id="before-after">
     <div className="container">
-      <Reveal className="section-header">
-        <span className="section-label">Transformations</span>
-        <h2 className="section-title">Before & <span className="text-gradient">After</span></h2>
-        <p className="section-desc">Witness the magic of our transformations</p>
-      </Reveal>
+      <SectionHeader
+        label="Transformations"
+        words={['Before', '&', 'After']}
+        highlightWord="After"
+        description="Witness the magic of our transformations"
+      />
       <div className="ba-grid">
         <Reveal delay={0.1} className="ba-comparison">
           <BeforeAfterSlider beforeImg={getAsset('/before_after_1.jpg')} afterImg={getAsset('/before_after_2.jpg')} />
