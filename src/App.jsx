@@ -1,7 +1,7 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ReactLenis from 'lenis/react';
-import { SilkAurora } from './components/ui/silk-aurora';
+
 import ScrollProgress from './components/ui/ScrollProgress';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -34,20 +34,13 @@ function App() {
           </Suspense>
           <ScrollProgress />
           <Navbar />
-          <SilkAurora
-            baseColor="#000000"
-            midColor="#0a0a0f"
-            sheenColor="#2a1e12"
-            accentColor="#0c1f13"
-            grain={0.9}
-            speed={0.5}
-            intensity={0.6}
-            className="w-full flex flex-col"
-          >
-            <div id="home">
-              <Hero />
-            </div>
-          </SilkAurora>
+          <div id="home">
+            <Hero
+              title="LUXURY BEAUTY DELIVERED"
+              subtitle="Premium Salon Experience"
+              description="Premium salon built around elevating your look into striking reality. Join our 1500+ happy clients and enjoy over 50+ premium services."
+            />
+          </div>
           <About />
           <Services />
           <Staff />
