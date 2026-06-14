@@ -120,7 +120,7 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-[200] bg-[#2A1E12] text-[#F9F6F0] flex flex-col"
+            className="fixed inset-0 z-[200] bg-[#050507]/60 backdrop-blur-2xl text-[#F9F6F0] flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -130,7 +130,7 @@ const Navbar = () => {
               <img src={getAsset('/logo.webp')} alt="WOW Salon" className="h-8 filter invert opacity-90" />
               <button 
                 onClick={() => setMobileOpen(false)}
-                className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+                className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
               >
                 <X size={24} color="#F4DFB8" strokeWidth={1.5} />
               </button>
@@ -141,15 +141,15 @@ const Navbar = () => {
                 <motion.a
                   key={l.label}
                   href={l.href}
-                  className="text-4xl sm:text-5xl font-light tracking-wide hover:text-[#F4DFB8] transition-colors"
+                  className="text-4xl sm:text-5xl font-display tracking-wide hover:text-[#F4DFB8] transition-colors"
                   onClick={() => {
                     setActiveTab(l.label);
                     setTimeout(() => setMobileOpen(false), 300);
                   }}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ delay: 0.1 + i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+                  transition={{ delay: 0.1 + i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {l.label}
                 </motion.a>

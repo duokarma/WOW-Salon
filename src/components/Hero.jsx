@@ -9,6 +9,7 @@ import {
 import { getAsset } from '../lib/assets';
 import { TextEffect } from './core/text-effect';
 import { SceneManager } from '../three/SceneManager';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const VERTEX_SHADER = `
 attribute vec2 position;
@@ -164,6 +165,32 @@ export function Hero({
   const mouseRef = React.useRef({ x: 0.5, y: 0.5 });
   const targetMouseRef = React.useRef({ x: 0.5, y: 0.5 });
   const [hasWebGLError, setHasWebGLError] = React.useState(false);
+  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 150]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.4,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
 
   const settings = React.useMemo(
     () => ({
@@ -215,6 +242,10 @@ export function Hero({
         x: (event.clientX - rect.left) / rect.width,
         y: 1 - (event.clientY - rect.top) / rect.height,
       };
+      setMousePosition({
+        x: (event.clientX / window.innerWidth - 0.5) * 20,
+        y: (event.clientY / window.innerHeight - 0.5) * 20,
+      });
     };
 
     const handlePointerLeave = () => {
@@ -460,27 +491,39 @@ export function Hero({
         </div>
 
         {(title || subtitle || description || children) && (
-          <div className="relative z-10 mx-auto w-full max-w-[1000px] px-6 py-24 md:px-10 md:py-32 flex flex-col items-center justify-center pt-32 sm:pt-40 text-center">
+          <motion.div 
+            className="relative z-10 mx-auto w-full max-w-[1000px] px-6 py-24 md:px-10 md:py-32 flex flex-col items-center justify-center pt-32 sm:pt-40 text-center"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            style={{ 
+              y, 
+              opacity,
+              x: mousePosition.x * -0.5,
+              rotateX: mousePosition.y * 0.1,
+              rotateY: mousePosition.x * 0.1,
+            }}
+          >
             {subtitle && (
-              <div className="mb-6 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-[#F4DFB8]/80">
-                <TextEffect per='char' preset='fade'>{subtitle}</TextEffect>
-              </div>
+              <motion.div variants={itemVariants} className="mb-6 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-[#F4DFB8]/80">
+                {subtitle}
+              </motion.div>
             )}
             
-            {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
+            {title && <motion.h1 variants={itemVariants} className={HEADLINE_CLASS} dangerouslySetInnerHTML={{ __html: title.replace(' ', '<br class="hidden sm:block"/>') }} />}
             
-            <p className="mt-8 text-base sm:text-lg lg:text-xl font-light text-[#E6D5B8] uppercase tracking-[0.1em] mb-4">
+            <motion.p variants={itemVariants} className="mt-8 text-base sm:text-lg lg:text-xl font-light text-[#E6D5B8] uppercase tracking-[0.1em] mb-4">
               Elevating your aesthetic. Where artistry meets elegance.
-            </p>
+            </motion.p>
             
             {description && (
-              <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/68 md:text-lg max-w-[640px]">
+              <motion.p variants={itemVariants} className="mt-2 text-sm sm:text-base leading-relaxed text-white/68 md:text-lg max-w-[640px]">
                 {description}
-              </p>
+              </motion.p>
             )}
             
-            {children && <div className="mt-12 flex justify-center">{children}</div>}
-          </div>
+            {children && <motion.div variants={itemVariants} className="mt-12 flex justify-center">{children}</motion.div>}
+          </motion.div>
         )}
       </div>
     </WebGLErrorBoundary>
