@@ -6,7 +6,7 @@ import { MagnetLines } from './ui/magnet-lines';
 import MagneticButton from './ui/MagneticButton';
 
 const CTA = () => (
-  <section className="section section-dark relative flex items-center justify-center min-h-[40vh] overflow-hidden" style={{ background: '#000000', padding: '8rem 0' }}>
+  <section id="cta" className="section section-dark relative flex items-center justify-center min-h-[40vh] overflow-hidden" style={{ background: '#000000' }}>
     <div className="absolute inset-0 z-0 flex items-center justify-center opacity-80 pointer-events-none">
       <MagnetLines
         rows={12}
@@ -19,7 +19,8 @@ const CTA = () => (
     </div>
     <div className="relative z-10 flex flex-col items-center justify-center gap-8 text-center" style={{ pointerEvents: 'none' }}>
       <motion.h2
-        className="text-4xl md:text-5xl lg:text-7xl font-light tracking-[0.12em] text-white uppercase leading-[1.1]"
+        className="font-light tracking-[0.12em] text-white uppercase leading-[1.1]"
+        style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}

@@ -1,0 +1,64 @@
+import { Environment } from '@react-three/drei'
+
+export function LightingRig() {
+  return (
+    <>
+      {/* 
+        1. HDR Environment:
+        Essential for rendering realistic glass, chrome, and liquid metal.
+        The 'studio' preset provides highly contrasted softbox reflections 
+        that trace beautifully across curved reflective surfaces.
+      */}
+      <Environment preset="studio" />
+
+      {/* 
+        2. Key Light:
+        The primary source of illumination. Positioned high and to the right.
+        Uses a very subtle warm champagne tint (#fff1e6) for a flattering, 
+        premium salon look. Casts the primary shadows.
+      */}
+      <directionalLight
+        position={[5, 8, 5]}
+        intensity={2.5}
+        color="#fff1e6"
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-bias={-0.0001}
+      />
+
+      {/* 
+        3. Rim Light (Backlight):
+        Positioned behind the subjects. This is the secret to cinematic 3D.
+        It catches the edges of the geometry, creating a luminous halo that 
+        separates objects from the background and dramatically highlights 
+        the refraction of the glass and the edges of the chrome.
+      */}
+      <spotLight
+        position={[-5, 5, -8]}
+        intensity={4}
+        color="#ffffff"
+        angle={0.6}
+        penumbra={1}
+      />
+
+      {/* 
+        4. Fill Light:
+        Positioned opposite the Key Light. It uses a very subtle cool/lavender 
+        tint (#e6e6fa) to lift harsh shadows. The warm key vs. cool fill 
+        creates a rich, cinematic color contrast on the surfaces.
+      */}
+      <directionalLight
+        position={[-8, 3, 5]}
+        intensity={1.2}
+        color="#e6e6fa"
+      />
+
+      {/* 
+        5. Ambient Base:
+        Just a whisper of global illumination to ensure no shadow is ever 100% pitch black.
+      */}
+      <ambientLight intensity={0.2} color="#ffffff" />
+    </>
+  )
+}
