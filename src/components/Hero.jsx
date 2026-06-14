@@ -6,6 +6,8 @@ import {
   WebGLErrorBoundary,
   WebGLFallback,
 } from "./ui/webgl-error-boundary";
+import { getAsset } from '../lib/assets';
+import { TextEffect } from './core/text-effect';
 
 const VERTEX_SHADER = `
 attribute vec2 position;
@@ -404,9 +406,9 @@ export function Hero({
             {/* Left Content */}
             <div className="w-full max-w-[660px] flex-shrink-0 z-20 text-center lg:text-left flex flex-col items-center lg:items-start">
               {subtitle && (
-                <p className="mb-5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-white/50">
-                  {subtitle}
-                </p>
+                <div className="mb-5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-white/50">
+                  <TextEffect per='char' preset='fade'>{subtitle}</TextEffect>
+                </div>
               )}
               {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
               {description && (
@@ -423,7 +425,7 @@ export function Hero({
                 {/* Overlay gradient to match SilkAurora lighting */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#2A1E12]/40 to-transparent mix-blend-overlay z-10 pointer-events-none" />
                 <img 
-                  src="/ticketbro_avatar.png" 
+                  src={getAsset('/ticketbro_avatar.png')}
                   alt="Premium Haircut Avatar" 
                   className="w-full h-full object-cover object-center relative z-0"
                 />
@@ -464,9 +466,9 @@ export function Hero({
             {/* Left Content */}
             <div className="w-full max-w-[660px] flex-shrink-0 z-20 text-center lg:text-left flex flex-col items-center lg:items-start">
               {subtitle && (
-                <p className="mb-5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-white/50">
-                  {subtitle}
-                </p>
+                <div className="mb-5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-white/50">
+                  <TextEffect per='char' preset='fade'>{subtitle}</TextEffect>
+                </div>
               )}
               {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
               {description && (
@@ -483,7 +485,7 @@ export function Hero({
                 {/* Overlay gradient to match SilkAurora lighting */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#2A1E12]/40 to-transparent mix-blend-overlay z-10 pointer-events-none" />
                 <img 
-                  src="/ticketbro_avatar.png" 
+                  src={getAsset('/ticketbro_avatar.png')} 
                   alt="Premium Haircut Avatar" 
                   className="w-full h-full object-cover object-center relative z-0"
                 />

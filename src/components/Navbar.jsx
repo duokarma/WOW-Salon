@@ -43,13 +43,13 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-[100] flex justify-center px-4 pt-4 sm:pt-6 w-full pointer-events-none"
+        className="fixed top-0 inset-x-0 z-[100] flex justify-center pt-4 sm:pt-6 pointer-events-none px-4"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.div
-          className={`pointer-events-auto flex items-center justify-between w-full max-w-5xl rounded-full px-4 sm:px-6 py-2.5 sm:py-3 transition-all duration-500 ${
+          className={`pointer-events-auto flex items-center justify-between w-full max-w-[1200px] rounded-full px-4 sm:px-6 py-2.5 sm:py-3 transition-all duration-500 ${
             scrolled 
               ? 'bg-[#F9F6F0]/90 backdrop-blur-xl border border-[#2A1E12]/10 shadow-[0_8px_32px_rgba(42,30,18,0.08)] scale-[0.98]' 
               : 'bg-[#2A1E12]/25 backdrop-blur-md border border-[#F4DFB8]/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] scale-100'
@@ -95,7 +95,7 @@ const Navbar = () => {
           {/* Right CTA / Hamburger */}
           <div className="flex items-center space-x-3 z-10">
             <a 
-              href="#contact"
+              href="#cta"
               className={`hidden md:flex items-center px-7 py-2.5 rounded-full text-[0.8rem] font-semibold tracking-wider uppercase transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] ${
                 scrolled 
                   ? 'bg-[#2A1E12] text-[#F4DFB8] shadow-md hover:shadow-lg' 
@@ -137,7 +137,7 @@ const Navbar = () => {
             </div>
             
             <div className="flex-1 flex flex-col justify-center px-8 py-8 space-y-6">
-              {links.concat([{ label: 'Contact', href: '#contact' }]).map((l, i) => (
+              {links.concat([{ label: 'Contact', href: '#cta' }]).map((l, i) => (
                 <motion.a
                   key={l.label}
                   href={l.href}

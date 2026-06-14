@@ -359,10 +359,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /*  SECTION SHARED                                 */
 /* ═══════════════════════════════════════════════ */
 .section {
-  padding: 80px 0;
+  padding: 40px 0;
   position: relative;
 }
-@media (min-width: 768px) { .section { padding: 120px 0; } }
+@media (min-width: 768px) { .section { padding: 60px 0; } }
 
 .section-header {
   text-align: center;
@@ -521,10 +521,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ═══════════════════════════════════════════════ */
 .service-tabs {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   position: relative;
   background: var(--bg-card);
   border-radius: 100px;
   padding: 4px;
+  max-width: 100%;
   width: max-content;
   margin: 0 auto 40px;
   border: 1px solid var(--border-card);
@@ -642,7 +645,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .carousel-next { right: 8px; }
 
 @media (max-width: 639px) {
-  .carousel-nav { display: none; }
+  .carousel-nav { 
+    display: flex; 
+    transform: translateY(-50%) scale(0.8);
+    background: rgba(10, 10, 15, 0.95);
+  }
 }
 
 /* ═══════════════════════════════════════════════ */

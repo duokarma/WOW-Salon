@@ -32,7 +32,7 @@ const CTA = () => (
         href="https://wa.me/919924404860"
         target="_blank"
         rel="noopener noreferrer"
-        className="btn-primary"
+        className="bg-[#F4DFB8] text-[#2A1E12] px-8 py-4 rounded-full text-sm font-semibold uppercase tracking-wider shadow-lg hover:bg-[#E6D5B8] transition-colors"
         style={{ pointerEvents: 'auto' }}
       >
         BOOK YOUR APPOINTMENT <ArrowUpRight size={20} className="inline-block ml-2" />

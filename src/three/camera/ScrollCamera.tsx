@@ -5,6 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import * as THREE from 'three'
 
 gsap.registerPlugin(ScrollTrigger)
+ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true })
+ScrollTrigger.normalizeScroll(true)
 
 export function ScrollCamera() {
   const { camera } = useThree()

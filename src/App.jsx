@@ -16,6 +16,7 @@ import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import SmoothCursor from './components/ui/SmoothCursor';
 import TouchInteraction from './components/ui/TouchInteraction';
+import { SceneManager } from './three/SceneManager';
 import './app.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
 
       <div style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.8s ease-in-out' }}>
         <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+          <SceneManager />
           <SmoothCursor />
           <TouchInteraction />
           <Navbar />
