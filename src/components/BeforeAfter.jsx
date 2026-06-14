@@ -1,0 +1,71 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { getAsset } from '../lib/assets';
+import Reveal from './ui/Reveal';
+
+const BeforeAfterSlider = ({ beforeImg, afterImg }) => {
+  const containerRef = useRef(null);
+  const [position, setPosition] = useState(50);
+  const isDragging = useRef(false);
+
+  const updatePosition = useCallback((clientX) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    setPosition((x / rect.width) * 100);
+  }, []);
+
+  const onPointerDown = (e) => { isDragging.current = true; updatePosition(e.clientX); };
+  const onPointerMove = (e) => { if (isDragging.current) updatePosition(e.clientX); };
+  const onPointerUp = () => { isDragging.current = false; };
+
+  useEffect(() => {
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    };
+  }, [onPointerMove]);
+
+  return (
+    <div className="ba-slider-container" ref={containerRef} onPointerDown={onPointerDown}>
+      <div className="ba-image ba-after">
+        <img src={afterImg} alt="After" loading="lazy" />
+        <span className="ba-label ba-label-after">After</span>
+      </div>
+      <div className="ba-image ba-before" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
+        <img src={beforeImg} alt="Before" loading="lazy" />
+        <span className="ba-label ba-label-before">Before</span>
+      </div>
+      <div className="ba-handle" style={{ left: `${position}%` }}>
+        <div className="ba-handle-line" />
+        <div className="ba-handle-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 8l4 4-4 4M6 8l-4 4 4 4" /></svg>
+        </div>
+        <div className="ba-handle-line" />
+      </div>
+    </div>
+  );
+};
+
+const BeforeAfter = () => (
+  <section className="section section-light" id="before-after">
+    <div className="container">
+      <Reveal className="section-header">
+        <span className="section-label">Transformations</span>
+        <h2 className="section-title">Before & <span className="text-gradient">After</span></h2>
+        <p className="section-desc">Witness the magic of our transformations</p>
+      </Reveal>
+      <div className="ba-grid">
+        <Reveal delay={0.1} className="ba-comparison">
+          <BeforeAfterSlider beforeImg={getAsset('/before_after_1.jpg')} afterImg={getAsset('/before_after_2.jpg')} />
+        </Reveal>
+        <Reveal delay={0.2} className="ba-comparison">
+          <BeforeAfterSlider beforeImg={getAsset('/before_after_3.jpg')} afterImg={getAsset('/before_after_4.jpg')} />
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
+
+export default BeforeAfter;

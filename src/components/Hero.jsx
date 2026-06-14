@@ -82,7 +82,9 @@ const Hero = () => {
             </motion.p>
             
             <motion.a
-              href="#contact"
+              href="https://wa.me/919924404860"
+              target="_blank"
+              rel="noopener noreferrer"
               custom={6}
               variants={fadeUp}
               initial="initial"
