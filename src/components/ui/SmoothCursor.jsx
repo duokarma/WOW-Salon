@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useSpring, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { MoveHorizontal, Eye } from "lucide-react";
 
 const DefaultCursorSVG = ({ invertColors }) => {
@@ -29,9 +29,6 @@ const DefaultCursorSVG = ({ invertColors }) => {
 
 export default function SmoothCursor({
   cursorSize = 40,
-  stiffness = 400,
-  damping = 45,
-  mass = 1,
   hideSystemCursor = true,
   enableBlendMode = false,
   invertIconColors = true,
@@ -41,23 +38,21 @@ export default function SmoothCursor({
   const [isVisible, setIsVisible] = useState(true);
   const [cursorState, setCursorState] = useState("default"); // 'default', 'drag', 'view'
 
-  const cursorX = useSpring(-100, { stiffness, damping, mass });
-  const cursorY = useSpring(-100, { stiffness, damping, mass });
-  const rotation = useSpring(0, { stiffness: 300, damping: 60 });
-  const scale = useSpring(1, { stiffness: 500, damping: 35 });
+  const cursorRef = useRef(null);
   
-  const lastMousePos = useRef({ x: 0, y: 0 });
-  const velocity = useRef({ x: 0, y: 0 });
-  const lastUpdateTime = useRef(Date.now());
+  // Track raw mouse position
+  const mouse = useRef({ x: -100, y: -100 });
+  // Track current visual position (lerped)
+  const current = useRef({ x: -100, y: -100 });
+  
+  const rotation = useRef(0);
   const previousAngle = useRef(0);
-  const accumulatedRotation = useRef(0);
-  const rafId = useRef(null);
+  const scale = useRef(1);
   const isMouseDown = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const checkDeviceConstraints = () => {
-      // Only show custom cursor if the device has a fine pointer (e.g. mouse/trackpad)
       const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
       setIsVisible(hasFinePointer);
     };
@@ -71,65 +66,27 @@ export default function SmoothCursor({
       document.body.style.cursor = "auto";
       return;
     }
-    const updateVelocity = (currentPos) => {
-      const currentTime = Date.now();
-      const deltaTime = currentTime - lastUpdateTime.current;
-      if (deltaTime > 0) {
-        velocity.current = {
-          x: (currentPos.x - lastMousePos.current.x) / deltaTime,
-          y: (currentPos.y - lastMousePos.current.y) / deltaTime
-        };
-      }
-      lastUpdateTime.current = currentTime;
-      lastMousePos.current = currentPos;
-    };
-
-    const smoothMouseMove = (e) => {
-      const currentPos = { x: e.clientX, y: e.clientY };
-      updateVelocity(currentPos);
-      const speed = Math.sqrt(Math.pow(velocity.current.x, 2) + Math.pow(velocity.current.y, 2));
-      cursorX.set(currentPos.x);
-      cursorY.set(currentPos.y);
-      if (speed > 0.1) {
-        const currentAngle = Math.atan2(velocity.current.y, velocity.current.x) * (180 / Math.PI) + 90;
-        let angleDiff = currentAngle - previousAngle.current;
-        if (angleDiff > 180) angleDiff -= 360;
-        if (angleDiff < -180) angleDiff += 360;
-        accumulatedRotation.current += angleDiff;
-        rotation.set(accumulatedRotation.current);
-        previousAngle.current = currentAngle;
-        
-        if (!isMouseDown.current) {
-          scale.set(0.95);
-          setTimeout(() => {
-            if (!isMouseDown.current) scale.set(1);
-          }, 150);
-        }
-      }
-    };
-
-    const throttledMouseMove = (e) => {
-      if (rafId.current) return;
-      rafId.current = requestAnimationFrame(() => {
-        smoothMouseMove(e);
-        rafId.current = null;
-      });
-    };
-
-    const handleMouseDown = () => {
-      isMouseDown.current = true;
-      if (enableClickEffect) scale.set(0.7);
-    };
-    const handleMouseUp = () => {
-      isMouseDown.current = false;
-      if (enableClickEffect) scale.set(1);
-    };
 
     if (hideSystemCursor) {
       document.body.style.cursor = "none";
     }
-    
-    const handleMouseOver = (e) => {
+
+    let animationFrameId;
+
+    const onMouseMove = (e) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+    };
+
+    const onMouseDown = () => {
+      isMouseDown.current = true;
+    };
+
+    const onMouseUp = () => {
+      isMouseDown.current = false;
+    };
+
+    const onMouseOver = (e) => {
       const target = e.target.closest('[data-cursor]');
       if (target) {
         setCursorState(target.getAttribute('data-cursor'));
@@ -138,22 +95,52 @@ export default function SmoothCursor({
       }
     };
 
-    window.addEventListener("mousemove", throttledMouseMove);
-    window.addEventListener("mouseover", handleMouseOver);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("mouseleave", handleMouseUp);
-    
-    return () => {
-      window.removeEventListener("mousemove", throttledMouseMove);
-      window.removeEventListener("mouseover", handleMouseOver);
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("mouseleave", handleMouseUp);
-      document.body.style.cursor = "auto";
-      if (rafId.current) cancelAnimationFrame(rafId.current);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("mouseover", onMouseOver);
+
+    // High performance render loop completely bypassing React
+    const render = () => {
+      // Very fast lerp (0.35) for almost 0ms latency but smooth enough to prevent stutter
+      current.current.x += (mouse.current.x - current.current.x) * 0.35;
+      current.current.y += (mouse.current.y - current.current.y) * 0.35;
+
+      const deltaX = mouse.current.x - current.current.x;
+      const deltaY = mouse.current.y - current.current.y;
+      const speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      if (speed > 1) {
+        const currentAngle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
+        let angleDiff = currentAngle - previousAngle.current;
+        if (angleDiff > 180) angleDiff -= 360;
+        if (angleDiff < -180) angleDiff += 360;
+        rotation.current += angleDiff;
+        previousAngle.current = currentAngle;
+      }
+
+      // Smooth scale interpolation
+      const targetScale = isMouseDown.current && enableClickEffect ? 0.7 : 1;
+      scale.current += (targetScale - scale.current) * 0.2;
+
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${current.current.x}px, ${current.current.y}px, 0) rotate(${rotation.current}deg) scale(${scale.current})`;
+      }
+
+      animationFrameId = requestAnimationFrame(render);
     };
-  }, [cursorX, cursorY, rotation, scale, hideSystemCursor, isVisible, enableClickEffect]);
+
+    render();
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("mouseover", onMouseOver);
+      cancelAnimationFrame(animationFrameId);
+      document.body.style.cursor = "auto";
+    };
+  }, [isVisible, hideSystemCursor, enableClickEffect]);
 
   if (!isVisible) return null;
 
@@ -162,15 +149,12 @@ export default function SmoothCursor({
       {hideSystemCursor && (
         <style dangerouslySetInnerHTML={{ __html: `* { cursor: none !important; }` }} />
       )}
-      <motion.div
+      <div
+        ref={cursorRef}
         style={{
           position: "fixed",
           top: 0,
           left: 0,
-          x: cursorX,
-          y: cursorY,
-          rotate: rotation,
-          scale: scale,
           zIndex: 999999,
           pointerEvents: "none",
           willChange: "transform",
@@ -223,7 +207,7 @@ export default function SmoothCursor({
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </>
   );
 }

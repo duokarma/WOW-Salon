@@ -38,6 +38,8 @@ export function SceneManager() {
           powerPreference: "high-performance"
         }}
         dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 1.5}
+        eventSource={typeof document !== 'undefined' ? document.getElementById('root') || document.body : undefined}
+        eventPrefix="client"
       >
         <Suspense fallback={null}>
           <ResponsiveCamera />

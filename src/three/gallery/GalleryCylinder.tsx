@@ -1,6 +1,5 @@
 import { useRef } from 'react'
-import { useFrame, ThreeEvent } from '@react-three/fiber'
-import { Image } from '@react-three/drei'
+import { useFrame, ThreeEvent, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
 import { getAsset } from '../../lib/assets'
@@ -23,6 +22,7 @@ const GALLERY_IMAGES = [
 
 export function GalleryCylinder() {
   const groupRef = useRef<THREE.Group>(null)
+  const textures = useLoader(THREE.TextureLoader, GALLERY_IMAGES)
   
   // Custom drag state for precise physics control without OrbitControls
   const isDragging = useRef(false)
@@ -130,16 +130,16 @@ export function GalleryCylinder() {
               // Point images outward relative to the center
               rotation={[0, angle, 0]}
             >
-              {/* 
-                @react-three/drei Image component 
-                Automatically handles texture aspect-ratio cropping 
-              */}
-              <Image 
-                url={url} 
-                transparent 
-                opacity={0.9} 
-                scale={[1.8, 2.6]} 
-              />
+              <mesh>
+                <planeGeometry args={[1.8, 2.6]} />
+                <meshBasicMaterial 
+                  map={textures[i]} 
+                  transparent 
+                  opacity={0.9} 
+                  side={THREE.DoubleSide}
+                  toneMapped={false}
+                />
+              </mesh>
             </group>
           )
         })}

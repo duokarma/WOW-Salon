@@ -7,6 +7,8 @@ export function LightingRig() {
   const keyLightRef = useRef<THREE.DirectionalLight>(null)
   const fillLightRef = useRef<THREE.DirectionalLight>(null)
   const rimLightRef = useRef<THREE.SpotLight>(null)
+  
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   useFrame(() => {
     if (typeof window === 'undefined') return
@@ -47,9 +49,9 @@ export function LightingRig() {
         position={[5, 8, 5]}
         intensity={1.5}
         color="#fff1e6"
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        castShadow={!isMobile}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
         shadow-bias={-0.0001}
       />
 

@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ReactLenis from 'lenis/react';
 import gsap from 'gsap';

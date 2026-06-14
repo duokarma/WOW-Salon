@@ -3,6 +3,10 @@ import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
 
 export function Effects() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  
+  if (isMobile) return null;
+
   return (
     // disableNormalPass keeps performance high.
     // multisampling={4} provides smooth edges without tanking mobile framerates.
