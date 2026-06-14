@@ -54,14 +54,9 @@ export default function SmoothCursor({
   useEffect(() => {
     if (typeof window === "undefined") return;
     const checkDeviceConstraints = () => {
-      const isPortrait = window.innerHeight > window.innerWidth;
-      const isMobileWidth = window.innerWidth < 768;
-      const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-      if (isPortrait || isMobileWidth || isTouch) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
+      // Only show custom cursor if the device has a fine pointer (e.g. mouse/trackpad)
+      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+      setIsVisible(hasFinePointer);
     };
     checkDeviceConstraints();
     window.addEventListener("resize", checkDeviceConstraints);
