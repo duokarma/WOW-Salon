@@ -11,7 +11,7 @@ export function MorphBlob() {
   // Base coordinates. Positioned at y: -8 to perfectly intersect with the CTA section 
   // at the end of our ScrollCamera GSAP timeline (which ends at y: -9).
   const basePosition = new THREE.Vector3(2, -8, -2) 
-  const segments = typeof window !== 'undefined' && window.innerWidth < 768 ? 64 : 128
+  const segments = typeof window !== 'undefined' && window.innerWidth < 768 ? 32 : 64
   const [isVisible, setIsVisible] = useState(false)
 
   useFrame((state, delta) => {

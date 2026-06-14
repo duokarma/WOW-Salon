@@ -21,7 +21,7 @@ const Gallery = () => {
         for the user to interact with the 3D GalleryCylinder underneath.
         The inner content acts as an HTML fallback if WebGL fails.
       */}
-      <div className="w-full relative pointer-events-none" style={{ minHeight: '120vh' }}>
+      <div className="w-full relative pointer-events-none" style={{ minHeight: '80vh' }}>
         <motion.div 
           className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
           initial={{ opacity: 0 }}
@@ -39,7 +39,7 @@ const Gallery = () => {
         </motion.div>
         <div className="absolute inset-0 flex flex-col justify-center opacity-0 pointer-events-auto z-20">
           <div className="gallery-slider pointer-events-auto overflow-x-auto px-4 sm:px-8" data-cursor="drag">
-            {[1, 2, 3, 4, 5, 6].map(i => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => (
               <div key={i} className="gallery-item flex-shrink-0 w-64 h-96 rounded-2xl overflow-hidden shadow-lg border border-white/10">
                 <img src={getAsset(`/gallery_${i}.webp`)} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
               </div>

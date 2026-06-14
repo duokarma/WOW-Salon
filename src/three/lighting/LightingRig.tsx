@@ -16,11 +16,11 @@ export function LightingRig() {
 
     if (keyLightRef.current) {
       keyLightRef.current.position.x = THREE.MathUtils.lerp(5, -2, progress)
-      keyLightRef.current.intensity = THREE.MathUtils.lerp(2.5, 1.8, progress)
+      keyLightRef.current.intensity = THREE.MathUtils.lerp(1.5, 1.0, progress)
     }
     if (fillLightRef.current) {
       fillLightRef.current.position.x = THREE.MathUtils.lerp(-8, 5, progress)
-      fillLightRef.current.intensity = THREE.MathUtils.lerp(1.2, 2.0, progress)
+      fillLightRef.current.intensity = THREE.MathUtils.lerp(0.8, 1.2, progress)
     }
     if (rimLightRef.current) {
       rimLightRef.current.position.y = THREE.MathUtils.lerp(5, 10, progress)
@@ -45,7 +45,7 @@ export function LightingRig() {
       <directionalLight
         ref={keyLightRef}
         position={[5, 8, 5]}
-        intensity={2.5}
+        intensity={1.5}
         color="#fff1e6"
         castShadow
         shadow-mapSize-width={2048}
@@ -63,7 +63,7 @@ export function LightingRig() {
       <spotLight
         ref={rimLightRef}
         position={[-5, 5, -8]}
-        intensity={4}
+        intensity={2.5}
         color="#ffffff"
         angle={0.6}
         penumbra={1}
@@ -78,7 +78,7 @@ export function LightingRig() {
       <directionalLight
         ref={fillLightRef}
         position={[-8, 3, 5]}
-        intensity={1.2}
+        intensity={0.8}
         color="#e6e6fa"
       />
 
@@ -86,7 +86,7 @@ export function LightingRig() {
         5. Ambient Base:
         Just a whisper of global illumination to ensure no shadow is ever 100% pitch black.
       */}
-      <ambientLight intensity={0.2} color="#ffffff" />
+      <ambientLight intensity={0.1} color="#ffffff" />
     </>
   )
 }

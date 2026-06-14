@@ -62,10 +62,10 @@ export function FloatingSalonObject() {
           A complex TorusKnot represents abstract, elegant curves
           symbolic of hair styling and natural flow. Reduced detail on mobile.
         */}
-        <TorusKnot ref={meshRef} args={[1.2, 0.35, isMobile ? 64 : 128, isMobile ? 16 : 32]} position={[0, 0, 0]}>
+        <TorusKnot ref={meshRef} args={[1.2, 0.35, isMobile ? 32 : 64, isMobile ? 8 : 16]} position={[0, 0, 0]}>
           <MeshTransmissionMaterial
-            backside={!isMobile} // Renders backside for realistic glass refraction only on desktop
-            samples={isMobile ? 2 : 4} // Balanced for high performance + premium visual
+            backside={false} // Renders backside for realistic glass refraction only on desktop
+            samples={isMobile ? 1 : 2} // Balanced for high performance + premium visual
             thickness={1.5}
             chromaticAberration={0.08}
             anisotropy={0.2}
@@ -78,7 +78,7 @@ export function FloatingSalonObject() {
             roughness={0.05}
             ior={1.45} // Index of refraction similar to fine glass/crystal
             color="#ffffff"
-            resolution={isMobile ? 128 : 256} // Capped resolution keeps mobile performance smooth
+            resolution={isMobile ? 64 : 128} // Capped resolution keeps mobile performance smooth
           />
         </TorusKnot>
       </Float>

@@ -28,7 +28,7 @@ function ResponsiveCamera() {
 
 export function SceneManager() {
   return (
-    <div className="fixed inset-0 z-10 pointer-events-none">
+    <div className="fixed inset-0 z-[-1] pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ 

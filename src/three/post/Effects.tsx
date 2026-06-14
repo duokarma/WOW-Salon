@@ -15,10 +15,10 @@ export function Effects() {
         A low intensity prevents the image from looking "washed out" or game-y.
       */}
       <Bloom 
-        luminanceThreshold={0.85} // Only the brightest pixels bloom
-        luminanceSmoothing={0.9}  // Smooth falloff for a natural lens flare feel
-        height={300}              // Lower resolution bloom for a softer, wider glow
-        intensity={0.3}           // Very low intensity for premium subtlety
+        luminanceThreshold={0.95} // Increased threshold to limit bloom to very bright reflections
+        luminanceSmoothing={0.9}
+        height={300}
+        intensity={0.15}          // Further reduced intensity for refined subtlety
         blendFunction={BlendFunction.SCREEN}
       />
       

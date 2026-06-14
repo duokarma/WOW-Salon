@@ -13,6 +13,12 @@ const GALLERY_IMAGES = [
   getAsset('/gallery_4.webp'),
   getAsset('/gallery_5.webp'),
   getAsset('/gallery_6.webp'),
+  getAsset('/gallery_7.webp'),
+  getAsset('/gallery_8.webp'),
+  getAsset('/gallery_9.webp'),
+  getAsset('/gallery_10.webp'),
+  getAsset('/gallery_11.webp'),
+  getAsset('/gallery_12.webp'),
 ]
 
 export function GalleryCylinder() {
@@ -25,7 +31,7 @@ export function GalleryCylinder() {
   const targetRotation = useRef(0)
 
   // Layout calculations
-  const radius = 3.5
+  const radius = 6.0 // Increased radius to accommodate 12 images instead of 6
   const itemCount = GALLERY_IMAGES.length
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {

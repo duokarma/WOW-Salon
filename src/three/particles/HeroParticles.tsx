@@ -60,7 +60,7 @@ const fragmentShader = `
   }
 `
 
-export function HeroParticles({ count = typeof window !== 'undefined' && window.innerWidth < 768 ? 1500 : 3000 }) {
+export function HeroParticles({ count = typeof window !== 'undefined' && window.innerWidth < 768 ? 800 : 1500 }) {
   const shaderRef = useRef<THREE.ShaderMaterial>(null)
   const [isVisible, setIsVisible] = useState(true)
 
