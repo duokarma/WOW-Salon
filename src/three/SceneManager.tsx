@@ -55,7 +55,7 @@ export function SceneManager() {
             <GalleryCylinder />
           </group>
           
-          <Effects />
+          {/* <Effects /> */}
         </Suspense>
       </Canvas>
     </div>
