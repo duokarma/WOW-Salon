@@ -322,7 +322,7 @@ export function SilkAurora({
       }
 
       const resize = () => {
-        // Optimize for performance on high-DPI screens by capping pixel ratio at 1.0
+        // Optimize for performance on high-DPI screens by capping pixel ratio at 1.0 for better mobile experience
         const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
         const { width, height } = container.getBoundingClientRect();
         canvas.width = Math.max(1, Math.floor(width * dpr));
@@ -359,7 +359,7 @@ export function SilkAurora({
           rafId = requestAnimationFrame(render);
           return;
         }
-        
+
         mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.045;
         mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.045;
 
@@ -407,12 +407,10 @@ export function SilkAurora({
   const fallbackContent = (
     <div
       className={cn(
-        hasTextContent 
-          ? "relative flex min-h-screen w-full items-center overflow-hidden bg-[#050507] text-white" 
-          : "relative flex min-h-screen w-full flex-col bg-[#050507] text-white",
+        "relative flex min-h-screen w-full items-center overflow-hidden bg-[#050507] text-white",
         className,
       )}
-      style={hasTextContent ? { containerType: "size", ...style } : style}
+      style={{ containerType: "size", ...style }}
       {...props}
     >
       <WebGLFallback className="absolute inset-0 h-full w-full" />
@@ -448,33 +446,21 @@ export function SilkAurora({
       <div
         ref={containerRef}
         className={cn(
-          hasTextContent 
-            ? "relative flex min-h-screen w-full items-center overflow-hidden bg-[#050507] text-white" 
-            : "relative flex min-h-screen w-full flex-col bg-[#050507] text-white",
+          "relative flex min-h-screen w-full items-center overflow-hidden bg-[#050507] text-white",
           className,
         )}
-        style={hasTextContent ? { containerType: "size", ...style } : style}
+        style={{ containerType: "size", ...style }}
         {...props}
       >
         <canvas
           ref={canvasRef}
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full"
-          style={{ width: "100%", height: "100%", display: "block", position: "fixed", zIndex: 0 }}
+          style={{ width: "100%", height: "100%", display: "block" }}
         />
-        {/* Gradients pinned to viewport in the background (zIndex 0) */}
-        <div 
-          className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(255,255,255,0.16),transparent_24%),radial-gradient(circle_at_18%_74%,rgba(110,214,201,0.13),transparent_30%)]" 
-          style={{ zIndex: 0 }}
-        />
-        <div 
-          className="pointer-events-none fixed inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.46),rgba(0,0,0,0.14)_42%,rgba(0,0,0,0.42))]" 
-          style={{ zIndex: 0 }}
-        />
-        <div 
-          className="pointer-events-none fixed inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" 
-          style={{ zIndex: 0 }}
-        />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(255,255,255,0.16),transparent_24%),radial-gradient(circle_at_18%_74%,rgba(110,214,201,0.13),transparent_30%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.46),rgba(0,0,0,0.14)_42%,rgba(0,0,0,0.42))]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
 
         {hasTextContent ? (
           <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-20 md:px-10 md:py-28">

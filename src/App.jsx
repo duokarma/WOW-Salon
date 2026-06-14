@@ -47,16 +47,16 @@ function App() {
             <div id="home">
               <Hero />
             </div>
-            <About />
-            <Services />
-            <Staff />
-            <Gallery />
-            <BeforeAfter />
-            <Reviews />
-            <Location />
-            <CTA />
-            <Footer />
           </SilkAurora>
+          <About />
+          <Services />
+          <Staff />
+          <Gallery />
+          <BeforeAfter />
+          <Reviews />
+          <Location />
+          <CTA />
+          <Footer />
         </ReactLenis>
       </div>
     </>
