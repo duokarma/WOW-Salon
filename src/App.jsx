@@ -2,7 +2,6 @@ import React, { useState, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ReactLenis from 'lenis/react';
 
-import ScrollProgress from './components/ui/ScrollProgress';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
@@ -15,7 +14,7 @@ import CTA from './components/CTA';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
-const SceneManager = lazy(() => import('./three/SceneManager').then(module => ({ default: module.SceneManager })));
+import SmoothCursor from './components/ui/SmoothCursor';
 import './app.css';
 
 function App() {
@@ -29,10 +28,7 @@ function App() {
 
       <div style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.8s ease-in-out' }}>
         <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
-          <Suspense fallback={null}>
-            <SceneManager />
-          </Suspense>
-          <ScrollProgress />
+          <SmoothCursor />
           <Navbar />
           <div id="home">
             <Hero
