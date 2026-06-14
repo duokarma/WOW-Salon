@@ -21,7 +21,7 @@ export function ScrollCamera() {
 
     // Phase 1: 0% -> 25% (Hero to Services - Move left)
     gsap.to(camera.position, {
-      x: -4,
+      x: -10,
       ease: 'power1.inOut',
       scrollTrigger: {
         trigger: '#home',

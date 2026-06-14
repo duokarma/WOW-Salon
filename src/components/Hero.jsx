@@ -324,7 +324,8 @@ export function Hero({
       }
 
       const resize = () => {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
         const { width, height } = container.getBoundingClientRect();
         canvas.width = Math.max(1, Math.floor(width * dpr));
         canvas.height = Math.max(1, Math.floor(height * dpr));
