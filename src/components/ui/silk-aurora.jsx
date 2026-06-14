@@ -322,8 +322,8 @@ export function SilkAurora({
       }
 
       const resize = () => {
-        // Optimize for performance on high-DPI screens by capping pixel ratio at 1.5
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        // Optimize for performance on high-DPI screens by capping pixel ratio at 1.0
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
         const { width, height } = container.getBoundingClientRect();
         canvas.width = Math.max(1, Math.floor(width * dpr));
         canvas.height = Math.max(1, Math.floor(height * dpr));
@@ -347,8 +347,19 @@ export function SilkAurora({
 
       let rafId = 0;
       const start = performance.now();
+      
+      let isVisible = true;
+      const observer = new IntersectionObserver(([entry]) => {
+        isVisible = entry.isIntersecting;
+      });
+      observer.observe(container);
 
       const render = (now) => {
+        if (!isVisible) {
+          rafId = requestAnimationFrame(render);
+          return;
+        }
+        
         mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.045;
         mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.045;
 
@@ -372,6 +383,7 @@ export function SilkAurora({
       rafId = requestAnimationFrame(render);
 
       return () => {
+        observer.disconnect();
         container.removeEventListener("pointermove", handlePointerMove);
         container.removeEventListener("pointerleave", handlePointerLeave);
         cancelAnimationFrame(rafId);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ReactLenis from 'lenis/react';
 import { SilkAurora } from './components/ui/silk-aurora';
@@ -15,7 +15,7 @@ import CTA from './components/CTA';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
-import { SceneManager } from './three/SceneManager';
+const SceneManager = lazy(() => import('./three/SceneManager').then(module => ({ default: module.SceneManager })));
 import './app.css';
 
 function App() {
@@ -29,7 +29,9 @@ function App() {
 
       <div style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.8s ease-in-out' }}>
         <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
-          <SceneManager />
+          <Suspense fallback={null}>
+            <SceneManager />
+          </Suspense>
           <ScrollProgress />
           <Navbar />
           <SilkAurora

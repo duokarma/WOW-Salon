@@ -9,19 +9,19 @@ import CarouselNav from './ui/CarouselNav';
 import Reveal from './ui/Reveal';
 
 const menServices = [
-  { img: getAsset('/service_men_1.jpg'), title: 'Premium Haircut', desc: 'Precision cuts tailored to your face shape and style preferences.' },
-  { img: getAsset('/service_men_2.jpg'), title: 'Beard Sculpting', desc: 'Expert beard shaping, trimming, and hot towel treatments.' },
-  { img: getAsset('/service_men_3.jpg'), title: 'Hair Color', desc: 'Premium coloring with global brands for natural and bold looks.' },
-  { img: getAsset('/service_men_1.jpg'), title: 'Hair Spa & Treatment', desc: 'Deep conditioning and scalp therapy for healthy, revitalized hair.' },
-  { img: getAsset('/service_men_2.jpg'), title: 'Premium Facial', desc: 'Luxury facial treatments using imported skincare products.' },
+  { img: getAsset('/service_men_1.webp'), title: 'Premium Haircut', desc: 'Precision cuts tailored to your face shape and style preferences.' },
+  { img: getAsset('/service_men_2.webp'), title: 'Beard Sculpting', desc: 'Expert beard shaping, trimming, and hot towel treatments.' },
+  { img: getAsset('/service_men_3.webp'), title: 'Hair Color', desc: 'Premium coloring with global brands for natural and bold looks.' },
+  { img: getAsset('/service_men_1.webp'), title: 'Hair Spa & Treatment', desc: 'Deep conditioning and scalp therapy for healthy, revitalized hair.' },
+  { img: getAsset('/service_men_2.webp'), title: 'Premium Facial', desc: 'Luxury facial treatments using imported skincare products.' },
 ];
 
 const womenServices = [
-  { img: getAsset('/service_women_1.jpg'), title: 'Hair Styling', desc: 'Expert styling for every occasion, from casual to red carpet.' },
-  { img: getAsset('/service_women_2.jpg'), title: 'Bridal Makeup', desc: 'Complete bridal packages with HD makeup and hairstyling.' },
-  { img: getAsset('/service_women_3.jpg'), title: 'Color & Highlights', desc: 'Balayage, highlights, global color — premium products only.' },
-  { img: getAsset('/service_women_1.jpg'), title: 'Keratin & Smoothening', desc: 'Professional keratin treatments for silky, frizz-free hair.' },
-  { img: getAsset('/service_women_2.jpg'), title: 'Skin Treatments', desc: 'Advanced facials, peels, and rejuvenation therapies.' },
+  { img: getAsset('/service_women_1.webp'), title: 'Hair Styling', desc: 'Expert styling for every occasion, from casual to red carpet.' },
+  { img: getAsset('/service_women_2.webp'), title: 'Bridal Makeup', desc: 'Complete bridal packages with HD makeup and hairstyling.' },
+  { img: getAsset('/service_women_3.webp'), title: 'Color & Highlights', desc: 'Balayage, highlights, global color — premium products only.' },
+  { img: getAsset('/service_women_1.webp'), title: 'Keratin & Smoothening', desc: 'Professional keratin treatments for silky, frizz-free hair.' },
+  { img: getAsset('/service_women_2.webp'), title: 'Skin Treatments', desc: 'Advanced facials, peels, and rejuvenation therapies.' },
 ];
 
 const TABS = [

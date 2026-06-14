@@ -23,7 +23,7 @@ const Footer = () => (
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            <img src={getAsset('/logo.png')} alt="WOW Salon Logo" className="brand-logo" />
+            <img src={getAsset('/logo.webp')} alt="WOW Salon Logo" className="brand-logo" />
           </motion.a>
           <p className="footer-desc">Where style meets the future. Experience premium luxury grooming in a cinematic atmosphere.</p>
           <div className="footer-social">

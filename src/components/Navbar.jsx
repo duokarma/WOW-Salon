@@ -49,7 +49,7 @@ const Navbar = () => {
             whileTap={reduced ? {} : { scale: 0.97 }}
             transition={spring}
           >
-            <img src={getAsset('/logo.png')} alt="WOW Salon Logo" className="brand-logo" />
+            <img src={getAsset('/logo.webp')} alt="WOW Salon Logo" className="brand-logo" />
           </motion.a>
           <ul className="nav-menu">
             {links.map(l => (
@@ -83,7 +83,7 @@ const Navbar = () => {
           >
             <div className="mobile-overlay-top">
               <a href="#home" className="nav-logo" onClick={() => setMobileOpen(false)}>
-                <img src={getAsset('/logo.png')} alt="WOW Salon Logo" className="brand-logo" />
+                <img src={getAsset('/logo.webp')} alt="WOW Salon Logo" className="brand-logo" />
               </a>
               <motion.button
                 className="mobile-close"

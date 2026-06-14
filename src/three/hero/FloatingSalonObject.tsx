@@ -6,6 +6,8 @@ import * as THREE from 'three'
 export function FloatingSalonObject() {
   const meshRef = useRef<THREE.Mesh>(null)
   const groupRef = useRef<THREE.Group>(null)
+  
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   // Target rotation state for smooth, weighty mouse tracking
   const targetRotation = useRef({ x: 0, y: 0 })
@@ -50,12 +52,12 @@ export function FloatingSalonObject() {
       >
         {/* 
           A complex TorusKnot represents abstract, elegant curves
-          symbolic of hair styling and natural flow.
+          symbolic of hair styling and natural flow. Reduced detail on mobile.
         */}
-        <TorusKnot ref={meshRef} args={[1.2, 0.35, 128, 32]} position={[0, 0, 0]}>
+        <TorusKnot ref={meshRef} args={[1.2, 0.35, isMobile ? 64 : 128, isMobile ? 16 : 32]} position={[0, 0, 0]}>
           <MeshTransmissionMaterial
-            backside // Renders backside for realistic glass refraction
-            samples={4} // Balanced for high performance + premium visual
+            backside={!isMobile} // Renders backside for realistic glass refraction only on desktop
+            samples={isMobile ? 2 : 4} // Balanced for high performance + premium visual
             thickness={1.5}
             chromaticAberration={0.08}
             anisotropy={0.2}
@@ -68,7 +70,7 @@ export function FloatingSalonObject() {
             roughness={0.05}
             ior={1.45} // Index of refraction similar to fine glass/crystal
             color="#ffffff"
-            resolution={256} // Capped resolution keeps mobile performance smooth
+            resolution={isMobile ? 128 : 256} // Capped resolution keeps mobile performance smooth
           />
         </TorusKnot>
       </Float>

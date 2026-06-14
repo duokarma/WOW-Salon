@@ -65,10 +65,10 @@ const BeforeAfter = () => (
       />
       <div className="ba-grid">
         <Reveal delay={0.1} className="ba-comparison">
-          <BeforeAfterSlider beforeImg={getAsset('/before_after_1.jpg')} afterImg={getAsset('/before_after_2.jpg')} />
+          <BeforeAfterSlider beforeImg={getAsset('/before_after_1.webp')} afterImg={getAsset('/before_after_2.webp')} />
         </Reveal>
         <Reveal delay={0.2} className="ba-comparison">
-          <BeforeAfterSlider beforeImg={getAsset('/before_after_3.jpg')} afterImg={getAsset('/before_after_4.jpg')} />
+          <BeforeAfterSlider beforeImg={getAsset('/before_after_3.webp')} afterImg={getAsset('/before_after_4.webp')} />
         </Reveal>
       </div>
     </div>

@@ -60,7 +60,7 @@ const fragmentShader = `
   }
 `
 
-export function HeroParticles({ count = 6000 }) {
+export function HeroParticles({ count = typeof window !== 'undefined' && window.innerWidth < 768 ? 1500 : 3000 }) {
   const shaderRef = useRef<THREE.ShaderMaterial>(null)
 
   // Generate attributes heavily optimized with useMemo

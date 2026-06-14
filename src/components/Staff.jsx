@@ -6,15 +6,15 @@ import HoverCard from './ui/HoverCard';
 import CarouselNav from './ui/CarouselNav';
 
 const staffData = [
-  { img: getAsset('/male_staff_1.jpg'), name: 'Arjun Patel', role: 'Master Stylist' },
-  { img: getAsset('/male_staff_2.jpg'), name: 'Vikram Shah', role: 'Senior Barber' },
-  { img: getAsset('/male_staff_3.jpg'), name: 'Rohan Mehta', role: 'Color Specialist' },
-  { img: getAsset('/male_staff_4.jpg'), name: 'Karan Desai', role: 'Creative Director' },
-  { img: getAsset('/male_staff_5.jpg'), name: 'Dev Sharma', role: 'Junior Stylist' },
-  { img: getAsset('/female_staff_1.jpg'), name: 'Priya Kapoor', role: 'Senior Stylist' },
-  { img: getAsset('/female_staff_2.jpg'), name: 'Neha Verma', role: 'Makeup Artist' },
-  { img: getAsset('/female_staff_3.jpg'), name: 'Ananya Joshi', role: 'Color Expert' },
-  { img: getAsset('/female_staff_4.jpg'), name: 'Riya Singh', role: 'Bridal Specialist' },
+  { img: getAsset('/male_staff_1.webp'), name: 'Arjun Patel', role: 'Master Stylist' },
+  { img: getAsset('/male_staff_2.webp'), name: 'Vikram Shah', role: 'Senior Barber' },
+  { img: getAsset('/male_staff_3.webp'), name: 'Rohan Mehta', role: 'Color Specialist' },
+  { img: getAsset('/male_staff_4.webp'), name: 'Karan Desai', role: 'Creative Director' },
+  { img: getAsset('/male_staff_5.webp'), name: 'Dev Sharma', role: 'Junior Stylist' },
+  { img: getAsset('/female_staff_1.webp'), name: 'Priya Kapoor', role: 'Senior Stylist' },
+  { img: getAsset('/female_staff_2.webp'), name: 'Neha Verma', role: 'Makeup Artist' },
+  { img: getAsset('/female_staff_3.webp'), name: 'Ananya Joshi', role: 'Color Expert' },
+  { img: getAsset('/female_staff_4.webp'), name: 'Riya Singh', role: 'Bridal Specialist' },
 ];
 
 const Staff = () => {

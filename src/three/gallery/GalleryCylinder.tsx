@@ -7,12 +7,12 @@ import { getAsset } from '../../lib/assets'
 
 // Use actual local project assets instead of remote placeholders to prevent 404 Suspense crashes
 const GALLERY_IMAGES = [
-  getAsset('/gallery_1.jpeg'),
-  getAsset('/gallery_2.jpeg'),
-  getAsset('/gallery_3.jpeg'),
-  getAsset('/gallery_4.jpeg'),
-  getAsset('/gallery_5.jpeg'),
-  getAsset('/gallery_6.jpeg'),
+  getAsset('/gallery_1.webp'),
+  getAsset('/gallery_2.webp'),
+  getAsset('/gallery_3.webp'),
+  getAsset('/gallery_4.webp'),
+  getAsset('/gallery_5.webp'),
+  getAsset('/gallery_6.webp'),
 ]
 
 export function GalleryCylinder() {

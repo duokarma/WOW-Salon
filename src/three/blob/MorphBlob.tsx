@@ -10,6 +10,7 @@ export function MorphBlob() {
   // Base coordinates. Positioned at y: -8 to perfectly intersect with the CTA section 
   // at the end of our ScrollCamera GSAP timeline (which ends at y: -9).
   const basePosition = new THREE.Vector3(2, -8, -2) 
+  const segments = typeof window !== 'undefined' && window.innerWidth < 768 ? 64 : 128
 
   useFrame((state, delta) => {
     if (!meshRef.current) return
@@ -47,8 +48,8 @@ export function MorphBlob() {
   })
 
   return (
-    // High segment count (128x128) is essential for smooth liquid vertex distortion
-    <Sphere ref={meshRef} args={[1.5, 128, 128]} position={basePosition.toArray()}>
+    // High segment count is essential for smooth liquid vertex distortion, but reduced on mobile for perf
+    <Sphere ref={meshRef} args={[1.5, segments, segments]} position={basePosition.toArray()}>
       {/* 
         MeshDistortMaterial perfectly simulates an amorphous, morphing liquid blob.
         We pair it with high metalness and clearcoat for a premium, wet-mercury aesthetic.

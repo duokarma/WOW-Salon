@@ -37,7 +37,7 @@ export function SceneManager() {
           preserveDrawingBuffer: false,
           powerPreference: "high-performance"
         }}
-        dpr={[1, 2]} // Cap DPR at 2 for performance on high-res screens
+        dpr={[1, 1.5]} // Cap DPR at 1.5 for performance on high-res screens, saves mobile GPU
       >
         <Suspense fallback={null}>
           <ResponsiveCamera />
