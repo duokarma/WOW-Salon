@@ -3,16 +3,16 @@ import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { Image } from '@react-three/drei'
 import * as THREE from 'three'
 
-// High-quality placeholder images tailored to a luxury salon aesthetic
+import { getAsset } from '../../lib/assets'
+
+// Use actual local project assets instead of remote placeholders to prevent 404 Suspense crashes
 const GALLERY_IMAGES = [
-  'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1521590832167-7bfc17484d8d?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1595476108010-b4d0700665b0?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?auto=format&fit=crop&w=800&q=80',
+  getAsset('/gallery_1.jpeg'),
+  getAsset('/gallery_2.jpeg'),
+  getAsset('/gallery_3.jpeg'),
+  getAsset('/gallery_4.jpeg'),
+  getAsset('/gallery_5.jpeg'),
+  getAsset('/gallery_6.jpeg'),
 ]
 
 export function GalleryCylinder() {
