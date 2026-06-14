@@ -1,6 +1,11 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ReactLenis from 'lenis/react';
+import gsap from 'gsap';
+import ScrollProgress from './components/ui/ScrollProgress';
+import StickyMobileCTA from './components/ui/StickyMobileCTA';
+import MagneticButton from './components/ui/MagneticButton';
+import { ArrowUpRight } from 'lucide-react';
 
 import Hero from './components/Hero';
 import About from './components/About';
@@ -21,6 +26,16 @@ import './app.css';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const lenisRef = React.useRef(null);
+
+  React.useEffect(() => {
+    function update(time) {
+      lenisRef.current?.lenis?.raf(time * 1000);
+    }
+    gsap.ticker.add(update);
+    gsap.ticker.lagSmoothing(0);
+    return () => gsap.ticker.remove(update);
+  }, []);
 
   return (
     <>
@@ -29,7 +44,8 @@ function App() {
       </AnimatePresence>
 
       <div style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.8s ease-in-out' }}>
-        <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+        <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }} ref={lenisRef} autoRaf={false}>
+          <ScrollProgress />
           <SceneManager />
           <SmoothCursor />
           <TouchInteraction />
@@ -39,7 +55,17 @@ function App() {
               title="LUXURY BEAUTY DELIVERED"
               subtitle="Premium Salon Experience"
               description="Premium salon built around elevating your look into striking reality. Join our 1500+ happy clients and enjoy over 50+ premium services."
-            />
+            >
+              <MagneticButton
+                href="https://wa.me/919924404860"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#F4DFB8] text-[#2A1E12] px-8 py-4 rounded-full text-sm font-semibold uppercase tracking-wider shadow-lg hover:bg-[#E6D5B8] transition-colors"
+                style={{ pointerEvents: 'auto' }}
+              >
+                BOOK NOW / WHATSAPP <ArrowUpRight size={20} className="inline-block ml-2" />
+              </MagneticButton>
+            </Hero>
           </div>
           <About />
           <Services />
@@ -50,6 +76,7 @@ function App() {
           <Location />
           <CTA />
           <Footer />
+          <StickyMobileCTA />
         </ReactLenis>
       </div>
     </>

@@ -61,6 +61,14 @@
   color: var(--color-carbon) !important;
 }
 
+#gallery {
+  background-color: transparent !important;
+}
+
+#cta {
+  background-color: transparent !important;
+}
+
 .section-dark {
   --bg-primary: var(--color-ink-black);
   --bg-secondary: var(--color-carbon);
@@ -359,10 +367,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /*  SECTION SHARED                                 */
 /* ═══════════════════════════════════════════════ */
 .section {
-  padding: 40px 0;
   position: relative;
+  padding: 80px 0;
+  overflow: hidden;
 }
-@media (min-width: 768px) { .section { padding: 60px 0; } }
+
+@media (min-width: 768px) {
+  .section {
+    padding: 140px 0;
+  }
+}
 
 .section-header {
   text-align: center;

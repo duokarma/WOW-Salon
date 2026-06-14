@@ -6,7 +6,7 @@ import { MagnetLines } from './ui/magnet-lines';
 import MagneticButton from './ui/MagneticButton';
 
 const CTA = () => (
-  <section id="cta" className="section section-dark relative flex items-center justify-center min-h-[40vh] overflow-hidden" style={{ background: '#000000' }}>
+  <section id="cta" className="section section-dark relative flex items-center justify-center min-h-[40vh] overflow-hidden">
     <div className="absolute inset-0 z-0 flex items-center justify-center opacity-80 pointer-events-none">
       <MagnetLines
         rows={12}

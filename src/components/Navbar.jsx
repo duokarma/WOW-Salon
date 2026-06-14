@@ -13,7 +13,7 @@ const Navbar = () => {
       setScrolled(window.scrollY > 50);
       
       // Basic active tab detection based on scroll position (optional but nice)
-      const sections = ['home', 'about', 'services', 'staff', 'gallery', 'reviews'];
+      const sections = ['home', 'about', 'services', 'staff', 'gallery', 'before-after', 'reviews', 'location', 'cta', 'footer'];
       for (const section of sections.reverse()) {
         const el = document.getElementById(section);
         if (el && window.scrollY >= el.offsetTop - 200) {

@@ -1,6 +1,31 @@
 import { Environment } from '@react-three/drei'
+import { useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
+import * as THREE from 'three'
 
 export function LightingRig() {
+  const keyLightRef = useRef<THREE.DirectionalLight>(null)
+  const fillLightRef = useRef<THREE.DirectionalLight>(null)
+  const rimLightRef = useRef<THREE.SpotLight>(null)
+
+  useFrame(() => {
+    if (typeof window === 'undefined') return
+    const scrollY = window.scrollY
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+    const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1)
+
+    if (keyLightRef.current) {
+      keyLightRef.current.position.x = THREE.MathUtils.lerp(5, -2, progress)
+      keyLightRef.current.intensity = THREE.MathUtils.lerp(2.5, 1.8, progress)
+    }
+    if (fillLightRef.current) {
+      fillLightRef.current.position.x = THREE.MathUtils.lerp(-8, 5, progress)
+      fillLightRef.current.intensity = THREE.MathUtils.lerp(1.2, 2.0, progress)
+    }
+    if (rimLightRef.current) {
+      rimLightRef.current.position.y = THREE.MathUtils.lerp(5, 10, progress)
+    }
+  })
   return (
     <>
       {/* 
@@ -18,6 +43,7 @@ export function LightingRig() {
         premium salon look. Casts the primary shadows.
       */}
       <directionalLight
+        ref={keyLightRef}
         position={[5, 8, 5]}
         intensity={2.5}
         color="#fff1e6"
@@ -35,6 +61,7 @@ export function LightingRig() {
         the refraction of the glass and the edges of the chrome.
       */}
       <spotLight
+        ref={rimLightRef}
         position={[-5, 5, -8]}
         intensity={4}
         color="#ffffff"
@@ -49,6 +76,7 @@ export function LightingRig() {
         creates a rich, cinematic color contrast on the surfaces.
       */}
       <directionalLight
+        ref={fillLightRef}
         position={[-8, 3, 5]}
         intensity={1.2}
         color="#e6e6fa"

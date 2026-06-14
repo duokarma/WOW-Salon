@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useSpring } from "framer-motion";
+import { motion, useSpring, AnimatePresence } from "framer-motion";
+import { MoveHorizontal, Eye } from "lucide-react";
 
 const DefaultCursorSVG = ({ invertColors }) => {
   const innerColor = invertColors ? "white" : "black";
@@ -38,6 +39,8 @@ export default function SmoothCursor({
   cursorImage,
 }) {
   const [isVisible, setIsVisible] = useState(true);
+  const [cursorState, setCursorState] = useState("default"); // 'default', 'drag', 'view'
+
   const cursorX = useSpring(-100, { stiffness, damping, mass });
   const cursorY = useSpring(-100, { stiffness, damping, mass });
   const rotation = useSpring(0, { stiffness: 300, damping: 60 });
@@ -126,13 +129,24 @@ export default function SmoothCursor({
       document.body.style.cursor = "none";
     }
     
+    const handleMouseOver = (e) => {
+      const target = e.target.closest('[data-cursor]');
+      if (target) {
+        setCursorState(target.getAttribute('data-cursor'));
+      } else {
+        setCursorState("default");
+      }
+    };
+
     window.addEventListener("mousemove", throttledMouseMove);
+    window.addEventListener("mouseover", handleMouseOver);
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("mouseleave", handleMouseUp);
     
     return () => {
       window.removeEventListener("mousemove", throttledMouseMove);
+      window.removeEventListener("mouseover", handleMouseOver);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("mouseleave", handleMouseUp);
@@ -170,11 +184,45 @@ export default function SmoothCursor({
           alignItems: "center"
         }}
       >
-        {cursorImage ? (
-          <img src={cursorImage} alt="Custom Cursor" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-        ) : (
-          <DefaultCursorSVG invertColors={invertIconColors} />
-        )}
+        <AnimatePresence mode="wait">
+          {cursorState === 'drag' ? (
+            <motion.div
+              key="drag"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              className="bg-[#2A1E12] text-[#F4DFB8] rounded-full p-3 flex items-center justify-center shadow-lg"
+              style={{ width: 80, height: 80 }}
+            >
+              <MoveHorizontal size={24} />
+            </motion.div>
+          ) : cursorState === 'view' ? (
+            <motion.div
+              key="view"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              className="bg-[#F4DFB8] text-[#2A1E12] rounded-full p-3 flex items-center justify-center shadow-lg"
+              style={{ width: 60, height: 60 }}
+            >
+              <Eye size={20} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="default"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              style={{ width: "100%", height: "100%" }}
+            >
+              {cursorImage ? (
+                <img src={cursorImage} alt="Custom Cursor" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+              ) : (
+                <DefaultCursorSVG invertColors={invertIconColors} />
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </>
   );

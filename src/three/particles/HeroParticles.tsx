@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -62,6 +62,7 @@ const fragmentShader = `
 
 export function HeroParticles({ count = typeof window !== 'undefined' && window.innerWidth < 768 ? 1500 : 3000 }) {
   const shaderRef = useRef<THREE.ShaderMaterial>(null)
+  const [isVisible, setIsVisible] = useState(true)
 
   // Generate attributes heavily optimized with useMemo
   const [positions, sizes, randoms] = useMemo(() => {
@@ -89,6 +90,11 @@ export function HeroParticles({ count = typeof window !== 'undefined' && window.
   }), [])
 
   useFrame((state) => {
+    if (typeof window !== 'undefined') {
+      const inView = window.scrollY < window.innerHeight * 1.5
+      if (inView !== isVisible) setIsVisible(inView)
+      if (!inView) return
+    }
     if (shaderRef.current) {
       // Update time for the floating animation
       shaderRef.current.uniforms.uTime.value = state.clock.elapsedTime
@@ -102,7 +108,7 @@ export function HeroParticles({ count = typeof window !== 'undefined' && window.
   })
 
   return (
-    <points>
+    <points visible={isVisible}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
