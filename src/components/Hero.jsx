@@ -8,6 +8,7 @@ import {
 } from "./ui/webgl-error-boundary";
 import { getAsset } from '../lib/assets';
 import { TextEffect } from './core/text-effect';
+import { SceneManager } from '../three/SceneManager';
 
 const VERTEX_SHADER = `
 attribute vec2 position;
@@ -403,35 +404,26 @@ export function Hero({
     >
       <WebGLFallback className="absolute inset-0 h-full w-full" />
         {(title || subtitle || description || children) && (
-          <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-24 md:px-10 md:py-32 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 pt-32 sm:pt-40">
-            {/* Left Content */}
-            <div className="w-full max-w-[660px] flex-shrink-0 z-20 text-center lg:text-left flex flex-col items-center lg:items-start">
-              {subtitle && (
-                <div className="mb-5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-white/50">
-                  <TextEffect per='char' preset='fade'>{subtitle}</TextEffect>
-                </div>
-              )}
-              {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
-              {description && (
-                <p className="mt-7 text-sm sm:text-base leading-relaxed text-white/68 md:text-xl mx-auto lg:mx-0 max-w-[540px]">
-                  {description}
-                </p>
-              )}
-              {children && <div className="mt-10">{children}</div>}
-            </div>
-
-            {/* Right Avatar Image */}
-            <div className="w-full lg:w-[480px] flex-shrink-0 flex justify-center lg:justify-end relative mt-8 lg:mt-0 z-20">
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full sm:rounded-[40px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-transform duration-700 hover:scale-[1.03] hover:rotate-1">
-                {/* Overlay gradient to match SilkAurora lighting */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#2A1E12]/40 to-transparent mix-blend-overlay z-10 pointer-events-none" />
-                <img 
-                  src={getAsset('/ticketbro_avatar.png')}
-                  alt="Premium Haircut Avatar" 
-                  className="w-full h-full object-cover object-center relative z-0"
-                />
+          <div className="relative z-10 mx-auto w-full max-w-[1000px] px-6 py-24 md:px-10 md:py-32 flex flex-col items-center justify-center pt-32 sm:pt-40 text-center">
+            {subtitle && (
+              <div className="mb-6 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-[#F4DFB8]/80">
+                <TextEffect per='char' preset='fade'>{subtitle}</TextEffect>
               </div>
-            </div>
+            )}
+            
+            {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
+            
+            <p className="mt-8 text-base sm:text-lg lg:text-xl font-light text-[#E6D5B8] uppercase tracking-[0.1em] mb-4">
+              Elevating your aesthetic. Where artistry meets elegance.
+            </p>
+            
+            {description && (
+              <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/68 md:text-lg max-w-[640px]">
+                {description}
+              </p>
+            )}
+            
+            {children && <div className="mt-12 flex justify-center">{children}</div>}
           </div>
         )}
     </div>
@@ -461,37 +453,33 @@ export function Hero({
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(255,255,255,0.16),transparent_24%),radial-gradient(circle_at_18%_74%,rgba(110,214,201,0.13),transparent_30%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.46),rgba(0,0,0,0.14)_42%,rgba(0,0,0,0.42))]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
+        
+        {/* Constrain 3D Scene to Hero section to eliminate scroll lag */}
+        <div className="absolute inset-0 z-[5] pointer-events-none">
+          <SceneManager />
+        </div>
 
         {(title || subtitle || description || children) && (
-          <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-24 md:px-10 md:py-32 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 pt-32 sm:pt-40">
-            {/* Left Content */}
-            <div className="w-full max-w-[660px] flex-shrink-0 z-20 text-center lg:text-left flex flex-col items-center lg:items-start">
-              {subtitle && (
-                <div className="mb-5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-white/50">
-                  <TextEffect per='char' preset='fade'>{subtitle}</TextEffect>
-                </div>
-              )}
-              {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
-              {description && (
-                <p className="mt-7 text-sm sm:text-base leading-relaxed text-white/68 md:text-xl mx-auto lg:mx-0 max-w-[540px]">
-                  {description}
-                </p>
-              )}
-              {children && <div className="mt-10">{children}</div>}
-            </div>
-
-            {/* Right Avatar Image */}
-            <div className="w-full lg:w-[480px] flex-shrink-0 flex justify-center lg:justify-end relative mt-8 lg:mt-0 z-20">
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full sm:rounded-[40px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-transform duration-700 hover:scale-[1.03] hover:rotate-1">
-                {/* Overlay gradient to match SilkAurora lighting */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#2A1E12]/40 to-transparent mix-blend-overlay z-10 pointer-events-none" />
-                <img 
-                  src={getAsset('/ticketbro_avatar.png')} 
-                  alt="Premium Haircut Avatar" 
-                  className="w-full h-full object-cover object-center relative z-0"
-                />
+          <div className="relative z-10 mx-auto w-full max-w-[1000px] px-6 py-24 md:px-10 md:py-32 flex flex-col items-center justify-center pt-32 sm:pt-40 text-center">
+            {subtitle && (
+              <div className="mb-6 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-[#F4DFB8]/80">
+                <TextEffect per='char' preset='fade'>{subtitle}</TextEffect>
               </div>
-            </div>
+            )}
+            
+            {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
+            
+            <p className="mt-8 text-base sm:text-lg lg:text-xl font-light text-[#E6D5B8] uppercase tracking-[0.1em] mb-4">
+              Elevating your aesthetic. Where artistry meets elegance.
+            </p>
+            
+            {description && (
+              <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/68 md:text-lg max-w-[640px]">
+                {description}
+              </p>
+            )}
+            
+            {children && <div className="mt-12 flex justify-center">{children}</div>}
           </div>
         )}
       </div>
