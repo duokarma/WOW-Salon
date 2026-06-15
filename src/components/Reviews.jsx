@@ -1,5 +1,4 @@
 import React from 'react';
-import SectionHeader from './ui/SectionHeader';
 import StarRating from './ui/StarRating';
 
 const row1 = [

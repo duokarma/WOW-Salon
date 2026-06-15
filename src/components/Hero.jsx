@@ -6,10 +6,11 @@ import {
   WebGLErrorBoundary,
   WebGLFallback,
 } from "./ui/webgl-error-boundary";
-import { getAsset } from '../lib/assets';
+
 import { TextEffect } from './core/text-effect';
 import { SceneManager } from '../three/SceneManager';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowUpRight, Play, Star, Sparkles } from 'lucide-react';
 
 const VERTEX_SHADER = `
 attribute vec2 position;
@@ -138,10 +139,9 @@ function hexToRgb01(hex, fallback) {
   return [r, g, b];
 }
 
-const HEADLINE_CLASS =
-  "max-w-[820px] text-[13cqi] font-semibold leading-[0.86] tracking-normal text-white md:text-[8cqi] lg:text-[6.4cqi]";
 
-export function Hero({
+
+function Hero({
   title,
   subtitle,
   description,
@@ -427,7 +427,7 @@ export function Hero({
   const fallbackContent = (
     <div
       className={cn(
-        "relative flex min-h-screen w-full items-center overflow-hidden bg-[#050507] text-white",
+        "relative flex min-h-screen w-full items-center overflow-hidden bg-[#FDFBF7] text-[#2A1E12]",
         className,
       )}
       style={{ containerType: "size", ...style }}
@@ -435,26 +435,63 @@ export function Hero({
     >
       <WebGLFallback className="absolute inset-0 h-full w-full" />
         {(title || subtitle || description || children) && (
-          <div className="relative z-10 mx-auto w-full max-w-[1000px] px-6 py-24 md:px-10 md:py-32 flex flex-col items-center justify-center pt-32 sm:pt-40 text-center">
-            {subtitle && (
-              <div className="mb-6 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-[#F4DFB8]/80">
-                <TextEffect per='char' preset='fade'>{subtitle}</TextEffect>
-              </div>
+          <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6 py-20 md:px-10 md:py-32 flex flex-col items-center justify-center pt-28 sm:pt-40 text-center">
+            {/* Cinematic Badge */}
+            <div className="liquid-glass-light rounded-full p-1.5 flex items-center gap-3 w-fit mx-auto mb-8 shadow-sm">
+              <span className="bg-[#2A1E12] text-white px-3 py-1 rounded-full text-xs font-semibold tracking-wide">NEW</span>
+              <span className="text-[13px] text-[#2A1E12] font-medium pr-4">Discover our premium bridal packages</span>
+            </div>
+            
+            {title && (
+              <h1 className="max-w-[1000px] text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-display font-light leading-[0.95] tracking-tight text-[#1A1A1A] drop-shadow-[0_4px_12px_rgba(0,0,0,0.05)] mb-6 flex flex-wrap justify-center" style={{ textWrap: 'balance' }}>
+                {title}
+              </h1>
             )}
             
-            {title && <h1 className={HEADLINE_CLASS}>{title}</h1>}
-            
-            <p className="mt-8 text-base sm:text-lg lg:text-xl font-light text-[#E6D5B8] uppercase tracking-[0.1em] mb-4">
-              Elevating your aesthetic. Where artistry meets elegance.
-            </p>
-            
             {description && (
-              <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/68 md:text-lg max-w-[640px]">
+              <p className="text-sm sm:text-base leading-relaxed text-[#2A1E12]/70 md:text-lg max-w-[640px] mx-auto font-light">
                 {description}
               </p>
             )}
             
-            {children && <div className="mt-12 flex justify-center">{children}</div>}
+            {/* Cinematic CTAs */}
+            <div className="flex flex-col sm:flex-row items-center gap-6 mt-10">
+              <button className="liquid-glass-strong-light rounded-full px-7 py-3.5 text-sm font-semibold text-[#2A1E12] flex items-center gap-2 uppercase tracking-widest transition-transform duration-300 hover:scale-105">
+                Book an Appointment <ArrowUpRight size={18} />
+              </button>
+              <button className="text-sm font-semibold text-[#2A1E12] flex items-center gap-2 uppercase tracking-widest hover:opacity-70 transition-opacity">
+                View Services <Play size={16} fill="currentColor" />
+              </button>
+            </div>
+
+            {/* Cinematic Stats Row */}
+            <div className="flex flex-col sm:flex-row items-stretch gap-4 mt-16 justify-center w-full">
+              <div className="liquid-glass-light p-6 w-full sm:w-[240px] rounded-[1.5rem] text-left flex flex-col items-start text-[#2A1E12] transition-transform hover:-translate-y-1 duration-300">
+                <Star className="w-8 h-8 mb-6 opacity-80" />
+                <div className="text-5xl font-display font-light leading-none tracking-tight">1500+</div>
+                <div className="text-[11px] font-semibold uppercase tracking-widest mt-3 opacity-60">Happy Clients</div>
+              </div>
+              <div className="liquid-glass-light p-6 w-full sm:w-[240px] rounded-[1.5rem] text-left flex flex-col items-start text-[#2A1E12] transition-transform hover:-translate-y-1 duration-300">
+                <Sparkles className="w-8 h-8 mb-6 opacity-80" />
+                <div className="text-5xl font-display font-light leading-none tracking-tight">50+</div>
+                <div className="text-[11px] font-semibold uppercase tracking-widest mt-3 opacity-60">Signature Services</div>
+              </div>
+            </div>
+
+            {/* Partners/Brands */}
+            <div className="mt-20 flex flex-col items-center gap-6 w-full pb-8">
+              <div className="liquid-glass-light rounded-full px-5 py-2 text-[10px] sm:text-xs font-semibold text-[#2A1E12]/80 uppercase tracking-[0.2em]">
+                Collaborating with top beauty brands globally
+              </div>
+              <div className="flex flex-wrap justify-center gap-8 md:gap-16 font-display font-light text-2xl md:text-3xl text-[#2A1E12]/60 tracking-tight">
+                <span>L'Oréal</span>
+                <span>Dyson</span>
+                <span>Olaplex</span>
+                <span>Kérastase</span>
+                <span>Wella</span>
+              </div>
+            </div>
+
           </div>
         )}
     </div>
@@ -494,7 +531,7 @@ export function Hero({
 
         {(title || subtitle || description || children) && (
           <motion.div 
-            className="relative z-10 mx-auto w-full max-w-[1000px] px-4 sm:px-6 py-20 md:px-10 md:py-32 flex flex-col items-center justify-center pt-28 sm:pt-40 text-center"
+            className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6 py-20 md:px-10 md:py-32 flex flex-col items-center justify-center pt-28 sm:pt-40 text-center"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -506,33 +543,62 @@ export function Hero({
               rotateY: mousePosition.x * 0.1,
             }}
           >
-            {subtitle && (
-              <motion.div variants={itemVariants} className="mb-8 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.3em] text-[#B8922E]">
-                {subtitle}
-              </motion.div>
-            )}
+            {/* Cinematic Badge */}
+            <motion.div variants={itemVariants} className="liquid-glass-light rounded-full p-1.5 flex items-center gap-3 w-fit mx-auto mb-8 shadow-sm">
+              <span className="bg-[#2A1E12] text-white px-3 py-1 rounded-full text-xs font-semibold tracking-wide">NEW</span>
+              <span className="text-[13px] text-[#2A1E12] font-medium pr-4">Discover our premium bridal packages</span>
+            </motion.div>
             
             {title && (
-              <motion.h1 
-                variants={itemVariants} 
-                className="max-w-[900px] text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-display font-light leading-[1.1] tracking-[0.05em] text-[#1A1A1A] uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
-                style={{ textWrap: 'balance' }}
-              >
-                {title}
-              </motion.h1>
+              <h1 className="max-w-[1000px] text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-display font-light leading-[0.95] tracking-tight text-[#1A1A1A] drop-shadow-[0_4px_12px_rgba(0,0,0,0.05)] mb-6 flex flex-wrap justify-center" style={{ textWrap: 'balance' }}>
+                <TextEffect per="word" preset="fade-in-blur">{title}</TextEffect>
+              </h1>
             )}
             
-            <motion.p variants={itemVariants} className="mt-8 text-sm sm:text-base lg:text-lg font-medium text-[#2A1E12]/70 uppercase tracking-[0.15em] mb-4">
-              Elevating your aesthetic. Where artistry meets elegance.
-            </motion.p>
-            
             {description && (
-              <motion.p variants={itemVariants} className="mt-4 text-xs sm:text-sm leading-relaxed text-[#2A1E12]/60 md:text-base max-w-[500px] mx-auto font-light">
+              <motion.p variants={itemVariants} className="text-sm sm:text-base leading-relaxed text-[#2A1E12]/70 md:text-lg max-w-[640px] mx-auto font-light">
                 {description}
               </motion.p>
             )}
             
-            {children && <motion.div variants={itemVariants} className="mt-10 sm:mt-12 flex justify-center w-full sm:w-auto">{children}</motion.div>}
+            {/* Cinematic CTAs */}
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-6 mt-10">
+              <button className="liquid-glass-strong-light rounded-full px-7 py-3.5 text-sm font-semibold text-[#2A1E12] flex items-center gap-2 uppercase tracking-widest transition-transform duration-300 hover:scale-105">
+                Book an Appointment <ArrowUpRight size={18} />
+              </button>
+              <button className="text-sm font-semibold text-[#2A1E12] flex items-center gap-2 uppercase tracking-widest hover:opacity-70 transition-opacity">
+                View Services <Play size={16} fill="currentColor" />
+              </button>
+            </motion.div>
+
+            {/* Cinematic Stats Row */}
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-stretch gap-4 mt-16 justify-center w-full">
+              <div className="liquid-glass-light p-6 w-full sm:w-[240px] rounded-[1.5rem] text-left flex flex-col items-start text-[#2A1E12] transition-transform hover:-translate-y-1 duration-300">
+                <Star className="w-8 h-8 mb-6 opacity-80" />
+                <div className="text-5xl font-display font-light leading-none tracking-tight">1500+</div>
+                <div className="text-[11px] font-semibold uppercase tracking-widest mt-3 opacity-60">Happy Clients</div>
+              </div>
+              <div className="liquid-glass-light p-6 w-full sm:w-[240px] rounded-[1.5rem] text-left flex flex-col items-start text-[#2A1E12] transition-transform hover:-translate-y-1 duration-300">
+                <Sparkles className="w-8 h-8 mb-6 opacity-80" />
+                <div className="text-5xl font-display font-light leading-none tracking-tight">50+</div>
+                <div className="text-[11px] font-semibold uppercase tracking-widest mt-3 opacity-60">Signature Services</div>
+              </div>
+            </motion.div>
+
+            {/* Partners/Brands */}
+            <motion.div variants={itemVariants} className="mt-20 flex flex-col items-center gap-6 w-full pb-8">
+              <div className="liquid-glass-light rounded-full px-5 py-2 text-[10px] sm:text-xs font-semibold text-[#2A1E12]/80 uppercase tracking-[0.2em]">
+                Collaborating with top beauty brands globally
+              </div>
+              <div className="flex flex-wrap justify-center gap-8 md:gap-16 font-display font-light text-2xl md:text-3xl text-[#2A1E12]/60 tracking-tight">
+                <span>L'Oréal</span>
+                <span>Dyson</span>
+                <span>Olaplex</span>
+                <span>Kérastase</span>
+                <span>Wella</span>
+              </div>
+            </motion.div>
+
           </motion.div>
         )}
       </div>

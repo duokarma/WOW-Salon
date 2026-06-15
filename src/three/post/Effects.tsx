@@ -46,17 +46,7 @@ export function Effects() {
         blendFunction={BlendFunction.OVERLAY} 
       />
 
-      {/* 
-        Vignette:
-        Darkens the corners of the screen slightly to draw the eye to the center objects.
-      */}
-      <Vignette 
-        eskil={false} 
-        offset={0.1} 
-        darkness={0.8} 
-        blendFunction={BlendFunction.NORMAL} 
-      />
-      
+      {/* Removed Vignette to prevent dark borders on the new Light Luxury theme */}
     </EffectComposer>
   )
 }

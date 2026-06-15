@@ -43,7 +43,7 @@ export function TextEffect({
     return <Component className={className}>{children}</Component>;
   }
 
-  let segments = [];
+  let segments;
   if (per === 'char') {
     segments = children.split('');
   } else if (per === 'word') {
