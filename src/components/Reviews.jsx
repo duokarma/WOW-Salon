@@ -18,9 +18,9 @@ const row2 = [
 ];
 
 const ReviewCard = ({ text, author, service }) => (
-  <div className="flex flex-col justify-between w-[280px] sm:w-[380px] h-[200px] sm:h-[240px] p-6 sm:p-8 mx-3 sm:mx-4 rounded-3xl bg-[#3B302B]/40 backdrop-blur-xl border border-[#F4DFB8]/15 shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-all duration-500 hover:-translate-y-2 hover:bg-[#3B302B]/60 hover:border-[#F4DFB8]/40 hover:shadow-[0_0_40px_rgba(244,223,184,0.15)] group relative overflow-hidden shrink-0 cursor-pointer">
+  <div className="flex flex-col justify-between w-[280px] sm:w-[380px] h-[200px] sm:h-[240px] p-6 sm:p-8 mx-3 sm:mx-4 rounded-3xl liquid-glass-strong transition-all duration-700 hover:-translate-y-2 hover:bg-white/5 hover:shadow-[0_12px_40px_rgba(255,255,255,0.1)] group relative shrink-0 cursor-pointer">
     {/* Soft inner glow on hover */}
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-[#F4DFB8]/10 to-transparent pointer-events-none" />
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
     
     {/* Star Rating */}
     <div className="flex gap-1.5 mb-4">
@@ -32,14 +32,14 @@ const ReviewCard = ({ text, author, service }) => (
     </p>
     
     <div className="flex items-center gap-4 mt-4">
-      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#F4DFB8] to-[#8B7355] flex items-center justify-center text-[#2A1E12] font-semibold text-lg sm:text-xl shadow-inner relative overflow-hidden">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full liquid-glass flex items-center justify-center text-white font-display italic text-lg sm:text-xl shadow-inner relative overflow-hidden">
         {/* Subtle shine on avatar */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:animate-[shimmer_1.5s_infinite]" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 translate-x-[-100%] group-hover:animate-[shimmer_1.5s_infinite]" />
         {author[0]}
       </div>
       <div>
-        <div className="text-[#F9F6F0] font-medium text-sm sm:text-base tracking-wide">{author}</div>
-        {service && <div className="text-[#F4DFB8]/70 text-[0.65rem] sm:text-xs uppercase tracking-widest mt-1">{service}</div>}
+        <div className="text-white/90 font-medium text-sm sm:text-base tracking-wide">{author}</div>
+        {service && <div className="text-white/50 text-[0.65rem] sm:text-xs uppercase tracking-widest mt-1">{service}</div>}
       </div>
     </div>
   </div>
@@ -47,24 +47,24 @@ const ReviewCard = ({ text, author, service }) => (
 
 const Reviews = () => {
   return (
-    <section className="relative py-24 sm:py-32 bg-[#2A1E12] overflow-hidden" id="reviews">
-      {/* Background cinematic blurs */}
-      <div className="absolute top-0 left-1/4 w-[40vw] h-[40vw] bg-[#F4DFB8]/15 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[50vw] h-[50vw] bg-[#8B7355]/20 rounded-full blur-[120px] pointer-events-none" />
+    <section className="relative py-24 sm:py-32 bg-black overflow-hidden" id="reviews">
+      {/* Background cinematic luminous blurs */}
+      <div className="absolute top-0 left-1/4 w-[40vw] h-[40vw] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[50vw] h-[50vw] bg-white/10 rounded-full blur-[120px] pointer-events-none" />
       
       {/* Liquid UI Glassmorphism Background Overlay */}
-      <div className="absolute inset-0 liquid-glass pointer-events-none z-0 opacity-80" />
+      <div className="absolute inset-0 liquid-glass pointer-events-none z-0 opacity-60" />
 
       {/* Smooth fade gradients on left/right edges */}
-      <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-40 bg-gradient-to-r from-[#2A1E12] to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-40 bg-gradient-to-l from-[#2A1E12] to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-40 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-40 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
       <div className="container relative z-20 mb-16 sm:mb-20">
         <div className="text-center">
-          <h2 className="text-3xl sm:text-5xl font-light tracking-wide text-[#F9F6F0] mb-4">
-            Client <span className="font-semibold text-[#F4DFB8] italic">Experiences</span>
+          <h2 className="text-3xl sm:text-5xl font-light tracking-wide text-white mb-4">
+            Client <span className="font-semibold text-white/90 italic">Experiences</span>
           </h2>
-          <p className="text-[#F9F6F0]/70 text-sm sm:text-base tracking-widest uppercase">
+          <p className="text-white/60 text-sm sm:text-base tracking-widest uppercase">
             The standard of premium luxury
           </p>
         </div>

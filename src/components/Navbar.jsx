@@ -163,18 +163,20 @@ const Navbar = () => {
             </div>
             
             <motion.div 
-              className="relative z-10 px-8 pb-12 pt-6 flex flex-col sm:flex-row gap-4"
+              className="relative z-10 px-8 pb-16 pt-8 flex"
               initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               exit={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
               transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <button className="w-full sm:w-auto bg-white/10 border border-white/20 text-white px-8 py-4 rounded-full font-body text-xs font-semibold tracking-[0.15em] uppercase hover:bg-white hover:text-black transition-colors duration-500 flex items-center justify-center gap-2 backdrop-blur-md">
-                Book Appointment <ArrowUpRight size={16} />
-              </button>
-              <button className="w-full sm:w-auto bg-transparent border border-white/20 text-white px-8 py-4 rounded-full font-body text-xs font-semibold tracking-[0.15em] uppercase hover:bg-[#25D366]/10 hover:border-[#25D366]/40 hover:text-[#25D366] transition-colors duration-500 flex items-center justify-center gap-2 backdrop-blur-md">
-                <MessageCircle size={16} /> WhatsApp
-              </button>
+              <a 
+                href="https://wa.me/919924404860" 
+                target="_blank" 
+                rel="noreferrer"
+                className="w-full sm:w-auto max-w-sm bg-white/10 border border-white/20 text-white px-8 py-5 rounded-full font-body text-[13px] font-semibold tracking-[0.15em] uppercase hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-colors duration-500 flex items-center justify-center gap-3 backdrop-blur-md"
+              >
+                <MessageCircle size={18} /> Chat on WhatsApp
+              </a>
             </motion.div>
 
           </motion.div>
