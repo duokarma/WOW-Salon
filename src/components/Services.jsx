@@ -138,7 +138,7 @@ const Services = () => {
       <div className="absolute bottom-0 left-0 w-[60vw] h-[60vw] bg-[#D4A853]/10 rounded-full blur-[120px] pointer-events-none translate-y-1/4 -translate-x-1/4"></div>
 
       <div className="container relative z-10">
-        <div className="flex flex-col items-center text-center mb-12">
+        <div className="flex flex-col items-center text-center mb-10">
           <SectionHeader
             label="Premium Salon Services"
             words={['Luxury', 'Experiences']}
@@ -147,6 +147,15 @@ const Services = () => {
             style={{ marginBottom: 0 }}
             className="text-[#1A1A1A] flex flex-col items-center"
           />
+          
+          <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-[#F4DFB8]/30 border border-[#8C7654]/20 rounded-full">
+            <span className="text-[#8C7654]">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </span>
+            <span className="text-sm font-medium tracking-wide text-[#4A3D2D]">
+              Important Notice: We do not offer services for children under 5 years old.
+            </span>
+          </div>
         </div>
       </div>
 
