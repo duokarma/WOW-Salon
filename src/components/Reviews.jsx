@@ -47,17 +47,17 @@ const ReviewCard = ({ text, author, service }) => (
 
 const Reviews = () => {
   return (
-    <section className="relative py-24 sm:py-32 bg-black overflow-hidden" id="reviews">
+    <section className="relative py-24 sm:py-32 bg-[#2A1E12] overflow-hidden" id="reviews">
       {/* Background cinematic luminous blurs */}
-      <div className="absolute top-0 left-1/4 w-[40vw] h-[40vw] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[50vw] h-[50vw] bg-white/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[40vw] h-[40vw] bg-[#F4DFB8]/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[50vw] h-[50vw] bg-[#8B7355]/20 rounded-full blur-[120px] pointer-events-none" />
       
       {/* Liquid UI Glassmorphism Background Overlay */}
       <div className="absolute inset-0 liquid-glass pointer-events-none z-0 opacity-60" />
 
       {/* Smooth fade gradients on left/right edges */}
-      <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-40 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-40 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-40 bg-gradient-to-r from-[#2A1E12] to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-40 bg-gradient-to-l from-[#2A1E12] to-transparent z-10 pointer-events-none" />
 
       <div className="container relative z-20 mb-16 sm:mb-20">
         <div className="text-center">
