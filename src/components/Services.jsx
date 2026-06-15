@@ -166,7 +166,7 @@ const Services = () => {
 
         <div 
           ref={carouselRef}
-          className="flex overflow-x-auto px-4 sm:px-8 lg:px-24 gap-6 pb-16 pt-8 snap-x snap-mandatory hide-scrollbar scroll-smooth"
+          className="flex overflow-x-auto overflow-y-hidden overscroll-x-contain px-4 sm:px-8 lg:px-24 gap-6 pb-16 pt-8 snap-x snap-proximity hide-scrollbar"
         >
           {serviceCategories.map((cat, i) => {
             const Icon = cat.icon;
