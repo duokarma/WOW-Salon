@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { X, Clock, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, Clock, ArrowUpRight, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import SectionHeader from './ui/SectionHeader';
 import BeforeAfterSlider from './ui/BeforeAfterSlider';
 import { getAsset } from '../lib/assets';
