@@ -177,13 +177,13 @@ const Services = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="premium-service-card snap-start shrink-0 w-[85vw] sm:w-[320px] lg:w-[360px] relative rounded-2xl bg-[#FFFDF9] border border-[#E8DCC4] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_60px_rgba(140,118,84,0.12)] transition-all duration-500 overflow-hidden flex flex-col group/card"
+                className="premium-service-card snap-start shrink-0 w-[85vw] sm:w-[320px] lg:w-[360px] relative rounded-2xl bg-[#FFFDF9]/40 backdrop-blur-xl border border-white/60 p-8 shadow-[0_8px_32px_rgba(140,118,84,0.08)] hover:shadow-[0_20px_60px_rgba(140,118,84,0.15)] transition-all duration-500 overflow-hidden flex flex-col group/card"
               >
                 {/* Subtle Hover Glow inside card */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FFFDF9] via-[#FFFDF9] to-[#F4DFB8]/30 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-white/40 to-[#F4DFB8]/40 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
 
                 <div className="relative z-10">
-                  <div className="w-14 h-14 rounded-full bg-[#FDF8F0] border border-[#E8DCC4] flex items-center justify-center text-[#8C7654] mb-6 group-hover/card:scale-110 group-hover/card:bg-[#8C7654] group-hover/card:text-white transition-all duration-500 shadow-sm">
+                  <div className="w-14 h-14 rounded-full bg-white/50 backdrop-blur-md border border-white/70 flex items-center justify-center text-[#8C7654] mb-6 group-hover/card:scale-110 group-hover/card:bg-[#8C7654] group-hover/card:text-white group-hover/card:border-[#8C7654] transition-all duration-500 shadow-sm">
                     <Icon size={24} strokeWidth={1.5} />
                   </div>
                   
