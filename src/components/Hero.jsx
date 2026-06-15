@@ -1,609 +1,152 @@
-"use client";
-
-import * as React from "react";
-import { cn } from "../lib/utils";
-import {
-  WebGLErrorBoundary,
-  WebGLFallback,
-} from "./ui/webgl-error-boundary";
-
-import { TextEffect } from './core/text-effect';
-import { SceneManager } from '../three/SceneManager';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight, Play, Star, Sparkles } from 'lucide-react';
-
-const VERTEX_SHADER = `
-attribute vec2 position;
-
-void main() {
-  gl_Position = vec4(position, 0.0, 1.0);
-}
-`;
-
-const FRAGMENT_SHADER = `
-precision highp float;
-
-uniform vec2 u_res;
-uniform vec2 u_mouse;
-uniform float u_time;
-uniform float u_speed;
-uniform float u_intensity;
-uniform float u_grain;
-uniform float u_vignette;
-uniform float u_mouseInfluence;
-uniform vec3 u_base;
-uniform vec3 u_mid;
-uniform vec3 u_sheen;
-uniform vec3 u_accent;
-
-float hash(vec2 p) {
-  return fract(sin(dot(p, vec2(41.93, 289.17))) * 43758.5453123);
-}
-
-float noise(vec2 p) {
-  vec2 i = floor(p);
-  vec2 f = fract(p);
-  vec2 u = f * f * (3.0 - 2.0 * f);
-
-  float a = hash(i);
-  float b = hash(i + vec2(1.0, 0.0));
-  float c = hash(i + vec2(0.0, 1.0));
-  float d = hash(i + vec2(1.0, 1.0));
-
-  return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
-}
-
-float fbm(vec2 p) {
-  float value = 0.0;
-  float amp = 0.5;
-  mat2 rot = mat2(0.82, 0.57, -0.57, 0.82);
-
-  for (int i = 0; i < 5; i++) {
-    value += amp * noise(p);
-    p = rot * p * 2.03;
-    amp *= 0.5;
-  }
-
-  return value;
-}
-
-float ribbon(vec2 p, float offset, float width, float softness) {
-  float y = p.y + sin(p.x * 1.8 + offset) * 0.18;
-  y += sin(p.x * 4.2 - offset * 0.7) * 0.045;
-  return smoothstep(width + softness, width, abs(y));
-}
-
-void main() {
-  vec2 uv = gl_FragCoord.xy / u_res;
-  float aspect = u_res.x / max(u_res.y, 1.0);
-  vec2 p = (uv - 0.5) * vec2(aspect, 1.0);
-
-  vec2 mouse = (u_mouse - 0.5) * vec2(aspect, 1.0);
-  float t = u_time * 0.12 * u_speed;
-  float pointerFalloff = smoothstep(0.72, 0.0, length(p - mouse));
-  p += (mouse - p) * pointerFalloff * 0.05 * u_mouseInfluence;
-
-  vec2 silk = p;
-  silk.x += fbm(p * 1.6 + vec2(t * 0.8, -t * 0.35)) * 0.16;
-  silk.y += fbm(p * 2.2 + vec2(-t * 0.25, t * 0.7)) * 0.10;
-
-  float veilA = ribbon(silk + vec2(-0.18, 0.08), t * 2.1, 0.055, 0.22);
-  float veilB = ribbon(silk * vec2(0.86, 1.18) + vec2(0.2, -0.14), -t * 2.8 + 1.7, 0.038, 0.18);
-  float veilC = ribbon(silk * vec2(1.18, 0.9) + vec2(-0.08, 0.24), t * 1.4 - 2.1, 0.03, 0.16);
-
-  float atmosphere = fbm(p * 1.35 + vec2(t * 0.22, -t * 0.1));
-  float pearlescent = pow(max(0.0, sin((p.x - p.y) * 7.5 + atmosphere * 4.0 - t * 2.5)), 5.0);
-  float glint = pow(max(0.0, noise(gl_FragCoord.xy * 0.065 + t * 18.0) - 0.72), 5.0);
-
-  vec3 col = u_base;
-  col = mix(col, u_mid, smoothstep(-0.45, 0.75, p.y + atmosphere * 0.75));
-  col += u_accent * veilA * 0.72 * u_intensity;
-  col += u_sheen * veilB * 0.64 * u_intensity;
-  col += mix(u_sheen, u_accent, 0.35) * veilC * 0.42 * u_intensity;
-  col += u_sheen * pearlescent * 0.075 * u_intensity;
-  col += vec3(1.0, 0.93, 0.82) * glint * 0.22 * u_intensity;
-  col += u_sheen * pointerFalloff * 0.08 * u_mouseInfluence;
-
-  float vignette = smoothstep(1.25, 0.22, length(p));
-  col *= mix(1.0 - u_vignette * 0.42, 1.06, vignette);
-
-  float grain = (hash(gl_FragCoord.xy + t * 90.0) - 0.5) * 0.08 * u_grain;
-  col += grain;
-
-  gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
-}
-`;
-
-const HEX_COLOR_REGEX = /^#?[0-9a-fA-F]{6}$/;
-
-const DEFAULT_BASE = "#050507";
-const DEFAULT_MID = "#14151d";
-const DEFAULT_SHEEN = "#f4dfb8";
-const DEFAULT_ACCENT = "#6ed6c9";
-
-function sanitizeHexColor(value, fallback) {
-  const trimmed = value.trim();
-  if (!HEX_COLOR_REGEX.test(trimmed)) {
-    return fallback;
-  }
-
-  return trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
-}
-
-function hexToRgb01(hex, fallback) {
-  const normalized = sanitizeHexColor(hex, fallback).replace("#", "");
-  const r = parseInt(normalized.slice(0, 2), 16) / 255;
-  const g = parseInt(normalized.slice(2, 4), 16) / 255;
-  const b = parseInt(normalized.slice(4, 6), 16) / 255;
-
-  return [r, g, b];
-}
-
-
-
-function Hero({
-  title,
-  subtitle,
-  description,
-  baseColor = DEFAULT_BASE,
-  midColor = DEFAULT_MID,
-  sheenColor = DEFAULT_SHEEN,
-  accentColor = DEFAULT_ACCENT,
-  speed = 1,
-  intensity = 1,
-  grain = 0.85,
-  vignette = 1,
-  mouseInfluence = 1,
-  interactive = true,
-  className,
-  children,
-  style,
-  ...props
-}) {
-  const containerRef = React.useRef(null);
-  const canvasRef = React.useRef(null);
-  const mouseRef = React.useRef({ x: 0.5, y: 0.5 });
-  const targetMouseRef = React.useRef({ x: 0.5, y: 0.5 });
-  const [hasWebGLError, setHasWebGLError] = React.useState(false);
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
-
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1000], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.4,
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
-    }
-  };
-
-  const settings = React.useMemo(
-    () => ({
-      baseColor,
-      midColor,
-      sheenColor,
-      accentColor,
-      speed,
-      intensity,
-      grain,
-      vignette,
-      mouseInfluence,
-      interactive,
-    }),
-    [
-      baseColor,
-      midColor,
-      sheenColor,
-      accentColor,
-      speed,
-      intensity,
-      grain,
-      vignette,
-      mouseInfluence,
-      interactive,
-    ],
-  );
-
-  React.useEffect(() => {
-    if (hasWebGLError) {
-      return;
-    }
-
-    const container = containerRef.current;
-    const canvas = canvasRef.current;
-    if (!container || !canvas) {
-      return;
-    }
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const handlePointerMove = (event) => {
-      if (!settings.interactive) {
-        return;
-      }
-
-      const rect = container.getBoundingClientRect();
-      targetMouseRef.current = {
-        x: (event.clientX - rect.left) / rect.width,
-        y: 1 - (event.clientY - rect.top) / rect.height,
-      };
-      setMousePosition({
-        x: (event.clientX / window.innerWidth - 0.5) * 20,
-        y: (event.clientY / window.innerHeight - 0.5) * 20,
-      });
-    };
-
-    const handlePointerLeave = () => {
-      targetMouseRef.current = { x: 0.5, y: 0.5 };
-    };
-
-    container.addEventListener("pointermove", handlePointerMove);
-    container.addEventListener("pointerleave", handlePointerLeave);
-
-    try {
-      const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
-      if (!gl) {
-        setHasWebGLError(true);
-        return () => {
-          container.removeEventListener("pointermove", handlePointerMove);
-          container.removeEventListener("pointerleave", handlePointerLeave);
-        };
-      }
-
-      const compileShader = (type, source) => {
-        const shader = gl.createShader(type);
-        if (!shader) {
-          return null;
-        }
-
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-          gl.deleteShader(shader);
-          return null;
-        }
-
-        return shader;
-      };
-
-      const vertexShader = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER);
-      const fragmentShader = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
-      if (!vertexShader || !fragmentShader) {
-        setHasWebGLError(true);
-        return;
-      }
-
-      const program = gl.createProgram();
-      if (!program) {
-        gl.deleteShader(vertexShader);
-        gl.deleteShader(fragmentShader);
-        setHasWebGLError(true);
-        return;
-      }
-
-      gl.attachShader(program, vertexShader);
-      gl.attachShader(program, fragmentShader);
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        gl.deleteProgram(program);
-        gl.deleteShader(vertexShader);
-        gl.deleteShader(fragmentShader);
-        setHasWebGLError(true);
-        return;
-      }
-
-      gl.useProgram(program);
-
-      const position = gl.getAttribLocation(program, "position");
-      const buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      gl.bufferData(
-        gl.ARRAY_BUFFER,
-        new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-        gl.STATIC_DRAW,
-      );
-      gl.enableVertexAttribArray(position);
-      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-
-      const uRes = gl.getUniformLocation(program, "u_res");
-      const uMouse = gl.getUniformLocation(program, "u_mouse");
-      const uTime = gl.getUniformLocation(program, "u_time");
-      const uSpeed = gl.getUniformLocation(program, "u_speed");
-      const uIntensity = gl.getUniformLocation(program, "u_intensity");
-      const uGrain = gl.getUniformLocation(program, "u_grain");
-      const uVignette = gl.getUniformLocation(program, "u_vignette");
-      const uMouseInfluence = gl.getUniformLocation(program, "u_mouseInfluence");
-      const uBase = gl.getUniformLocation(program, "u_base");
-      const uMid = gl.getUniformLocation(program, "u_mid");
-      const uSheen = gl.getUniformLocation(program, "u_sheen");
-      const uAccent = gl.getUniformLocation(program, "u_accent");
-
-      if (
-        !uRes ||
-        !uMouse ||
-        !uTime ||
-        !uSpeed ||
-        !uIntensity ||
-        !uGrain ||
-        !uVignette ||
-        !uMouseInfluence ||
-        !uBase ||
-        !uMid ||
-        !uSheen ||
-        !uAccent
-      ) {
-        gl.deleteBuffer(buffer);
-        gl.deleteProgram(program);
-        gl.deleteShader(vertexShader);
-        gl.deleteShader(fragmentShader);
-        setHasWebGLError(true);
-        return;
-      }
-
-      const resize = () => {
-        const isMobile = window.innerWidth < 768;
-        const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
-        const { width, height } = container.getBoundingClientRect();
-        canvas.width = Math.max(1, Math.floor(width * dpr));
-        canvas.height = Math.max(1, Math.floor(height * dpr));
-        gl.viewport(0, 0, canvas.width, canvas.height);
-        gl.uniform2f(uRes, canvas.width, canvas.height);
-      };
-
-      resize();
-      const resizeObserver = new ResizeObserver(resize);
-      resizeObserver.observe(container);
-
-      const base = hexToRgb01(settings.baseColor, DEFAULT_BASE);
-      const mid = hexToRgb01(settings.midColor, DEFAULT_MID);
-      const sheen = hexToRgb01(settings.sheenColor, DEFAULT_SHEEN);
-      const accent = hexToRgb01(settings.accentColor, DEFAULT_ACCENT);
-
-      gl.uniform3f(uBase, base[0], base[1], base[2]);
-      gl.uniform3f(uMid, mid[0], mid[1], mid[2]);
-      gl.uniform3f(uSheen, sheen[0], sheen[1], sheen[2]);
-      gl.uniform3f(uAccent, accent[0], accent[1], accent[2]);
-
-      let rafId = 0;
-      const start = performance.now();
-
-      const render = (now) => {
-        mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.045;
-        mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.045;
-
-        const elapsed = reducedMotion ? 8 : (now - start) / 1000;
-
-        gl.uniform2f(uMouse, mouseRef.current.x, mouseRef.current.y);
-        gl.uniform1f(uTime, elapsed);
-        gl.uniform1f(uSpeed, reducedMotion ? 0 : settings.speed);
-        gl.uniform1f(uIntensity, settings.intensity);
-        gl.uniform1f(uGrain, settings.grain);
-        gl.uniform1f(uVignette, settings.vignette);
-        gl.uniform1f(
-          uMouseInfluence,
-          settings.interactive && !reducedMotion ? settings.mouseInfluence : 0,
-        );
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
-        rafId = requestAnimationFrame(render);
-      };
-
-      rafId = requestAnimationFrame(render);
-
-      return () => {
-        container.removeEventListener("pointermove", handlePointerMove);
-        container.removeEventListener("pointerleave", handlePointerLeave);
-        cancelAnimationFrame(rafId);
-        resizeObserver.disconnect();
-        gl.deleteBuffer(buffer);
-        gl.deleteProgram(program);
-        gl.deleteShader(vertexShader);
-        gl.deleteShader(fragmentShader);
-      };
-    } catch {
-      setHasWebGLError(true);
-      return () => {
-        container.removeEventListener("pointermove", handlePointerMove);
-        container.removeEventListener("pointerleave", handlePointerLeave);
-      };
-    }
-  }, [hasWebGLError, settings]);
-
-  const fallbackContent = (
-    <div
-      className={cn(
-        "relative flex min-h-screen w-full items-center overflow-hidden bg-[#FDFBF7] text-[#2A1E12]",
-        className,
-      )}
-      style={{ containerType: "size", ...style }}
-      {...props}
-    >
-      <WebGLFallback className="absolute inset-0 h-full w-full" />
-        {(title || subtitle || description || children) && (
-          <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6 py-20 md:px-10 md:py-32 flex flex-col items-center justify-center pt-28 sm:pt-40 text-center">
-            {/* Cinematic Badge */}
-            <div className="liquid-glass-light rounded-full p-1.5 flex items-center gap-3 w-fit mx-auto mb-8 shadow-sm">
-              <span className="bg-[#2A1E12] text-white px-3 py-1 rounded-full text-xs font-semibold tracking-wide">NEW</span>
-              <span className="text-[13px] text-[#2A1E12] font-medium pr-4">Discover our premium bridal packages</span>
-            </div>
-            
-            {title && (
-              <h1 className="max-w-[1000px] text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-display font-light leading-[0.95] tracking-tight text-[#1A1A1A] drop-shadow-[0_4px_12px_rgba(0,0,0,0.05)] mb-6 flex flex-wrap justify-center" style={{ textWrap: 'balance' }}>
-                {title}
-              </h1>
-            )}
-            
-            {description && (
-              <p className="text-sm sm:text-base leading-relaxed text-[#2A1E12]/70 md:text-lg max-w-[640px] mx-auto font-light">
-                {description}
-              </p>
-            )}
-            
-            {/* Cinematic CTAs */}
-            <div className="flex flex-col sm:flex-row items-center gap-6 mt-10">
-              <button className="liquid-glass-strong-light rounded-full px-7 py-3.5 text-sm font-semibold text-[#2A1E12] flex items-center gap-2 uppercase tracking-widest transition-transform duration-300 hover:scale-105">
-                Book an Appointment <ArrowUpRight size={18} />
-              </button>
-              <button className="text-sm font-semibold text-[#2A1E12] flex items-center gap-2 uppercase tracking-widest hover:opacity-70 transition-opacity">
-                View Services <Play size={16} fill="currentColor" />
-              </button>
-            </div>
-
-            {/* Cinematic Stats Row */}
-            <div className="flex flex-col sm:flex-row items-stretch gap-4 mt-16 justify-center w-full">
-              <div className="liquid-glass-light p-6 w-full sm:w-[240px] rounded-[1.5rem] text-left flex flex-col items-start text-[#2A1E12] transition-transform hover:-translate-y-1 duration-300">
-                <Star className="w-8 h-8 mb-6 opacity-80" />
-                <div className="text-5xl font-display font-light leading-none tracking-tight">1500+</div>
-                <div className="text-[11px] font-semibold uppercase tracking-widest mt-3 opacity-60">Happy Clients</div>
-              </div>
-              <div className="liquid-glass-light p-6 w-full sm:w-[240px] rounded-[1.5rem] text-left flex flex-col items-start text-[#2A1E12] transition-transform hover:-translate-y-1 duration-300">
-                <Sparkles className="w-8 h-8 mb-6 opacity-80" />
-                <div className="text-5xl font-display font-light leading-none tracking-tight">50+</div>
-                <div className="text-[11px] font-semibold uppercase tracking-widest mt-3 opacity-60">Signature Services</div>
-              </div>
-            </div>
-
-            {/* Partners/Brands */}
-            <div className="mt-20 flex flex-col items-center gap-6 w-full pb-8">
-              <div className="liquid-glass-light rounded-full px-5 py-2 text-[10px] sm:text-xs font-semibold text-[#2A1E12]/80 uppercase tracking-[0.2em]">
-                Collaborating with top beauty brands globally
-              </div>
-              <div className="flex flex-wrap justify-center gap-8 md:gap-16 font-display font-light text-2xl md:text-3xl text-[#2A1E12]/60 tracking-tight">
-                <span>L'Oréal</span>
-                <span>Dyson</span>
-                <span>Olaplex</span>
-                <span>Kérastase</span>
-                <span>Wella</span>
-              </div>
-            </div>
-
-          </div>
-        )}
-    </div>
-  );
-
-  if (hasWebGLError) {
-    return fallbackContent;
-  }
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { ArrowUpRight, Play, Clock, Globe } from 'lucide-react';
+import FadingVideo from './ui/FadingVideo';
+
+const BlurText = ({ text, className }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.1, once: true });
+  const words = text.split(' ');
 
   return (
-    <WebGLErrorBoundary fallback={fallbackContent}>
-      <div
-        ref={containerRef}
-        className={cn(
-          "relative flex min-h-screen w-full items-center overflow-hidden bg-[#FDFBF7] text-[#2A1E12]",
-          className,
-        )}
-        style={{ containerType: "size", ...style }}
-        {...props}
-      >
-        <canvas
-          ref={canvasRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full"
-          style={{ width: "100%", height: "100%", display: "block" }}
-        />
+    <p
+      ref={ref}
+      className={className}
+      style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', rowGap: '0.1em' }}
+    >
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ filter: 'blur(10px)', opacity: 0, y: 50 }}
+          animate={isInView ? { 
+            filter: ['blur(10px)', 'blur(5px)', 'blur(0px)'],
+            opacity: [0, 0.5, 1],
+            y: [50, -5, 0]
+          } : {}}
+          transition={{
+            duration: 0.7,
+            times: [0, 0.5, 1],
+            ease: 'easeOut',
+            delay: (i * 100) / 1000
+          }}
+          style={{ display: 'inline-block', marginRight: '0.28em' }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </p>
+  );
+};
+
+export default function Hero() {
+  return (
+    <section className="relative w-full min-h-screen bg-black overflow-hidden flex flex-col items-center justify-between z-10 font-body">
+      {/* Background Video */}
+      <FadingVideo
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
+        className="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top z-0 opacity-40"
+        style={{ width: "120%", height: "120%", maxWidth: "none" }}
+      />
+
+      {/* Custom Navbar inside Hero */}
+      <nav className="fixed top-4 left-0 right-0 px-8 lg:px-16 z-50 flex items-center justify-between pointer-events-none">
+        <div className="w-12 h-12 rounded-full liquid-glass flex items-center justify-center pointer-events-auto">
+          <span className="font-heading italic text-white text-2xl uppercase mt-1">W</span>
+        </div>
         
-        {/* Light Theme Gradients */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(212,168,83,0.08),transparent_24%),radial-gradient(circle_at_18%_74%,rgba(184,146,46,0.05),transparent_30%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(253,251,247,0.4),rgba(253,251,247,0.1)_42%,rgba(253,251,247,0.4))]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#FDFBF7] via-[#FDFBF7]/80 to-transparent" />
-        
-        {/* Constrain 3D Scene to Hero section to eliminate scroll lag */}
-        <div className="absolute inset-0 z-[5] pointer-events-none">
-          <SceneManager />
+        <div className="hidden lg:flex items-center liquid-glass rounded-full px-1.5 py-1.5 gap-1 pointer-events-auto">
+          {['Services', 'Gallery', 'Reviews', 'Staff', 'Contact'].map((link) => (
+            <a key={link} href={`#${link.toLowerCase()}`} className="px-3 py-2 text-sm font-medium text-white/90 font-body hover:text-white transition-colors">
+              {link}
+            </a>
+          ))}
+          <button className="bg-white text-black rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap flex items-center gap-1 hover:bg-white/90 transition-colors ml-2">
+            Book Appointment <ArrowUpRight size={16} />
+          </button>
         </div>
 
-        {(title || subtitle || description || children) && (
-          <motion.div 
-            className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6 py-20 md:px-10 md:py-32 flex flex-col items-center justify-center pt-28 sm:pt-40 text-center"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            style={{ 
-              y, 
-              opacity,
-              x: mousePosition.x * -0.5,
-              rotateX: mousePosition.y * 0.1,
-              rotateY: mousePosition.x * 0.1,
-            }}
-          >
-            {/* Cinematic Badge */}
-            <motion.div variants={itemVariants} className="liquid-glass-light rounded-full p-1.5 flex items-center gap-3 w-fit mx-auto mb-8 shadow-sm">
-              <span className="bg-[#2A1E12] text-white px-3 py-1 rounded-full text-xs font-semibold tracking-wide">NEW</span>
-              <span className="text-[13px] text-[#2A1E12] font-medium pr-4">Discover our premium bridal packages</span>
-            </motion.div>
-            
-            {title && (
-              <h1 className="max-w-[1000px] text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-display font-light leading-[0.95] tracking-tight text-[#1A1A1A] drop-shadow-[0_4px_12px_rgba(0,0,0,0.05)] mb-6 flex flex-wrap justify-center" style={{ textWrap: 'balance' }}>
-                <TextEffect per="word" preset="fade-in-blur">{title}</TextEffect>
-              </h1>
-            )}
-            
-            {description && (
-              <motion.p variants={itemVariants} className="text-sm sm:text-base leading-relaxed text-[#2A1E12]/70 md:text-lg max-w-[640px] mx-auto font-light">
-                {description}
-              </motion.p>
-            )}
-            
-            {/* Cinematic CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-6 mt-10">
-              <button className="liquid-glass-strong-light rounded-full px-7 py-3.5 text-sm font-semibold text-[#2A1E12] flex items-center gap-2 uppercase tracking-widest transition-transform duration-300 hover:scale-105">
-                Book an Appointment <ArrowUpRight size={18} />
-              </button>
-              <button className="text-sm font-semibold text-[#2A1E12] flex items-center gap-2 uppercase tracking-widest hover:opacity-70 transition-opacity">
-                View Services <Play size={16} fill="currentColor" />
-              </button>
-            </motion.div>
+        <div className="w-12 h-12 invisible"></div>
+      </nav>
 
-            {/* Cinematic Stats Row */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-stretch gap-4 mt-16 justify-center w-full">
-              <div className="liquid-glass-light p-6 w-full sm:w-[240px] rounded-[1.5rem] text-left flex flex-col items-start text-[#2A1E12] transition-transform hover:-translate-y-1 duration-300">
-                <Star className="w-8 h-8 mb-6 opacity-80" />
-                <div className="text-5xl font-display font-light leading-none tracking-tight">1500+</div>
-                <div className="text-[11px] font-semibold uppercase tracking-widest mt-3 opacity-60">Happy Clients</div>
-              </div>
-              <div className="liquid-glass-light p-6 w-full sm:w-[240px] rounded-[1.5rem] text-left flex flex-col items-start text-[#2A1E12] transition-transform hover:-translate-y-1 duration-300">
-                <Sparkles className="w-8 h-8 mb-6 opacity-80" />
-                <div className="text-5xl font-display font-light leading-none tracking-tight">50+</div>
-                <div className="text-[11px] font-semibold uppercase tracking-widest mt-3 opacity-60">Signature Services</div>
-              </div>
-            </motion.div>
+      {/* Main Content */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center pt-24 px-4 w-full">
+        
+        <motion.div
+          initial={{ filter: 'blur(10px)', opacity: 0, y: 20 }}
+          animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, ease: 'easeOut' }}
+          className="liquid-glass rounded-full p-1.5 flex items-center gap-3 w-fit mb-8"
+        >
+          <span className="bg-white text-black px-3 py-1 rounded-full text-xs font-semibold">Premium</span>
+          <span className="text-sm text-white/90 pr-3 font-medium">Elevating Dahod's Beauty Standards Since 2024</span>
+        </motion.div>
 
-            {/* Partners/Brands */}
-            <motion.div variants={itemVariants} className="mt-20 flex flex-col items-center gap-6 w-full pb-8">
-              <div className="liquid-glass-light rounded-full px-5 py-2 text-[10px] sm:text-xs font-semibold text-[#2A1E12]/80 uppercase tracking-[0.2em]">
-                Collaborating with top beauty brands globally
-              </div>
-              <div className="flex flex-wrap justify-center gap-8 md:gap-16 font-display font-light text-2xl md:text-3xl text-[#2A1E12]/60 tracking-tight">
-                <span>L'Oréal</span>
-                <span>Dyson</span>
-                <span>Olaplex</span>
-                <span>Kérastase</span>
-                <span>Wella</span>
-              </div>
-            </motion.div>
+        <BlurText 
+          text="Experience The Ultimate WOW Transformation"
+          className="text-6xl md:text-7xl lg:text-[5.5rem] font-heading italic text-white leading-[0.8] max-w-4xl text-center tracking-[-4px]"
+        />
 
-          </motion.div>
-        )}
+        <motion.p
+          initial={{ filter: 'blur(10px)', opacity: 0, y: 20 }}
+          animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, ease: 'easeOut' }}
+          className="mt-4 text-sm md:text-base text-white max-w-2xl font-body font-light leading-tight text-center"
+        >
+          Discover a premium salon experience built around elevating your look into striking reality. Immerse yourself in luxury and let our experts craft your signature style.
+        </motion.p>
+
+        <motion.div
+          initial={{ filter: 'blur(10px)', opacity: 0, y: 20 }}
+          animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, ease: 'easeOut' }}
+          className="flex items-center gap-6 mt-6"
+        >
+          <button className="liquid-glass-strong rounded-full px-5 py-2.5 text-sm font-medium text-white flex items-center gap-2 hover:scale-105 transition-transform">
+            Book Appointment <ArrowUpRight size={20} />
+          </button>
+          <button className="text-sm font-medium text-white flex items-center gap-2 hover:opacity-70 transition-opacity">
+            View Services <Play size={16} fill="currentColor" />
+          </button>
+        </motion.div>
+
+        <motion.div
+          initial={{ filter: 'blur(10px)', opacity: 0, y: 20 }}
+          animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
+          transition={{ delay: 1.3, ease: 'easeOut' }}
+          className="flex flex-col sm:flex-row items-stretch gap-4 mt-8"
+        >
+          <div className="liquid-glass p-5 w-[220px] rounded-[1.25rem]">
+            <Clock className="w-7 h-7 text-white mb-6" strokeWidth={1.5} />
+            <div className="text-4xl tracking-[-1px] leading-none font-heading italic text-white">50+</div>
+            <div className="text-xs text-white/80 font-body font-light mt-2">Signature Services</div>
+          </div>
+          <div className="liquid-glass p-5 w-[220px] rounded-[1.25rem]">
+            <Globe className="w-7 h-7 text-white mb-6" strokeWidth={1.5} />
+            <div className="text-4xl tracking-[-1px] leading-none font-heading italic text-white">1,500+</div>
+            <div className="text-xs text-white/80 font-body font-light mt-2">Happy Clients</div>
+          </div>
+        </motion.div>
+
       </div>
-    </WebGLErrorBoundary>
+
+      {/* Partners */}
+      <motion.div
+        initial={{ filter: 'blur(10px)', opacity: 0, y: 20 }}
+        animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
+        transition={{ delay: 1.4, ease: 'easeOut' }}
+        className="relative z-10 flex flex-col items-center gap-4 pb-8 mt-12 w-full"
+      >
+        <div className="liquid-glass rounded-full px-3.5 py-1 text-xs font-medium text-white">
+          Collaborating with premium beauty brands globally
+        </div>
+        <div className="flex flex-wrap justify-center font-heading italic text-white text-2xl md:text-3xl tracking-tight gap-12 md:gap-16">
+          <span>L'Oréal</span>
+          <span>Dyson</span>
+          <span>Schwarzkopf</span>
+          <span>Matrix</span>
+          <span>Wella</span>
+        </div>
+      </motion.div>
+    </section>
   );
 }
-
-export default Hero;

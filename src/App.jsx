@@ -8,6 +8,7 @@ import MagneticButton from './components/ui/MagneticButton';
 import { ArrowUpRight } from 'lucide-react';
 
 import Hero from './components/Hero';
+import Capabilities from './components/Capabilities';
 import About from './components/About';
 import Services from './components/Services';
 import Staff from './components/Staff';
@@ -48,16 +49,9 @@ function App() {
           <TouchInteraction />
           <Navbar />
           <div id="home">
-            <Hero
-              title="EXPERIENCE THE WOW"
-              subtitle="Premium Salon Experience"
-              description="A premium salon built around elevating your look into striking reality. Join our 1500+ happy clients and enjoy over 50+ signature services."
-              baseColor="#FDFBF7"
-              midColor="#F4EFE6"
-              sheenColor="#D4A853"
-              accentColor="#B8922E"
-            />
+            <Hero />
           </div>
+          <Capabilities />
           <About />
           <Services />
           <Staff />
