@@ -16,10 +16,13 @@ const Gallery = () => {
   };
 
   return (
-    <section className="section section-dark relative overflow-hidden" id="gallery" style={{ paddingBottom: '100px' }}>
-      {/* Luxury Background Accents */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#b8922e]/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#b8922e]/5 rounded-full blur-[150px] pointer-events-none"></div>
+    <section className="section relative overflow-hidden text-[#F9F6F0] bg-[#0a0806]" id="gallery" style={{ paddingBottom: '100px' }}>
+      {/* Vibrant Orbs for Glassmorphism Underlay */}
+      <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[#d4a853]/30 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[-20%] right-[-10%] w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] bg-[#8b7355]/20 rounded-full blur-[140px] pointer-events-none"></div>
+      
+      {/* Heavy Frosted Glass Overlay */}
+      <div className="absolute inset-0 bg-[#120e0a]/40 backdrop-blur-[80px] border-y border-[#d4a853]/10 pointer-events-none z-0"></div>
 
       <div className="container relative z-10 mb-8 flex justify-between items-end">
         <SectionHeader

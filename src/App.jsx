@@ -49,20 +49,14 @@ function App() {
           <Navbar />
           <div id="home">
             <Hero
-              title="LUXURY BEAUTY DELIVERED"
+              title="EXPERIENCE THE WOW"
               subtitle="Premium Salon Experience"
-              description="Premium salon built around elevating your look into striking reality. Join our 1500+ happy clients and enjoy over 50+ premium services."
-            >
-              <MagneticButton
-                href="https://wa.me/919924404860"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#F4DFB8] text-[#2A1E12] px-8 py-4 rounded-full text-sm font-semibold uppercase tracking-wider shadow-lg hover:bg-[#E6D5B8] transition-colors"
-                style={{ pointerEvents: 'auto' }}
-              >
-                BOOK NOW / WHATSAPP <ArrowUpRight size={20} className="inline-block ml-2" />
-              </MagneticButton>
-            </Hero>
+              description="A premium salon built around elevating your look into striking reality. Join our 1500+ happy clients and enjoy over 50+ signature services."
+              baseColor="#FDFBF7"
+              midColor="#F4EFE6"
+              sheenColor="#D4A853"
+              accentColor="#B8922E"
+            />
           </div>
           <About />
           <Services />

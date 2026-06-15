@@ -469,7 +469,7 @@ export function Hero({
       <div
         ref={containerRef}
         className={cn(
-          "relative flex min-h-screen w-full items-center overflow-hidden bg-[#050507] text-white",
+          "relative flex min-h-screen w-full items-center overflow-hidden bg-[#FDFBF7] text-[#2A1E12]",
           className,
         )}
         style={{ containerType: "size", ...style }}
@@ -481,9 +481,11 @@ export function Hero({
           className="pointer-events-none absolute inset-0 h-full w-full"
           style={{ width: "100%", height: "100%", display: "block" }}
         />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(255,255,255,0.16),transparent_24%),radial-gradient(circle_at_18%_74%,rgba(110,214,201,0.13),transparent_30%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.46),rgba(0,0,0,0.14)_42%,rgba(0,0,0,0.42))]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
+        
+        {/* Light Theme Gradients */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(212,168,83,0.08),transparent_24%),radial-gradient(circle_at_18%_74%,rgba(184,146,46,0.05),transparent_30%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(253,251,247,0.4),rgba(253,251,247,0.1)_42%,rgba(253,251,247,0.4))]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#FDFBF7] via-[#FDFBF7]/80 to-transparent" />
         
         {/* Constrain 3D Scene to Hero section to eliminate scroll lag */}
         <div className="absolute inset-0 z-[5] pointer-events-none">
@@ -505,7 +507,7 @@ export function Hero({
             }}
           >
             {subtitle && (
-              <motion.div variants={itemVariants} className="mb-8 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.3em] text-[#d4a853]">
+              <motion.div variants={itemVariants} className="mb-8 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.3em] text-[#B8922E]">
                 {subtitle}
               </motion.div>
             )}
@@ -513,19 +515,19 @@ export function Hero({
             {title && (
               <motion.h1 
                 variants={itemVariants} 
-                className="max-w-[900px] text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-display font-light leading-[1.1] tracking-[0.05em] text-white uppercase drop-shadow-2xl"
+                className="max-w-[900px] text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-display font-light leading-[1.1] tracking-[0.05em] text-[#1A1A1A] uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
                 style={{ textWrap: 'balance' }}
               >
                 {title}
               </motion.h1>
             )}
             
-            <motion.p variants={itemVariants} className="mt-8 text-sm sm:text-base lg:text-lg font-light text-[#E6D5B8] uppercase tracking-[0.15em] mb-4">
+            <motion.p variants={itemVariants} className="mt-8 text-sm sm:text-base lg:text-lg font-medium text-[#2A1E12]/70 uppercase tracking-[0.15em] mb-4">
               Elevating your aesthetic. Where artistry meets elegance.
             </motion.p>
             
             {description && (
-              <motion.p variants={itemVariants} className="mt-4 text-xs sm:text-sm leading-relaxed text-white/60 md:text-base max-w-[500px] mx-auto font-light">
+              <motion.p variants={itemVariants} className="mt-4 text-xs sm:text-sm leading-relaxed text-[#2A1E12]/60 md:text-base max-w-[500px] mx-auto font-light">
                 {description}
               </motion.p>
             )}
