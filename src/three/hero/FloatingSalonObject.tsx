@@ -59,28 +59,28 @@ export function FloatingSalonObject() {
         floatingRange={[-0.4, 0.4]}
       >
         {/* 
-          A complex TorusKnot represents abstract, elegant curves
-          symbolic of hair styling and natural flow. Reduced detail on mobile.
+          A minimalist Torus (ring) represents timeless elegance,
+          flow, and perfection. It's much cleaner than the TorusKnot.
         */}
-        <TorusKnot ref={meshRef} args={[1.2, 0.35, isMobile ? 32 : 64, isMobile ? 8 : 16]} position={[0, 0, 0]}>
+        <Torus ref={meshRef} args={[1.4, 0.08, isMobile ? 32 : 64, isMobile ? 64 : 128]} position={[0, 0, 0]}>
           <MeshTransmissionMaterial
             backside={false} // Renders backside for realistic glass refraction only on desktop
-            samples={isMobile ? 1 : 2} // Balanced for high performance + premium visual
-            thickness={1.5}
-            chromaticAberration={0.08}
-            anisotropy={0.2}
-            distortion={0.3} // Adds organic, fluid rippling inside the glass
-            distortionScale={0.4}
-            temporalDistortion={0.05} // Animated distortion
+            samples={isMobile ? 1 : 3} // Balanced for high performance + premium visual
+            thickness={2.5}
+            chromaticAberration={0.12}
+            anisotropy={0.3}
+            distortion={0.1} // Very subtle rippling
+            distortionScale={0.2}
+            temporalDistortion={0.02}
             clearcoat={1}
-            clearcoatRoughness={0.1}
-            metalness={0.2}
-            roughness={0.05}
-            ior={1.45} // Index of refraction similar to fine glass/crystal
+            clearcoatRoughness={0.02}
+            metalness={0.15}
+            roughness={0.02}
+            ior={1.5} // Crystal glass
             color="#ffffff"
-            resolution={isMobile ? 64 : 128} // Capped resolution keeps mobile performance smooth
+            resolution={isMobile ? 128 : 256} // High resolution for clear glass
           />
-        </TorusKnot>
+        </Torus>
       </Float>
     </group>
   )

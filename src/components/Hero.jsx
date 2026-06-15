@@ -492,7 +492,7 @@ export function Hero({
 
         {(title || subtitle || description || children) && (
           <motion.div 
-            className="relative z-10 mx-auto w-full max-w-[1000px] px-6 py-24 md:px-10 md:py-32 flex flex-col items-center justify-center pt-32 sm:pt-40 text-center"
+            className="relative z-10 mx-auto w-full max-w-[1000px] px-4 sm:px-6 py-20 md:px-10 md:py-32 flex flex-col items-center justify-center pt-28 sm:pt-40 text-center"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -505,24 +505,32 @@ export function Hero({
             }}
           >
             {subtitle && (
-              <motion.div variants={itemVariants} className="mb-6 text-[10px] sm:text-xs font-medium uppercase tracking-[0.24em] text-[#F4DFB8]/80">
+              <motion.div variants={itemVariants} className="mb-8 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.3em] text-[#d4a853]">
                 {subtitle}
               </motion.div>
             )}
             
-            {title && <motion.h1 variants={itemVariants} className={HEADLINE_CLASS} dangerouslySetInnerHTML={{ __html: title.replace(' ', '<br class="hidden sm:block"/>') }} />}
+            {title && (
+              <motion.h1 
+                variants={itemVariants} 
+                className="max-w-[900px] text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-display font-light leading-[1.1] tracking-[0.05em] text-white uppercase drop-shadow-2xl"
+                style={{ textWrap: 'balance' }}
+              >
+                {title}
+              </motion.h1>
+            )}
             
-            <motion.p variants={itemVariants} className="mt-8 text-base sm:text-lg lg:text-xl font-light text-[#E6D5B8] uppercase tracking-[0.1em] mb-4">
+            <motion.p variants={itemVariants} className="mt-8 text-sm sm:text-base lg:text-lg font-light text-[#E6D5B8] uppercase tracking-[0.15em] mb-4">
               Elevating your aesthetic. Where artistry meets elegance.
             </motion.p>
             
             {description && (
-              <motion.p variants={itemVariants} className="mt-2 text-sm sm:text-base leading-relaxed text-white/68 md:text-lg max-w-[640px]">
+              <motion.p variants={itemVariants} className="mt-4 text-xs sm:text-sm leading-relaxed text-white/60 md:text-base max-w-[500px] mx-auto font-light">
                 {description}
               </motion.p>
             )}
             
-            {children && <motion.div variants={itemVariants} className="mt-12 flex justify-center">{children}</motion.div>}
+            {children && <motion.div variants={itemVariants} className="mt-10 sm:mt-12 flex justify-center w-full sm:w-auto">{children}</motion.div>}
           </motion.div>
         )}
       </div>
