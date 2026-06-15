@@ -1329,3 +1329,10 @@ pointer-events: none;
   left: 200%;
 }
 
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+.animate-shine {
+  animation: shine 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
