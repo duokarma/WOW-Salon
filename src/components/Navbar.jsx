@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, X, Menu } from 'lucide-react';
+import { ArrowUpRight, X, Menu, MessageCircle } from 'lucide-react';
 import { getAsset } from '../lib/assets';
 
 const Navbar = () => {
@@ -116,57 +116,67 @@ const Navbar = () => {
         </motion.div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Luxury Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-[200] bg-[#050507]/60 backdrop-blur-2xl text-[#F9F6F0] flex flex-col"
+            className="fixed inset-0 z-[200] flex flex-col justify-between overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="flex items-center justify-between px-6 py-6 border-b border-[#F4DFB8]/10">
+            {/* Glass Backdrop Layer */}
+            <div className="absolute inset-0 bg-[#050507]/60 backdrop-blur-[24px]" />
+            
+            <div className="relative z-10 flex items-center justify-between px-6 py-8">
               <img src={getAsset('/logo.webp')} alt="WOW Salon" className="h-8 filter invert opacity-90" />
               <button 
                 onClick={() => setMobileOpen(false)}
-                className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
+                className="p-3 rounded-full hover:bg-white/10 transition-colors group border border-transparent hover:border-white/20"
               >
-                <X size={24} color="#F4DFB8" strokeWidth={1.5} />
+                <X size={28} color="#FFFFFF" strokeWidth={1} className="group-hover:scale-90 transition-transform duration-500" />
               </button>
             </div>
             
-            <div className="flex-1 flex flex-col justify-center px-8 py-8 space-y-6">
-              {links.concat([{ label: 'Contact', href: '#cta' }]).map((l, i) => (
+            <div className="relative z-10 flex-1 flex flex-col justify-center px-8 py-2 space-y-6 sm:space-y-8">
+              {links.map((l, i) => (
                 <motion.a
                   key={l.label}
                   href={l.href}
-                  className="text-4xl sm:text-5xl font-display tracking-wide hover:text-[#F4DFB8] transition-colors"
+                  className="group relative flex items-center w-fit"
                   onClick={() => {
                     setActiveTab(l.label);
-                    setTimeout(() => setMobileOpen(false), 300);
+                    setTimeout(() => setMobileOpen(false), 400);
                   }}
-                  initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+                  initial={{ opacity: 0, y: 50, filter: 'blur(12px)' }}
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-                  transition={{ delay: 0.1 + i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  exit={{ opacity: 0, y: -20, filter: 'blur(10px)', transition: { duration: 0.4, delay: i * 0.05 } }}
+                  transition={{ delay: 0.15 + i * 0.08, duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
                 >
-                  {l.label}
+                  <span className="text-5xl sm:text-6xl lg:text-7xl font-display text-white/60 group-hover:text-white transition-colors duration-500 font-light tracking-tight">
+                    {l.label}
+                  </span>
+                  <ArrowUpRight size={32} className="ml-4 opacity-0 -translate-x-6 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white/80" strokeWidth={1} />
                 </motion.a>
               ))}
             </div>
             
             <motion.div 
-              className="px-8 py-10 border-t border-[#F4DFB8]/10 flex items-center justify-between"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              className="relative z-10 px-8 pb-12 pt-6 flex flex-col sm:flex-row gap-4"
+              initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+              transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="text-[#F4DFB8]/60 text-sm tracking-widest uppercase">
-                Premium Experience
-              </div>
-              <ArrowUpRight size={24} color="#F4DFB8" strokeWidth={1.5} />
+              <button className="w-full sm:w-auto bg-white/10 border border-white/20 text-white px-8 py-4 rounded-full font-body text-xs font-semibold tracking-[0.15em] uppercase hover:bg-white hover:text-black transition-colors duration-500 flex items-center justify-center gap-2 backdrop-blur-md">
+                Book Appointment <ArrowUpRight size={16} />
+              </button>
+              <button className="w-full sm:w-auto bg-transparent border border-white/20 text-white px-8 py-4 rounded-full font-body text-xs font-semibold tracking-[0.15em] uppercase hover:bg-[#25D366]/10 hover:border-[#25D366]/40 hover:text-[#25D366] transition-colors duration-500 flex items-center justify-center gap-2 backdrop-blur-md">
+                <MessageCircle size={16} /> WhatsApp
+              </button>
             </motion.div>
+
           </motion.div>
         )}
       </AnimatePresence>

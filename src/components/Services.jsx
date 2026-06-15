@@ -41,7 +41,7 @@ const Services = () => {
   };
 
   return (
-    <section className="section section-light" id="services" style={{ paddingTop: '20px' }}>
+    <section className="section section-light" id="services">
       <div className="container">
         <SectionHeader
           label="What We Offer"
