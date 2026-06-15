@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import SectionHeader from './ui/SectionHeader';
 import { getAsset } from '../lib/assets';
 import { motion } from 'framer-motion';
-import { MoveHorizontal } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Gallery = () => {
+  const sliderRef = useRef(null);
+
+  const scroll = (direction) => {
+    if (sliderRef.current) {
+      const { clientWidth } = sliderRef.current;
+      const scrollAmount = direction === 'left' ? -clientWidth / 1.5 : clientWidth / 1.5;
+      sliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="section section-dark relative overflow-hidden" id="gallery" style={{ paddingBottom: '100px' }}>
       {/* Luxury Background Accents */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#b8922e]/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#b8922e]/5 rounded-full blur-[150px] pointer-events-none"></div>
 
-      <div className="container relative z-10 mb-8">
+      <div className="container relative z-10 mb-8 flex justify-between items-end">
         <SectionHeader
           label="Our Work"
           words={['Showcase', 'Gallery']}
@@ -19,10 +29,29 @@ const Gallery = () => {
           description="A glimpse into the striking realities we create."
           style={{ marginBottom: 0 }}
         />
+        
+        {/* Desktop Premium Navigation */}
+        <div className="hidden md:flex gap-4">
+          <button 
+            onClick={() => scroll('left')}
+            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-[#d4a853] hover:border-[#d4a853] transition-all duration-300"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button 
+            onClick={() => scroll('right')}
+            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-[#d4a853] hover:border-[#d4a853] transition-all duration-300"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
       </div>
       
-      <div className="w-full relative mt-12 z-10">
-        <div className="gallery-slider flex overflow-x-auto px-4 sm:px-8 gap-6 pb-12 snap-x snap-mandatory hide-scrollbar">
+      <div className="w-full relative mt-12 z-10 group/slider">
+        <div 
+          ref={sliderRef}
+          className="gallery-slider flex overflow-x-auto px-4 sm:px-8 gap-6 pb-12 snap-x snap-mandatory hide-scrollbar scroll-smooth"
+        >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => (
             <motion.div 
               key={i} 
@@ -45,11 +74,19 @@ const Gallery = () => {
           ))}
         </div>
         
-        {/* Swipe Hint for Mobile */}
-        <div className="absolute top-[45%] left-4 right-4 flex justify-between pointer-events-none md:hidden opacity-50 z-20">
-           <div className="bg-black/60 border border-white/10 rounded-full p-2 backdrop-blur-md shadow-lg"><MoveHorizontal size={20} color="#d4a853" /></div>
-           <div className="bg-black/60 border border-white/10 rounded-full p-2 backdrop-blur-md shadow-lg"><MoveHorizontal size={20} color="#d4a853" /></div>
-        </div>
+        {/* Floating Navigation for Mobile/Tablet */}
+        <button 
+          onClick={() => scroll('left')}
+          className="absolute top-[40%] left-4 md:hidden w-12 h-12 bg-black/40 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-[#d4a853] hover:border-[#d4a853] hover:bg-black/80 transition-all duration-300 z-20 shadow-xl opacity-0 group-hover/slider:opacity-100 sm:opacity-100"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button 
+          onClick={() => scroll('right')}
+          className="absolute top-[40%] right-4 md:hidden w-12 h-12 bg-black/40 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-[#d4a853] hover:border-[#d4a853] hover:bg-black/80 transition-all duration-300 z-20 shadow-xl opacity-0 group-hover/slider:opacity-100 sm:opacity-100"
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
     </section>
   );
