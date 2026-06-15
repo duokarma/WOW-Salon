@@ -23,8 +23,10 @@ const CounterStat = ({ target, suffix = '', label }) => {
   const count = useCounter(target, isInView);
   return (
     <div ref={ref} className="stat-item">
-      <span className="stat-number">{count}</span>
-      <span className="stat-plus">{suffix}</span>
+      <div className="flex items-baseline justify-start md:justify-center">
+        <span className="stat-number">{count}</span>
+        {suffix && <span className="stat-plus ml-1">{suffix}</span>}
+      </div>
       <span className="stat-label">{label}</span>
     </div>
   );
