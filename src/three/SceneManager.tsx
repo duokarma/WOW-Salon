@@ -34,7 +34,7 @@ export function SceneManager() {
         preserveDrawingBuffer: false,
         powerPreference: "high-performance"
       }}
-      dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 1.5}
+      dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1 : 1.5) : 1}
     >
       <Suspense fallback={null}>
         <ResponsiveCamera />

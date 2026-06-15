@@ -70,6 +70,17 @@ export default function Hero() {
     mouseY.set((e.clientY / clientHeight) - 0.5);
   };
 
+  useEffect(() => {
+    const isHoverable = window.matchMedia('(hover: hover)').matches;
+    const el = containerRef.current;
+    if (isHoverable && el) {
+      el.addEventListener('mousemove', handleMouseMove, { passive: true });
+    }
+    return () => {
+      if (el) el.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   // Scroll Parallax (Depth Layers)
   const { scrollY } = useScroll();
   const videoScrollY = useTransform(scrollY, [0, 1000], [0, 200]);
@@ -80,13 +91,12 @@ export default function Hero() {
     <>
       <section 
         ref={containerRef}
-        onMouseMove={handleMouseMove}
         className="relative w-full min-h-screen bg-black overflow-hidden flex flex-col items-center justify-between z-10 font-body"
       >
         
         {/* Background Video (Layer 1: Deepest, slow scroll, ambient drift) */}
         <motion.div 
-          className="absolute inset-0 z-0 pointer-events-none"
+          className="absolute inset-0 z-0 pointer-events-none will-change-transform"
           style={{ y: videoScrollY }}
           animate={{ scale: [1, 1.03, 1], x: [-10, 10, -10], y: [-5, 5, -5] }}
           transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
@@ -100,7 +110,7 @@ export default function Hero() {
 
         {/* 3D Scene Layer (Layer 2: Middle depth, medium scroll) */}
         <motion.div 
-          className="absolute inset-0 z-[5] pointer-events-none mix-blend-screen opacity-70"
+          className="absolute inset-0 z-[5] pointer-events-none mix-blend-screen opacity-70 will-change-transform"
           style={{ y: particlesScrollY }}
         >
           <WebGLErrorBoundary fallback={<div className="absolute inset-0 pointer-events-none" />}>
@@ -112,7 +122,7 @@ export default function Hero() {
 
         {/* Main Content (Layer 3: Top depth, inverted scroll, max parallax) */}
         <motion.div 
-          className="relative z-10 flex-1 flex flex-col items-center justify-center pt-24 px-4 w-full"
+          className="relative z-10 flex-1 flex flex-col items-center justify-center pt-24 px-4 w-full will-change-transform"
           style={{ y: contentScrollY }}
         >
           

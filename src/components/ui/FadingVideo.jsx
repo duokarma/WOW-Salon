@@ -2,49 +2,22 @@ import React, { useRef, useEffect } from 'react';
 
 export default function FadingVideo({ src, className, style }) {
   const videoRef = useRef(null);
-  const fadeRafRef = useRef(null);
   const fadingOutRef = useRef(false);
 
-  const FADE_MS = 500;
   const FADE_OUT_LEAD = 0.55;
-
-  const fadeTo = (targetOpacity, durationMs) => {
-    if (!videoRef.current) return;
-    
-    if (fadeRafRef.current) {
-      cancelAnimationFrame(fadeRafRef.current);
-    }
-
-    const startOpacity = parseFloat(videoRef.current.style.opacity || '0');
-    const startTime = performance.now();
-
-    const animate = (currentTime) => {
-      if (!videoRef.current) return;
-      
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / durationMs, 1);
-      
-      const currentOpacity = startOpacity + (targetOpacity - startOpacity) * progress;
-      videoRef.current.style.opacity = currentOpacity;
-
-      if (progress < 1) {
-        fadeRafRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    fadeRafRef.current = requestAnimationFrame(animate);
-  };
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    // Use hardware-accelerated CSS transitions instead of JS requestAnimationFrame loops
+    video.style.transition = 'opacity 500ms ease';
+    video.style.willChange = 'opacity';
     video.style.opacity = '0';
 
     const handleLoadedData = () => {
-      video.style.opacity = '0';
       video.play().catch(() => {});
-      fadeTo(1, FADE_MS);
+      video.style.opacity = '1';
     };
 
     const handleTimeUpdate = () => {
@@ -53,7 +26,7 @@ export default function FadingVideo({ src, className, style }) {
       
       if (!fadingOutRef.current && timeLeft <= FADE_OUT_LEAD && timeLeft > 0) {
         fadingOutRef.current = true;
-        fadeTo(0, FADE_MS);
+        video.style.opacity = '0';
       }
     };
 
@@ -64,7 +37,7 @@ export default function FadingVideo({ src, className, style }) {
         video.currentTime = 0;
         video.play().catch(() => {});
         fadingOutRef.current = false;
-        fadeTo(1, FADE_MS);
+        video.style.opacity = '1';
       }, 100);
     };
 
@@ -73,9 +46,6 @@ export default function FadingVideo({ src, className, style }) {
     video.addEventListener('ended', handleEnded);
 
     return () => {
-      if (fadeRafRef.current) {
-        cancelAnimationFrame(fadeRafRef.current);
-      }
       video.removeEventListener('loadeddata', handleLoadedData);
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('ended', handleEnded);
