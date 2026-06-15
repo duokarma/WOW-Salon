@@ -34,7 +34,8 @@ const Location = () => (
                 <Clock size={20} />
                 <div>
                   <strong>Hours</strong>
-                  <p>Mon - Sun: 9:30 AM - 9:30 PM</p>
+                  <p>Men: 9:30 AM - 9:30 PM</p>
+                  <p>Women: 11:00 AM - 8:00 PM</p>
                 </div>
               </div>
               <div className="detail-item">
