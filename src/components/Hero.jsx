@@ -108,19 +108,7 @@ export default function Hero() {
           </WebGLErrorBoundary>
         </motion.div>
 
-        {/* Glassmorphism Navbar */}
-        <nav className="fixed top-4 left-0 right-0 px-8 lg:px-16 z-50 flex items-center justify-end pointer-events-none">
-          <div className="hidden lg:flex items-center liquid-glass rounded-full px-1.5 py-1.5 gap-1 pointer-events-auto shadow-sm">
-            {['Services', 'Gallery', 'Reviews', 'Staff', 'Contact'].map((link) => (
-              <a key={link} href={`#${link.toLowerCase()}`} className="px-3 py-2 text-sm font-medium text-white/90 font-body hover:text-white transition-colors tracking-wide">
-                {link}
-              </a>
-            ))}
-            <button className="bg-white text-black rounded-full px-5 py-2 text-sm font-medium whitespace-nowrap flex items-center gap-1 hover:bg-white/90 transition-colors ml-2 tracking-wide cta-hover-sweep">
-              Book Appointment <ArrowUpRight size={16} />
-            </button>
-          </div>
-        </nav>
+
 
         {/* Main Content (Layer 3: Top depth, inverted scroll, max parallax) */}
         <motion.div 
