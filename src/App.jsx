@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import ReactLenis from 'lenis/react';
 import gsap from 'gsap';
 import ScrollProgress from './components/ui/ScrollProgress';
-import StickyMobileCTA from './components/ui/StickyMobileCTA';
+
 import MagneticButton from './components/ui/MagneticButton';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -59,7 +59,7 @@ function App() {
           <Location />
           <CTA />
           <Footer />
-          <StickyMobileCTA />
+
         </ReactLenis>
       </div>
     </>

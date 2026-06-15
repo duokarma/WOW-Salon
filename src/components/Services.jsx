@@ -96,9 +96,7 @@ const Services = () => {
                       <h3 className="card-title">{s.title}</h3>
                       <p className="card-desc">{s.desc}</p>
                     </div>
-                    <a href="#cta" className="text-[#2A1E12] text-xs font-semibold uppercase tracking-wider mt-4 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                      Book this service <ChevronRight size={14} />
-                    </a>
+
                   </div>
                 </HoverCard>
               ))}

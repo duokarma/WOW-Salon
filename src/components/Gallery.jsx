@@ -24,18 +24,18 @@ const Gallery = () => {
       {/* Light Frosted Glass Overlay */}
       <div className="absolute inset-0 bg-white/40 backdrop-blur-[60px] border-y border-white/50 pointer-events-none z-0"></div>
 
-      <div className="container relative z-10 mb-8 flex justify-between items-end">
+      <div className="container relative z-10 mb-8 flex flex-col items-center text-center">
         <SectionHeader
           label="Our Work"
           words={['Showcase', 'Gallery']}
           highlightWord="Gallery"
           description="A glimpse into the striking realities we create."
           style={{ marginBottom: 0 }}
-          className="text-[#1A1A1A]"
+          className="text-[#1A1A1A] flex flex-col items-center"
         />
         
         {/* Desktop Premium Navigation */}
-        <div className="hidden md:flex gap-4">
+        <div className="hidden md:flex gap-4 absolute right-4 bottom-0 lg:right-8">
           <button 
             onClick={() => scroll('left')}
             className="w-12 h-12 rounded-full border border-[#2A1E12]/10 flex items-center justify-center text-[#2A1E12]/50 hover:text-[#2A1E12] hover:border-[#2A1E12] transition-all duration-300"
