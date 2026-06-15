@@ -144,10 +144,9 @@ export default function Hero() {
           </motion.div>
 
           <motion.div style={{ x: headlineX, y: headlineY }}>
-            <BlurText 
-              text="Luxury Hair. <br/> Timeless Beauty."
-              className="text-6xl md:text-7xl lg:text-[7.5rem] font-display font-light text-white leading-[0.9] max-w-5xl text-center tracking-[-2px] mb-6 drop-shadow-xl"
-            />
+            <h1 className="text-6xl md:text-7xl lg:text-[7.5rem] font-display font-light text-white leading-[0.9] max-w-5xl text-center tracking-[-2px] mb-6 drop-shadow-xl text-shimmer">
+              Luxury Hair. <br /> Timeless Beauty.
+            </h1>
           </motion.div>
 
           <motion.p
@@ -164,14 +163,11 @@ export default function Hero() {
             animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 1.1 }}
             style={{ x: ctaX, y: ctaY }}
-            className="flex flex-col sm:flex-row items-center gap-6 mt-12"
+            className="flex items-center mt-12"
           >
-            <button className="liquid-glass-strong cta-hover-sweep rounded-full px-8 py-4 text-[13px] font-semibold text-white flex items-center gap-2 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_8px_32px_rgba(255,255,255,0.1)] tracking-[0.15em] uppercase overflow-hidden relative">
-              Book Appointment <ArrowUpRight size={18} />
-            </button>
-            <button className="text-[13px] font-semibold text-white/80 flex items-center gap-2 transition-all duration-500 hover:text-white hover:scale-[1.02] tracking-[0.15em] uppercase">
-              View Our Work <Play size={16} fill="currentColor" />
-            </button>
+            <a href="#services" className="liquid-glass-strong cta-hover-sweep rounded-full px-8 py-4 text-[13px] font-semibold text-white flex items-center gap-2 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_8px_32px_rgba(255,255,255,0.1)] tracking-[0.15em] uppercase overflow-hidden relative">
+              View Our Services <ArrowUpRight size={18} />
+            </a>
           </motion.div>
 
         </motion.div>

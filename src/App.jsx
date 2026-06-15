@@ -8,7 +8,6 @@ import MagneticButton from './components/ui/MagneticButton';
 import { ArrowUpRight } from 'lucide-react';
 
 import Hero from './components/Hero';
-import Capabilities from './components/Capabilities';
 import About from './components/About';
 import Services from './components/Services';
 import Staff from './components/Staff';
@@ -51,7 +50,6 @@ function App() {
           <div id="home">
             <Hero />
           </div>
-          <Capabilities />
           <About />
           <Services />
           <Staff />
