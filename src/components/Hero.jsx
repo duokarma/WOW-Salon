@@ -109,11 +109,7 @@ export default function Hero() {
         </motion.div>
 
         {/* Glassmorphism Navbar */}
-        <nav className="fixed top-4 left-0 right-0 px-8 lg:px-16 z-50 flex items-center justify-between pointer-events-none">
-          <div className="w-12 h-12 rounded-full liquid-glass flex items-center justify-center pointer-events-auto shadow-sm">
-            <span className="font-display italic text-white text-2xl uppercase mt-1 drop-shadow-md">W</span>
-          </div>
-          
+        <nav className="fixed top-4 left-0 right-0 px-8 lg:px-16 z-50 flex items-center justify-end pointer-events-none">
           <div className="hidden lg:flex items-center liquid-glass rounded-full px-1.5 py-1.5 gap-1 pointer-events-auto shadow-sm">
             {['Services', 'Gallery', 'Reviews', 'Staff', 'Contact'].map((link) => (
               <a key={link} href={`#${link.toLowerCase()}`} className="px-3 py-2 text-sm font-medium text-white/90 font-body hover:text-white transition-colors tracking-wide">
@@ -124,8 +120,6 @@ export default function Hero() {
               Book Appointment <ArrowUpRight size={16} />
             </button>
           </div>
-
-          <div className="w-12 h-12 invisible"></div>
         </nav>
 
         {/* Main Content (Layer 3: Top depth, inverted scroll, max parallax) */}
@@ -144,7 +138,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div style={{ x: headlineX, y: headlineY }}>
-            <h1 className="text-6xl md:text-7xl lg:text-[7.5rem] font-display font-light text-white leading-[0.9] max-w-5xl text-center tracking-[-2px] mb-6 drop-shadow-xl text-shimmer">
+            <h1 className="text-6xl md:text-7xl lg:text-[7.5rem] font-display font-light text-white leading-[0.9] max-w-5xl text-center tracking-[-2px] mb-6 drop-shadow-xl">
               Luxury Hair. <br /> Timeless Beauty.
             </h1>
           </motion.div>
@@ -171,6 +165,9 @@ export default function Hero() {
           </motion.div>
 
         </motion.div>
+
+        {/* Smooth Transition Overlay to About Section */}
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white to-transparent pointer-events-none z-20" />
 
       </section>
     </>
