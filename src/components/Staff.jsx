@@ -26,7 +26,7 @@ const Staff = () => {
   };
 
   return (
-    <section className="section section-light" id="staff">
+    <section className="section section-light" id="staff" style={{ paddingTop: '20px' }}>
       <div className="container">
         <SectionHeader
           label="Meet the Experts"
