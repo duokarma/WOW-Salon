@@ -77,7 +77,7 @@ export default function Hero() {
   const contentScrollY = useTransform(scrollY, [0, 1000], [0, -50]);
 
   return (
-    <WebGLErrorBoundary fallback={<div className="min-h-screen bg-black" />}>
+    <>
       <section 
         ref={containerRef}
         onMouseMove={handleMouseMove}
@@ -103,7 +103,9 @@ export default function Hero() {
           className="absolute inset-0 z-[5] pointer-events-none mix-blend-screen opacity-70"
           style={{ y: particlesScrollY }}
         >
-          <SceneManager />
+          <WebGLErrorBoundary fallback={<div className="absolute inset-0 pointer-events-none" />}>
+            <SceneManager />
+          </WebGLErrorBoundary>
         </motion.div>
 
         {/* Glassmorphism Navbar */}
@@ -175,6 +177,6 @@ export default function Hero() {
         </motion.div>
 
       </section>
-    </WebGLErrorBoundary>
+    </>
   );
 }
