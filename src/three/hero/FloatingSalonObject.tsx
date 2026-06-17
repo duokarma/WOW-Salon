@@ -62,23 +62,23 @@ export function FloatingSalonObject() {
           A minimalist Torus (ring) represents timeless elegance,
           flow, and perfection. It's much cleaner than the TorusKnot.
         */}
-        <Torus ref={meshRef} args={[1.4, 0.08, isMobile ? 32 : 64, isMobile ? 64 : 128]} position={[0, 0, 0]}>
+        <Torus ref={meshRef} args={[1.4, 0.08, isMobile ? 16 : 32, isMobile ? 48 : 64]} position={[0, 0, 0]}>
           <MeshTransmissionMaterial
-            backside={false} // Renders backside for realistic glass refraction only on desktop
-            samples={isMobile ? 1 : 3} // Balanced for high performance + premium visual
-            thickness={2.5}
-            chromaticAberration={0.12}
-            anisotropy={0.3}
-            distortion={0.1} // Very subtle rippling
-            distortionScale={0.2}
-            temporalDistortion={0.02}
+            backside={false} 
+            samples={1} 
+            thickness={1.5}
+            chromaticAberration={0.05}
+            anisotropy={0.1}
+            distortion={0.02} 
+            distortionScale={0.1}
+            temporalDistortion={0.01}
             clearcoat={1}
-            clearcoatRoughness={0.02}
+            clearcoatRoughness={0.05}
             metalness={0.15}
             roughness={0.02}
-            ior={1.5} // Crystal glass
+            ior={1.2} 
             color="#ffffff"
-            resolution={isMobile ? 128 : 256} // High resolution for clear glass
+            resolution={isMobile ? 64 : 128} 
           />
         </Torus>
       </Float>

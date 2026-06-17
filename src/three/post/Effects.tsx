@@ -10,7 +10,7 @@ export function Effects() {
   return (
     // disableNormalPass keeps performance high.
     // multisampling={4} provides smooth edges without tanking mobile framerates.
-    <EffectComposer disableNormalPass multisampling={4}>
+    <EffectComposer disableNormalPass multisampling={0}>
       
       {/* 
         Bloom: 
