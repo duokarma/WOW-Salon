@@ -62,7 +62,7 @@ const fragmentShader = `
 
 export function HeroParticles({ count = typeof window !== 'undefined' && window.innerWidth < 768 ? 500 : 1000 }) {
   const shaderRef = useRef<THREE.ShaderMaterial>(null)
-  const [isVisible, setIsVisible] = useState(true)
+  const pointsRef = useRef<THREE.Points>(null)
 
   // Generate attributes heavily optimized with useMemo
   const [positions, sizes, randoms] = useMemo(() => {
@@ -90,9 +90,10 @@ export function HeroParticles({ count = typeof window !== 'undefined' && window.
   }), [])
 
   useFrame((state) => {
+    if (!pointsRef.current) return
     if (typeof window !== 'undefined') {
       const inView = window.scrollY < window.innerHeight * 1.5
-      if (inView !== isVisible) setIsVisible(inView)
+      pointsRef.current.visible = inView
       if (!inView) return
     }
     if (shaderRef.current) {
@@ -108,7 +109,7 @@ export function HeroParticles({ count = typeof window !== 'undefined' && window.
   })
 
   return (
-    <points visible={isVisible}>
+    <points ref={pointsRef}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"

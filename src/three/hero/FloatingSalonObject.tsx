@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { useState } from 'react'
-import { Float, MeshTransmissionMaterial, TorusKnot } from '@react-three/drei'
+import { Float, MeshTransmissionMaterial, Torus } from '@react-three/drei'
 import * as THREE from 'three'
 
 export function FloatingSalonObject() {
@@ -12,13 +11,13 @@ export function FloatingSalonObject() {
 
   // Target rotation state for smooth, weighty mouse tracking
   const targetRotation = useRef({ x: 0, y: 0 })
-  const [isVisible, setIsVisible] = useState(true)
 
   useFrame((state, delta) => {
+    if (!groupRef.current) return
     // Only render when in Hero section to save massive draw calls
     if (typeof window !== 'undefined') {
       const inView = window.scrollY < window.innerHeight * 1.5
-      if (inView !== isVisible) setIsVisible(inView)
+      groupRef.current.visible = inView
       if (!inView) return
     }
     // 1. Parallax/Mouse interaction
@@ -47,7 +46,7 @@ export function FloatingSalonObject() {
   })
 
   return (
-    <group ref={groupRef} visible={isVisible}>
+    <group ref={groupRef}>
       {/* 
         Float creates the slow hovering/bobbing motion 
         perfect for a centerpiece object.

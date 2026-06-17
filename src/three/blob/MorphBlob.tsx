@@ -12,15 +12,14 @@ export function MorphBlob() {
   // at the end of our ScrollCamera GSAP timeline (which ends at y: -9).
   const basePosition = new THREE.Vector3(2, -8, -2) 
   const segments = typeof window !== 'undefined' && window.innerWidth < 768 ? 16 : 32
-  const [isVisible, setIsVisible] = useState(false)
 
   useFrame((state, delta) => {
+    if (!meshRef.current) return
     if (typeof window !== 'undefined') {
       const inView = window.scrollY > document.documentElement.scrollHeight - window.innerHeight * 3
-      if (inView !== isVisible) setIsVisible(inView)
+      meshRef.current.visible = inView
       if (!inView) return
     }
-    if (!meshRef.current) return
 
     // 1. Organic Ambient Rotation
     meshRef.current.rotation.x -= delta * 0.05
@@ -56,7 +55,7 @@ export function MorphBlob() {
 
   return (
     // High segment count is essential for smooth liquid vertex distortion, but reduced on mobile for perf
-    <Sphere ref={meshRef} args={[1.5, segments, segments]} position={basePosition.toArray()} visible={isVisible}>
+    <Sphere ref={meshRef} args={[1.5, segments, segments]} position={basePosition.toArray()}>
       {/* 
         MeshDistortMaterial perfectly simulates an amorphous, morphing liquid blob.
         We pair it with high metalness and clearcoat for a premium, wet-mercury aesthetic.

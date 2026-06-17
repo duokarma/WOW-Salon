@@ -1,12 +1,12 @@
 import { Canvas } from '@react-three/fiber'
-import { Suspense, useState, useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { LightingRig } from './lighting/LightingRig'
 import { Effects } from './post/Effects'
 import { FloatingSalonObject } from './hero/FloatingSalonObject'
 import { HeroParticles } from './particles/HeroParticles'
 import { MorphBlob } from './blob/MorphBlob'
 import { useThree } from '@react-three/fiber'
-import { Preload, PerformanceMonitor } from '@react-three/drei'
+import { Preload } from '@react-three/drei'
 
 function ResponsiveCamera() {
   const { camera, size } = useThree()
@@ -25,7 +25,6 @@ function ResponsiveCamera() {
 }
 
 export function SceneManager() {
-  const [dpr, setDpr] = useState(1);
   return (
     <Canvas
       camera={{ position: [0, 0, 5], fov: 45 }}
@@ -35,9 +34,8 @@ export function SceneManager() {
         preserveDrawingBuffer: false,
         powerPreference: "high-performance"
       }}
-      dpr={dpr}
+      dpr={[1, 1.5]}
     >
-      <PerformanceMonitor onIncline={() => setDpr(1.5)} onDecline={() => setDpr(1)} />
       <Suspense fallback={null}>
         <ResponsiveCamera />
         <LightingRig />
