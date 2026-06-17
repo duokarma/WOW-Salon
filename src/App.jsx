@@ -8,20 +8,20 @@ import MagneticButton from './components/ui/MagneticButton';
 import { ArrowUpRight } from 'lucide-react';
 
 import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Staff from './components/Staff';
-import Gallery from './components/Gallery';
-import BeforeAfter from './components/BeforeAfter';
-import Reviews from './components/Reviews';
-import Location from './components/Location';
-import CTA from './components/CTA';
-import Footer from './components/Footer';
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import TouchInteraction from './components/ui/TouchInteraction';
-import { SceneManager } from './three/SceneManager';
 import './app.css';
+
+const About = React.lazy(() => import('./components/About'));
+const Services = React.lazy(() => import('./components/Services'));
+const Staff = React.lazy(() => import('./components/Staff'));
+const Gallery = React.lazy(() => import('./components/Gallery'));
+const BeforeAfter = React.lazy(() => import('./components/BeforeAfter'));
+const Reviews = React.lazy(() => import('./components/Reviews'));
+const Location = React.lazy(() => import('./components/Location'));
+const CTA = React.lazy(() => import('./components/CTA'));
+const Footer = React.lazy(() => import('./components/Footer'));
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -50,15 +50,17 @@ function App() {
           <div id="home">
             <Hero />
           </div>
-          <About />
-          <Services />
-          <Staff />
-          <Gallery />
-          <BeforeAfter />
-          <Reviews />
-          <Location />
-          <CTA />
-          <Footer />
+          <React.Suspense fallback={null}>
+            <About />
+            <Services />
+            <Staff />
+            <Gallery />
+            <BeforeAfter />
+            <Reviews />
+            <Location />
+            <CTA />
+            <Footer />
+          </React.Suspense>
 
         </ReactLenis>
       </div>

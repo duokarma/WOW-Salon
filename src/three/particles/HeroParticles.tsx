@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState } from 'react'
+import React, { useRef, useMemo, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -60,7 +60,7 @@ const fragmentShader = `
   }
 `
 
-export function HeroParticles({ count = typeof window !== 'undefined' && window.innerWidth < 768 ? 500 : 1000 }) {
+export const HeroParticles = React.memo(function HeroParticles({ count = typeof window !== 'undefined' && window.innerWidth < 768 ? 500 : 1000 }) {
   const shaderRef = useRef<THREE.ShaderMaterial>(null)
   const pointsRef = useRef<THREE.Points>(null)
 
@@ -141,4 +141,4 @@ export function HeroParticles({ count = typeof window !== 'undefined' && window.
       />
     </points>
   )
-}
+})

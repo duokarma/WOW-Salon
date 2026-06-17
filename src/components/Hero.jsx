@@ -65,7 +65,6 @@ export default function Hero() {
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
     const { clientWidth, clientHeight } = containerRef.current;
-    // Normalize coordinates between -0.5 and 0.5
     mouseX.set((e.clientX / clientWidth) - 0.5);
     mouseY.set((e.clientY / clientHeight) - 0.5);
   };
@@ -73,11 +72,19 @@ export default function Hero() {
   useEffect(() => {
     const isHoverable = window.matchMedia('(hover: hover)').matches;
     const el = containerRef.current;
+    let rafId = null;
+
+    const throttledMouseMove = (e) => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => handleMouseMove(e));
+    };
+
     if (isHoverable && el) {
-      el.addEventListener('mousemove', handleMouseMove, { passive: true });
+      el.addEventListener('mousemove', throttledMouseMove, { passive: true });
     }
     return () => {
-      if (el) el.removeEventListener('mousemove', handleMouseMove);
+      if (el) el.removeEventListener('mousemove', throttledMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 

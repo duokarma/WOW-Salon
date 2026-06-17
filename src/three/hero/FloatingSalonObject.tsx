@@ -1,9 +1,9 @@
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Float, MeshTransmissionMaterial, Torus } from '@react-three/drei'
 import * as THREE from 'three'
 
-export function FloatingSalonObject() {
+export const FloatingSalonObject = React.memo(function FloatingSalonObject() {
   const meshRef = useRef<THREE.Mesh>(null)
   const groupRef = useRef<THREE.Group>(null)
   
@@ -83,4 +83,4 @@ export function FloatingSalonObject() {
       </Float>
     </group>
   )
-}
+})

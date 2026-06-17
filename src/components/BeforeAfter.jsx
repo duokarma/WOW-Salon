@@ -32,11 +32,11 @@ const BeforeAfterSlider = ({ beforeImg, afterImg }) => {
   return (
     <div className="ba-slider-container" ref={containerRef} onPointerDown={onPointerDown}>
       <div className="ba-image ba-after">
-        <img src={afterImg} alt="After" loading="lazy" />
+        <img src={afterImg} alt="After" loading="lazy" decoding="async" />
         <span className="ba-label ba-label-after">After</span>
       </div>
       <div className="ba-image ba-before" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
-        <img src={beforeImg} alt="Before" loading="lazy" />
+        <img src={beforeImg} alt="Before" loading="lazy" decoding="async" />
         <span className="ba-label ba-label-before">Before</span>
       </div>
       <motion.div className="ba-handle" style={{ left: `${position}%` }}>

@@ -1,5 +1,5 @@
+import React, { Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Suspense, useEffect } from 'react'
 import { LightingRig } from './lighting/LightingRig'
 import { Effects } from './post/Effects'
 import { FloatingSalonObject } from './hero/FloatingSalonObject'
@@ -24,7 +24,7 @@ function ResponsiveCamera() {
   return null
 }
 
-export function SceneManager() {
+export const SceneManager = React.memo(function SceneManager() {
   return (
     <Canvas
       camera={{ position: [0, 0, 5], fov: 45 }}
@@ -51,4 +51,4 @@ export function SceneManager() {
       </Suspense>
     </Canvas>
   )
-}
+})

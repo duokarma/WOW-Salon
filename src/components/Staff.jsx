@@ -25,6 +25,7 @@ const Staff = () => {
             alt="WOW Salon Team" 
             className="staff-group-image"
             loading="lazy" 
+            decoding="async"
           />
         </motion.div>
       </div>

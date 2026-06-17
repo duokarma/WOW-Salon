@@ -56,6 +56,7 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, className = '' }) => {
         alt="After" 
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         loading="lazy"
+        decoding="async"
       />
       
       {/* Before Image (Foreground, clipped) */}
@@ -64,6 +65,8 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, className = '' }) => {
         alt="Before" 
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+        loading="lazy"
+        decoding="async"
       />
 
       {/* Slider Handle */}

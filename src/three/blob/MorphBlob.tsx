@@ -1,10 +1,10 @@
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useState } from 'react'
 import { Sphere, MeshDistortMaterial } from '@react-three/drei'
 import * as THREE from 'three'
 
-export function MorphBlob() {
+export const MorphBlob = React.memo(function MorphBlob() {
   const meshRef = useRef<THREE.Mesh>(null)
   const materialRef = useRef<any>(null)
   
@@ -75,4 +75,4 @@ export function MorphBlob() {
       />
     </Sphere>
   )
-}
+})

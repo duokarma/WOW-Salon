@@ -62,6 +62,7 @@ const Navbar = () => {
               src={getAsset('/logo.webp')} 
               alt="WOW Salon" 
               className={`h-7 sm:h-9 w-auto transition-all duration-500 ${scrolled ? 'filter invert opacity-80' : 'opacity-100'}`} 
+              decoding="async"
             />
           </a>
 
@@ -130,7 +131,7 @@ const Navbar = () => {
             <div className="absolute inset-0 bg-[#050507]/60 backdrop-blur-[24px]" />
             
             <div className="relative z-10 flex items-center justify-between px-6 py-8">
-              <img src={getAsset('/logo.webp')} alt="WOW Salon" className="h-8 filter invert opacity-90" />
+              <img src={getAsset('/logo.webp')} alt="WOW Salon" className="h-8 filter invert opacity-90" decoding="async" />
               <button 
                 onClick={() => setMobileOpen(false)}
                 className="p-3 rounded-full hover:bg-white/10 transition-colors group border border-transparent hover:border-white/20"

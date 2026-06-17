@@ -21,7 +21,7 @@ const About = () => {
         <div className="about-grid">
           <Reveal direction="left" className="about-image-col">
             <motion.div className="about-image-frame" style={{ y: imageY }}>
-              <img src={getAsset('/about_salon.webp')} alt="WOW Salon luxury interior" loading="lazy" />
+              <img src={getAsset('/about_salon.webp')} alt="WOW Salon luxury interior" loading="lazy" decoding="async" />
               <div className="image-chrome-border" />
             </motion.div>
             <motion.div
