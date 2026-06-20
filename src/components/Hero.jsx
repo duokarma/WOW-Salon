@@ -2,8 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { motion, useInView, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { ArrowUpRight, Play } from 'lucide-react';
 import FadingVideo from './ui/FadingVideo';
-import { SceneManager } from '../three/SceneManager';
-import { WebGLErrorBoundary } from './ui/webgl-error-boundary';
+
 
 const BlurText = ({ text, className }) => {
   const ref = useRef(null);
@@ -113,16 +112,6 @@ export default function Hero() {
             className="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top opacity-40"
             style={{ width: "120%", height: "120%", maxWidth: "none" }}
           />
-        </motion.div>
-
-        {/* 3D Scene Layer (Layer 2: Middle depth, medium scroll) */}
-        <motion.div 
-          className="absolute inset-0 z-[5] pointer-events-none mix-blend-screen opacity-70 will-change-transform"
-          style={{ y: particlesScrollY }}
-        >
-          <WebGLErrorBoundary fallback={<div className="absolute inset-0 pointer-events-none" />}>
-            <SceneManager />
-          </WebGLErrorBoundary>
         </motion.div>
 
 
