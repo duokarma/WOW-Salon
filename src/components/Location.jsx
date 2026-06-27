@@ -42,7 +42,10 @@ const Location = () => (
                 <Phone size={20} />
                 <div>
                   <strong>Direct Contact</strong>
-                  <p><a href="tel:9924404860" className="location-link">+91 99244 04860</a></p>
+                  <p>
+                    <a href="tel:9723046502" className="location-link">+91 97230 46502</a><br />
+                    <a href="tel:8490903555" className="location-link">+91 84909 03555</a>
+                  </p>
                 </div>
               </div>
             </div>
